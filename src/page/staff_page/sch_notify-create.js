@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import StaffLeftMenu from '../../component/staff_page/left_menu';
-import { Container, Card, CardBody, Row, Col, Form, FormGroup, Label, Input,  Button ,Progress} from "reactstrap";
+import { Container, Card, CardBody, Row, Col, Form, FormGroup, Label, Input, Button, Progress } from "reactstrap";
 
 import { Helmet } from "react-helmet";
 import axios from 'axios';
@@ -13,10 +13,21 @@ import NavBar from "../../component/structure_global/navbar";
 const title = 'เพิ่มทุนการศึกษา - ระบบผู้ดูแล';
 
 const Newresult = () => {
-   
+    const session = {
+        id: localStorage.getItem('id'),
+        fname: localStorage.getItem('fname'),
+        lname: localStorage.getItem('lname'),
+        status: localStorage.getItem('status')
+    }
+    const [ses, setSes] = useState(session);
+    if (ses.status == "นักเรียน") {
+        window.location.assign("/");
+
+    }
+
     //////////////////////รายชื่อทุน/////////////////////
-     useEffect(() => {
-       
+    useEffect(() => {
+
         axios.get("http://localhost:8080/Mback/public/allSubscholarship")
             .then((response) => {
                 setlist(response.data);
@@ -30,19 +41,14 @@ const Newresult = () => {
         msch_name: "",
         file: "",
         msch_detail: "",
-       namescholar: ""
+        namescholar: ""
 
 
     };
 
     const [resultScholar, setResultScholar] = useState(initresultScholar);
     //    mr drop
-    const session = {
-        id: localStorage.getItem('id'),
-        fname: localStorage.getItem('fname'),
-        lname: localStorage.getItem('lname'),
-        status: localStorage.getItem('status')
-    }
+
 
 
 
@@ -102,44 +108,44 @@ const Newresult = () => {
 
             };
     }
-/////////////////////////////////upload file//////////////////////////
+    /////////////////////////////////upload file//////////////////////////
 
- const [progress, setProgress] = useState(0);
- const uploadFileToFirebase = (file) => {
-     const mId = "result";
-     const timestamp = Math.floor(Date.now() / 1000); //เวลาในนี้
-     const newName = mId + "_" + timestamp;//เปลี่ยนชื่อ
-     const uploadTask = storage.ref(`resultfile/${newName}`).put(file);//firebase storeage
-     //ref เลือกfolder
-     uploadTask.on(
-         "state_changed",
-         (snapshot) => {
-             const uploadProgress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-             //สร้าง % ในการอัพ โหลด
-             setProgress(uploadProgress);
-         },
-         (error) => {
-             console.log(error);
+    const [progress, setProgress] = useState(0);
+    const uploadFileToFirebase = (file) => {
+        const mId = "result";
+        const timestamp = Math.floor(Date.now() / 1000); //เวลาในนี้
+        const newName = mId + "_" + timestamp;//เปลี่ยนชื่อ
+        const uploadTask = storage.ref(`resultfile/${newName}`).put(file);//firebase storeage
+        //ref เลือกfolder
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+                const uploadProgress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                //สร้าง % ในการอัพ โหลด
+                setProgress(uploadProgress);
+            },
+            (error) => {
+                console.log(error);
 
-         },
-         () => {
-             
-             storage.ref(`resultfile`).child(newName).getDownloadURL().then((fileURL) => {
-                 // ref จาก folderไหน  child ชื่อไฟล? get url
-                 console.log(fileURL);
-                 saveResult(fileURL);
-             });
-         }
+            },
+            () => {
 
-     )
+                storage.ref(`resultfile`).child(newName).getDownloadURL().then((fileURL) => {
+                    // ref จาก folderไหน  child ชื่อไฟล? get url
+                    console.log(fileURL);
+                    saveResult(fileURL);
+                });
+            }
 
- }
- const FILE_SIZE = 3000 * 1024;
- const SUPPORTED_TYPE = [
-    "application/pdf",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-     ]
-     const formik = useFormik({
+        )
+
+    }
+    const FILE_SIZE = 3000 * 1024;
+    const SUPPORTED_TYPE = [
+        "application/pdf",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ]
+    const formik = useFormik({
         initialValues: initresultScholar,
         validationSchema: yup.object().shape(
 
@@ -195,8 +201,8 @@ const Newresult = () => {
                             <ol className="breadcrumb CardBackground-1">
                                 <li className="breadcrumb-item"><a href="/home">หน้าหลัก</a></li>
                                 <li className="breadcrumb-item"><a href="/staff_page">หน้าหลักระบบผู้ดูแล</a></li>
-                                <li className="breadcrumb-item"><a href="/staff/scholarship">ประกาศผลทุนการศึกษา</a></li>
-                                <li className="breadcrumb-item active" aria-current="page">เพิ่มประกาศผลทุนการศึกษา</li>
+                                <li className="breadcrumb-item"><a href="/staff/scholarship">ประกาศรายชื่อผู้ได้รับทุนการศึกษา</a></li>
+                                <li className="breadcrumb-item active" aria-current="page">เพิ่มประกาศรายชื่อผู้ได้รับทุนการศึกษา</li>
                             </ol>
                         </nav>
 
@@ -235,19 +241,19 @@ const Newresult = () => {
                                                         })}
                                                     </Input>
                                                     {formik.errors.namescholar && formik.touched.namescholar && (
-                                                <p style={{ color: "red" }}>{formik.errors.namescholar}</p>
+                                                        <p style={{ color: "red" }}>{formik.errors.namescholar}</p>
 
-                                            )}
+                                                    )}
                                                 </FormGroup>
                                             </Col>
-                       
+
                                         </Row>
-                                       
+
                                         <FormGroup align="left">
                                             <Label for="first_name">รายละเอียดเพิ่มเติม</Label>
-                                            <Input type="textarea" rows="8" name="msch_detail" id="first_name" placeholder="รายละเอียดเพิ่มเติม"  value={formik.values.msch_detail} onChange={formik.handleChange} required />
+                                            <Input type="textarea" rows="8" name="msch_detail" id="first_name" placeholder="รายละเอียดเพิ่มเติม" value={formik.values.msch_detail} onChange={formik.handleChange} required />
                                         </FormGroup>
-                            <FormGroup align="left">
+                                        <FormGroup align="left">
                                             <Label for="ssch_file">ไฟล์เอกสารทุน(หากมี)</Label>
                                             <Input type="file" name="file" id="ssch_file" onChange={(e) => {
                                                 formik.setFieldValue("file", e.currentTarget.files[0]);
@@ -262,7 +268,7 @@ const Newresult = () => {
                                             )}
                                         </FormGroup>
 
-                               
+
                                         <div className="borderline" />
                                         <div style={{ maxWidth: "300px" }} align="left">
                                             <Button className="Button-Style" block color="success" size="md" >

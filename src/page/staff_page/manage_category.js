@@ -10,6 +10,17 @@ import NavBar from "../../component/structure_global/navbar";
 const title = 'หมวดหมู่ทุนการศึกษา - ระบบผู้ดูแล';
 
 const ManageCategory = () => {
+    const session = {
+        id: localStorage.getItem('id'),
+        fname: localStorage.getItem('fname'),
+        lname: localStorage.getItem('lname'),
+        status: localStorage.getItem('status')
+    }
+    const [ses, setSes] = useState(session);
+    if (ses.status == "นักเรียน") {
+        window.location.assign("/");
+
+    }
 
     const [type, setType] = useState([]);
     const page = () => {
@@ -149,8 +160,8 @@ const ManageCategory = () => {
                                         <div style={{ maxWidth: "300px" }} align="left">
                                             <Button className="Button-Style" block color="success" size="md" >
                                                 <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/save_white.png" />
-                                                    บันทึกข้อมูล
-                                                </Button>
+                                                บันทึกข้อมูล
+                                            </Button>
                                         </div>
                                     </Form>
                                 </div>
@@ -164,49 +175,51 @@ const ManageCategory = () => {
                                     หน่วยงานทุนการศึกษา
                                 </h6>
                                 <div className="borderline" />
+                                {type == "" ?
 
-                                <div className="NotFoundTxtInBox">
-                                    <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/error_outline_danger.png" />
-                                    ไม่พบข้อมูล
-                                </div>
-                                
-                                <div className="EdgeRow-1">
-                                    <Row>
-                                        {type.map((stype) => {
+                                    <div className="NotFoundTxtInBox">
+                                        <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/error_outline_danger.png" />
+                                        ไม่พบข้อมูล
+                                    </div>
+                                    :
+                                    <div className="EdgeRow-1">
+                                        <Row>
+                                            {type.map((stype) => {
 
-                                            return (
-                                                <>
-                                                    <div className="col-12 col-sm-6 col-lg-6 col-BoxContentSetting">
+                                                return (
+                                                    <>
+                                                        <div className="col-12 col-sm-6 col-lg-6 col-BoxContentSetting">
 
-                                                        <div key={stype.sch_type_id} >
-                                                            <Card className="CardBackground-2">
-                                                                <a href="#">
-                                                                    <CardHeader className="" style={{ background: "#dadce0", borderRadius: "10px", borderBottom: "0px" }}>
-                                                                        <h6 className="text-dark" style={{ margin: '0px' }}>
-                                                                            <b>{stype.sch_typename}</b>
-                                                                        </h6>
-                                                                    </CardHeader>
-                                                                </a>
-                                                                <CardBody className="text-secondary" style={{ padding: "10px" }}>
-                                                                    <div align="left">
-                                                                        <Button className="Button-Style" color="secondary" size="sm" onClick={() => delectType(stype.sch_type_id)} style={{ borderTopRightRadius: "0px", borderBottomRightRadius: "0px", marginBottom: "0px" }} href="" >
-                                                                            <img className="Button-icon" style={{ height: "17px", width: "auto" }} src="https://tzs-global.com/website_factor-image/button_icon/delete_forever_white.png" />
-                                                                        </Button>
-                                                                        <Button className="Button-Style" outline color="secondary" size="sm" onClick={() => delectType(stype.sch_type_id)} style={{ borderTopLeftRadius: "0px", borderBottomLeftRadius: "0px", marginBottom: "0px" }} href="" >
-                                                                            ลบข้อมูล
+                                                            <div key={stype.sch_type_id} >
+                                                                <Card className="CardBackground-2">
+                                                                    <a href="#">
+                                                                        <CardHeader className="" style={{ background: "#dadce0", borderRadius: "10px", borderBottom: "0px" }}>
+                                                                            <h6 className="text-dark" style={{ margin: '0px' }}>
+                                                                                <b>{stype.sch_typename}</b>
+                                                                            </h6>
+                                                                        </CardHeader>
+                                                                    </a>
+                                                                    <CardBody className="text-secondary" style={{ padding: "10px" }}>
+                                                                        <div align="left">
+                                                                            <Button className="Button-Style" color="secondary" size="sm" onClick={() => delectType(stype.sch_type_id)} style={{ borderTopRightRadius: "0px", borderBottomRightRadius: "0px", marginBottom: "0px" }} href="" >
+                                                                                <img className="Button-icon" style={{ height: "17px", width: "auto" }} src="https://tzs-global.com/website_factor-image/button_icon/delete_forever_white.png" />
                                                                             </Button>
-                                                                    </div>
-                                                                </CardBody>
-                                                            </Card>
+                                                                            <Button className="Button-Style" outline color="secondary" size="sm" onClick={() => delectType(stype.sch_type_id)} style={{ borderTopLeftRadius: "0px", borderBottomLeftRadius: "0px", marginBottom: "0px" }} href="" >
+                                                                                ลบข้อมูล
+                                                                            </Button>
+                                                                        </div>
+                                                                    </CardBody>
+                                                                </Card>
+                                                            </div>
+
                                                         </div>
+                                                    </>
+                                                );
 
-                                                    </div>
-                                                </>
-                                            );
-
-                                        })}
-                                    </Row>
-                                </div>
+                                            })}
+                                        </Row>
+                                    </div>
+                                }
                             </CardBody>
                         </Card>
 

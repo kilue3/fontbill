@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import StaffLeftMenu from '../../component/staff_page/left_menu';
-import { Container, Card, CardBody, Row, Col, Form, FormGroup, Label, Input,  Button ,Progress} from "reactstrap";
+import { Container, Card, CardBody, Row, Col, Form, FormGroup, Label, Input, Button, Progress } from "reactstrap";
 
 import { Helmet } from "react-helmet";
 import axios from 'axios';
@@ -12,11 +12,22 @@ import NavBar from "../../component/structure_global/navbar";
 
 const title = 'เพิ่มทุนการศึกษา - ระบบผู้ดูแล';
 
-const Editresult = ({id}) => {
-   
+const Editresult = ({ id }) => {
+    const session = {
+        id: localStorage.getItem('id'),
+        fname: localStorage.getItem('fname'),
+        lname: localStorage.getItem('lname'),
+        status: localStorage.getItem('status')
+    }
+    const [ses, setSes] = useState(session);
+    if (ses.status == "นักเรียน") {
+        window.location.assign("/");
+
+    }
+
     //////////////////////รายชื่อทุน/////////////////////
-     useEffect(() => {
-       
+    useEffect(() => {
+
         axios.get("http://localhost:8080/Mback/public/allSubscholarship")
             .then((response) => {
                 setlist(response.data);
@@ -31,33 +42,27 @@ const Editresult = ({id}) => {
             .then((response) => {
                 setResultinfo(response.data);
             });
-   
-     
+
+
 
 
     };
     useEffect(() => {
         page();
     }, []);
-    
+
     const initresultScholar = {
 
         msch_name: "",
         file: "",
         msch_detail: "",
-       namescholar: ""
+        namescholar: ""
 
 
     };
 
     const [resultScholar, setResultScholar] = useState(initresultScholar);
     //    mr drop
-    const session = {
-        id: localStorage.getItem('id'),
-        fname: localStorage.getItem('fname'),
-        lname: localStorage.getItem('lname'),
-        status: localStorage.getItem('status')
-    }
 
 
 
@@ -87,7 +92,7 @@ const Editresult = ({id}) => {
                 )
 
             } else {
-                axios.put("http://localhost:8080/Mback/public/editresult/"+id, data)//ส่งค่าไปแอดใน DB
+                axios.put("http://localhost:8080/Mback/public/editresult/" + id, data)//ส่งค่าไปแอดใน DB
                     .then((res) => {
                         console.log(res.data.message);
                         if (res.data.message == "success") {
@@ -117,44 +122,44 @@ const Editresult = ({id}) => {
 
             };
     }
-/////////////////////////////////upload file//////////////////////////
+    /////////////////////////////////upload file//////////////////////////
 
- const [progress, setProgress] = useState(0);
- const uploadFileToFirebase = (file) => {
-     const mId = "result";
-     const timestamp = Math.floor(Date.now() / 1000); //เวลาในนี้
-     const newName = mId + "_" + timestamp;//เปลี่ยนชื่อ
-     const uploadTask = storage.ref(`resultfile/${newName}`).put(file);//firebase storeage
-     //ref เลือกfolder
-     uploadTask.on(
-         "state_changed",
-         (snapshot) => {
-             const uploadProgress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-             //สร้าง % ในการอัพ โหลด
-             setProgress(uploadProgress);
-         },
-         (error) => {
-             console.log(error);
+    const [progress, setProgress] = useState(0);
+    const uploadFileToFirebase = (file) => {
+        const mId = "result";
+        const timestamp = Math.floor(Date.now() / 1000); //เวลาในนี้
+        const newName = mId + "_" + timestamp;//เปลี่ยนชื่อ
+        const uploadTask = storage.ref(`resultfile/${newName}`).put(file);//firebase storeage
+        //ref เลือกfolder
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+                const uploadProgress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                //สร้าง % ในการอัพ โหลด
+                setProgress(uploadProgress);
+            },
+            (error) => {
+                console.log(error);
 
-         },
-         () => {
-             
-             storage.ref(`resultfile`).child(newName).getDownloadURL().then((fileURL) => {
-                 // ref จาก folderไหน  child ชื่อไฟล? get url
-                 console.log(fileURL);
-                 saveResult(fileURL);
-             });
-         }
+            },
+            () => {
 
-     )
+                storage.ref(`resultfile`).child(newName).getDownloadURL().then((fileURL) => {
+                    // ref จาก folderไหน  child ชื่อไฟล? get url
+                    console.log(fileURL);
+                    saveResult(fileURL);
+                });
+            }
 
- }
- const FILE_SIZE = 3000 * 1024;
- const SUPPORTED_TYPE = [
-    "application/pdf",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-     ]
-     const formik = useFormik({
+        )
+
+    }
+    const FILE_SIZE = 3000 * 1024;
+    const SUPPORTED_TYPE = [
+        "application/pdf",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ]
+    const formik = useFormik({
         initialValues: initresultScholar,
         validationSchema: yup.object().shape(
 
@@ -197,110 +202,110 @@ const Editresult = ({id}) => {
 
             <NavBar />
             <>  {Resultinfo.map((result) => {
-            return (
-                <>
-            <Container className="container-fluid TZS-Container">
-                <Row>
+                return (
+                    <>
+                        <Container className="container-fluid TZS-Container">
+                            <Row>
 
-                    <Col lg="3" className="col-ContentSetting">
-                        <StaffLeftMenu />
-                    </Col>
+                                <Col lg="3" className="col-ContentSetting">
+                                    <StaffLeftMenu />
+                                </Col>
 
-                    <Col md="9" className="col-ContentSetting">
+                                <Col md="9" className="col-ContentSetting">
 
-                        <nav aria-label="breadcrumb">
-                            <ol className="breadcrumb CardBackground-1">
-                                <li className="breadcrumb-item"><a href="/home">หน้าหลัก</a></li>
-                                <li className="breadcrumb-item"><a href="/staff_page">หน้าหลักระบบผู้ดูแล</a></li>
-                                <li className="breadcrumb-item"><a href="/staff/scholarship">ประกาศผลทุนการศึกษา</a></li>
-                                <li className="breadcrumb-item active" aria-current="page">แก้ไขประกาศผลทุนการศึกษา</li>
-                            </ol>
-                        </nav>
+                                    <nav aria-label="breadcrumb">
+                                        <ol className="breadcrumb CardBackground-1">
+                                            <li className="breadcrumb-item"><a href="/home">หน้าหลัก</a></li>
+                                            <li className="breadcrumb-item"><a href="/staff_page">หน้าหลักระบบผู้ดูแล</a></li>
+                                            <li className="breadcrumb-item"><a href="/staff/scholarship">ประกาศผลทุนการศึกษา</a></li>
+                                            <li className="breadcrumb-item active" aria-current="page">แก้ไขประกาศผลทุนการศึกษา</li>
+                                        </ol>
+                                    </nav>
 
-                        <Card className="CardBackground-1">
-                            <CardBody className="CardBody">
-                                <h5 style={{ margin: '0px' }}>
-                                    <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/add_circle.png" />
-                                    ประกาศผลทุนการศึกษา
-                                </h5>
-                                <div className="borderline" />
-                                <div align="center">
+                                    <Card className="CardBackground-1">
+                                        <CardBody className="CardBody">
+                                            <h5 style={{ margin: '0px' }}>
+                                                <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/add_circle.png" />
+                                                ประกาศผลทุนการศึกษา
+                                            </h5>
+                                            <div className="borderline" />
+                                            <div align="center">
 
-                                    <Form style={{ maxWidth: '700px' }} onSubmit={formik.handleSubmit} >
-                                        <FormGroup align="left">
-                                            <Label for="ssch_name_main">ชื่อทุนการศึกษา</Label>
-                                            <Input type="text" name="msch_name" id="ssch_name_main" placeholder={result.result_name} value={formik.values.msch_name} onChange={formik.handleChange} required />
-                                            {formik.errors.msch_name && formik.touched.msch_name && (
-                                                <p style={{ color: "red" }}>{formik.errors.msch_name}</p>
+                                                <Form style={{ maxWidth: '700px' }} onSubmit={formik.handleSubmit} >
+                                                    <FormGroup align="left">
+                                                        <Label for="ssch_name_main">ชื่อทุนการศึกษา</Label>
+                                                        <Input type="text" name="msch_name" id="ssch_name_main" placeholder={result.result_name} value={formik.values.msch_name} onChange={formik.handleChange} required />
+                                                        {formik.errors.msch_name && formik.touched.msch_name && (
+                                                            <p style={{ color: "red" }}>{formik.errors.msch_name}</p>
 
-                                            )}
-                                        </FormGroup>
-                                        <Row >
-                                            <Col md={12}>
-                                                <FormGroup align="left">
-                                                    <Label for="category">ชื่อทุนการศึกษา</Label>
-                                                    <Input type="select" name="namescholar" id="category" onChange={formik.handleChange} value={formik.values.namescholar} required>
-                                                        <option >กรุณาเลือกชื่อทุนการศึกษา</option>
+                                                        )}
+                                                    </FormGroup>
+                                                    <Row >
+                                                        <Col md={12}>
+                                                            <FormGroup align="left">
+                                                                <Label for="category">ชื่อทุนการศึกษา</Label>
+                                                                <Input type="select" name="namescholar" id="category" onChange={formik.handleChange} value={formik.values.namescholar} required>
+                                                                    <option >กรุณาเลือกชื่อทุนการศึกษา</option>
 
-                                                        {listnamescholar.map((stype) => {
+                                                                    {listnamescholar.map((stype) => {
 
-                                                            return (
+                                                                        return (
 
-                                                                <option key={stype.ssch_id} value={stype.ssch_id}>{stype.ssch_name}</option>
+                                                                            <option key={stype.ssch_id} value={stype.ssch_id}>{stype.ssch_name}</option>
 
-                                                            );
+                                                                        );
 
-                                                        })}
-                                                    </Input>
-                                                    {formik.errors.namescholar && formik.touched.namescholar && (
-                                                <p style={{ color: "red" }}>{formik.errors.namescholar}</p>
+                                                                    })}
+                                                                </Input>
+                                                                {formik.errors.namescholar && formik.touched.namescholar && (
+                                                                    <p style={{ color: "red" }}>{formik.errors.namescholar}</p>
 
-                                            )}
-                                                </FormGroup>
-                                            </Col>
-                       
-                                        </Row>
-                                       
-                                        <FormGroup align="left">
-                                            <Label for="first_name">รายละเอียดเพิ่มเติม</Label>
-                                            <Input type="textarea" rows="8" name="msch_detail" id="first_name" placeholder={result.result_detail}  value={formik.values.msch_detail} onChange={formik.handleChange} required />
-                                        </FormGroup>
-                            <FormGroup align="left">
-                                            <Label for="ssch_file">ไฟล์เอกสารทุน(หากมี)</Label>
-                                            <Input type="file" name="file" id="ssch_file" onChange={(e) => {
-                                                formik.setFieldValue("file", e.currentTarget.files[0]);
+                                                                )}
+                                                            </FormGroup>
+                                                        </Col>
 
-                                            }} />
-                                            <br />
-                                            {progress !== 0 && (
-                                                <Progress value={progress}>{progress}%</Progress>
-                                            )}
-                                            {formik.errors.file && formik.touched.file && (
-                                                <p style={{ color: "red" }}>{formik.errors.file}</p>
-                                            )}
-                                        </FormGroup>
+                                                    </Row>
 
-                               
-                                        <div className="borderline" />
-                                        <div style={{ maxWidth: "300px" }} align="left">
-                                            <Button className="Button-Style" block color="success" size="md" >
-                                                <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/save_white.png" />
-                                                บันทึกข้อมูล
-                                            </Button>
-                                        </div>
-                                    </Form>
-                                </div>
-                            </CardBody>
-                        </Card>
+                                                    <FormGroup align="left">
+                                                        <Label for="first_name">รายละเอียดเพิ่มเติม</Label>
+                                                        <Input type="textarea" rows="8" name="msch_detail" id="first_name" placeholder={result.result_detail} value={formik.values.msch_detail} onChange={formik.handleChange} required />
+                                                    </FormGroup>
+                                                    <FormGroup align="left">
+                                                        <Label for="ssch_file">ไฟล์เอกสารทุน(หากมี)</Label>
+                                                        <Input type="file" name="file" id="ssch_file" onChange={(e) => {
+                                                            formik.setFieldValue("file", e.currentTarget.files[0]);
 
-                    </Col>
+                                                        }} />
+                                                        <br />
+                                                        {progress !== 0 && (
+                                                            <Progress value={progress}>{progress}%</Progress>
+                                                        )}
+                                                        {formik.errors.file && formik.touched.file && (
+                                                            <p style={{ color: "red" }}>{formik.errors.file}</p>
+                                                        )}
+                                                    </FormGroup>
 
-                </Row>
-            </Container>
+
+                                                    <div className="borderline" />
+                                                    <div style={{ maxWidth: "300px" }} align="left">
+                                                        <Button className="Button-Style" block color="success" size="md" >
+                                                            <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/save_white.png" />
+                                                            บันทึกข้อมูล
+                                                        </Button>
+                                                    </div>
+                                                </Form>
+                                            </div>
+                                        </CardBody>
+                                    </Card>
+
+                                </Col>
+
+                            </Row>
+                        </Container>
+                    </>
+                );
+            })}
             </>
-            );
-        })}
-        </> 
         </>
     )
 }

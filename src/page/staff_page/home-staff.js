@@ -9,7 +9,17 @@ import NavBar from "../../component/structure_global/navbar";
 const title = 'หน้าหลักระบบผู้ดูแล';
 
 const StaffPage = () => {
+    const session = {
+        id: localStorage.getItem('id'),
+        fname: localStorage.getItem('fname'),
+        lname: localStorage.getItem('lname'),
+        status: localStorage.getItem('status')
+    }
+    const [ses, setSes] = useState(session);
+    if (ses.status == "นักเรียน") {
+        window.location.assign("/");
 
+    }
 
 
     return (
@@ -28,7 +38,7 @@ const StaffPage = () => {
                     </Col>
 
                     <Col lg="9" className="col-ContentSetting">
-                        
+
                         <Card className="HeaderShadow">
                             <nav aria-label="breadcrumb">
                                 <ol className="breadcrumb BreadcrumbStyle">
@@ -37,10 +47,10 @@ const StaffPage = () => {
                                 </ol>
                             </nav>
                             <Card className="CardHeaderStyle">
-                                    <h5 style={{ margin: '0px' }}>
-                                        <img className="header-1-Icon" src="https://tzs-global.com/website_factor-image/button_icon/house.png" />
-                                        หน้าหลักระบบผู้ดูแล
-                                    </h5>
+                                <h5 style={{ margin: '0px' }}>
+                                    <img className="header-1-Icon" src="https://tzs-global.com/website_factor-image/button_icon/house.png" />
+                                    หน้าหลักระบบผู้ดูแล
+                                </h5>
                             </Card>
                         </Card>
                         <div className="CardHeaderDetail">

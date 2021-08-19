@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import StaffLeftMenu from '../../component/staff_page/left_menu';
-import { Container, Card, CardBody, Row, Col, Form, FormGroup, Label, Input, Alert, Button, Progress } from "reactstrap";
+import { Container, Card, CardBody, Row, Col, Form, FormGroup, Label, Input, Button, Progress } from "reactstrap";
 import { Helmet } from "react-helmet";
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -20,6 +20,10 @@ const ScholarshipCreateSub = ({ id }) => {
         status: localStorage.getItem('status')
     }
     const [ses, setSes] = useState(session);
+    if (ses.status == "นักเรียน") {
+        window.location.assign("/");
+
+    }
 
     //////mscholar////////////
     const initMscholar = {
@@ -31,12 +35,16 @@ const ScholarshipCreateSub = ({ id }) => {
         Tname: "",
     }
     const [Mscholar, setMscholar] = useState(initMscholar);
-
-    axios.get("http://localhost:8080/Mback/public/findMshcholarship/" + id)
-        .then((response) => {
-            setMscholar(response.data);
-        }, [id]);
-
+    const page = () => {
+        axios.get("http://localhost:8080/Mback/public/findMshcholarship/" + id)
+            .then((response) => {
+                setMscholar(response.data);
+            });
+    }
+    useEffect(() => {
+        page();
+        // ใช้updateProductsบรรทัด 7
+    }, [id]);
     const initScholarsub = {
         ssch_name: "",
         ssch_detail: "",
@@ -48,7 +56,7 @@ const ScholarshipCreateSub = ({ id }) => {
         ssch_dclose: "",
         ssch_web: "",
         ssch_file: "",
-        msch_id: id,
+        mainsch_id: id,
         by_st_id: ses.id,
 
 
@@ -142,7 +150,7 @@ const ScholarshipCreateSub = ({ id }) => {
             ssch_dclose: formik.values.ssch_dclose,
             ssch_web: formik.values.ssch_web,
             ssch_file: fileURL,
-            msch_id: Scholarsub.msch_id,
+            mainsch_id: Scholarsub.mainsch_id,
             by_st_id: Scholarsub.by_st_id,
 
 

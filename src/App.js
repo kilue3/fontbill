@@ -26,10 +26,18 @@ import AllSchollarpage from "./page/sch_main-showAll";
 import Newresult from "./page/staff_page/sch_notify-create";
 import Allresutpage from "./page/sch_notify-showAll";
 import Result_pagestaff from "./page/staff_page/sch_notify-show";
-import result_showpage  from "./page/sch_notify-page";
+import result_showpage from "./page/sch_notify-page";
 import editrelt from './page/staff_page/Editresult-props';
-import userinfo  from "./page/staff_page/user_info";
-
+import userinfo from "./page/staff_page/user_info";
+import userinfostaff from "./page/staff_page/user_info_staff";
+import agen_tag_page from "./page/tag/agen_tag_page";
+import Typepage from "./page/tag/type_tag_page";
+import Yearpage from './page/tag/year_tag_page';
+import Agency_page from './page/agency_page';
+import Type_page from './page/type_page';
+import Year_page from './page/year_page';
+import Allcomment_page from './page/all_noti_comment_page'
+import AllcommentStaff_page from './page/all_noti_comment_staff_page'
 const App = () => {
     const [loading, setloading] = useState(false);
 
@@ -72,13 +80,21 @@ const App = () => {
                     <Route path="/staff/ShEditSunsholar/:id" component={editShscholar} />
                     <Route path="/staff/editDataShscholar/:id" component={editDataShscholar} />
                     <Route path="/staff/NewResultpage" component={Newresult} />
-      
                     <Route path="/followpage" component={Follow} />
                     <Route path="/staff/resultpagestaff" component={Result_pagestaff} />
-                    <Route path="/staff/editresult/:id" component={editrelt}/>
+                    <Route path="/staff/editresult/:id" component={editrelt} />
                     <Route path="/userinfo/:id" component={userinfo} />
+                    <Route path="/userinfostaff/:id" component={userinfostaff} />
+                    <Route path="/allResult_forthis_agen/:id" component={agen_tag_page} />
+                    <Route path="/allResult_forthis_Type/:id" component={Typepage} />
+                    <Route path="/allResult_forthis_year/:id" component={Yearpage} />
+                    <Route path="/AllAgency" component={Agency_page} />
+                    <Route path="/AllType" component={Type_page} />
+                    <Route path="/AllYear" component={Year_page} />
+                    <Route path="/allnotification" component={Allcomment_page} />
+                    <Route path="/allnotificationStaff" component={AllcommentStaff_page} />
 
-                    
+
                 </Switch>
             </Router>
         ]

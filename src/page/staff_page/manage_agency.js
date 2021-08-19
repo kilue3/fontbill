@@ -10,6 +10,17 @@ import NavBar from "../../component/structure_global/navbar";
 const title = 'หน่วยงานทุนการศึกษา - ระบบผู้ดูแล';
 
 const ManageAgency = () => {
+    const session = {
+        id: localStorage.getItem('id'),
+        fname: localStorage.getItem('fname'),
+        lname: localStorage.getItem('lname'),
+        status: localStorage.getItem('status')
+    }
+    const [ses, setSes] = useState(session);
+    if (ses.status == "นักเรียน") {
+        window.location.assign("/");
+
+    }
 
     /////////////////////////// show agency ///////////////
     const [AgenShow, setAgen] = useState([]);
@@ -123,7 +134,7 @@ const ManageAgency = () => {
                             </nav>
                             <Card className="CardHeaderStyle">
                                 <h5 style={{ margin: '0px' }}>
-                                <img className="header-1-Icon" src="https://tzs-global.com/website_factor-image/button_icon/work.png" />
+                                    <img className="header-1-Icon" src="https://tzs-global.com/website_factor-image/button_icon/work.png" />
                                     หน่วยงานทุนการศึกษา
                                 </h5>
                             </Card>
@@ -150,8 +161,8 @@ const ManageAgency = () => {
                                         <div style={{ maxWidth: "300px" }} align="left">
                                             <Button className="Button-Style" block color="success" size="md" >
                                                 <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/save_white.png" />
-                                                    บันทึกข้อมูล
-                                                </Button>
+                                                บันทึกข้อมูล
+                                            </Button>
                                         </div>
                                     </Form>
                                 </div>
@@ -165,49 +176,51 @@ const ManageAgency = () => {
                                     หน่วยงานทุนการศึกษา
                                 </h6>
                                 <div className="borderline" />
+                                {AgenShow == "" ?
 
-                                <div className="NotFoundTxtInBox">
-                                    <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/error_outline_danger.png" />
-                                    ไม่พบข้อมูล
-                                </div>
-                                
-                                <div className="EdgeRow-1">
-                                    <Row>
-                                        {AgenShow.map((agen) => {
+                                    <div className="NotFoundTxtInBox">
+                                        <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/error_outline_danger.png" />
+                                        ไม่พบข้อมูล
+                                    </div>
+                                    :
+                                    <div className="EdgeRow-1">
+                                        <Row>
+                                            {AgenShow.map((agen) => {
 
-                                            return (
-                                                <>
-                                                    <div className="col-12 col-sm-6 col-lg-6 col-BoxContentSetting">
+                                                return (
+                                                    <>
+                                                        <div className="col-12 col-sm-6 col-lg-6 col-BoxContentSetting">
 
-                                                        <div key=""  >
-                                                            <Card className="CardBackground-2">
-                                                                <a href="#">
-                                                                    <CardHeader className="" style={{ background: "#dadce0", borderRadius: "10px", borderBottom: "0px" }}>
-                                                                        <h6 className="text-dark" style={{ margin: '0px' }}>
-                                                                            <b>{agen.agen_name}</b>
-                                                                        </h6>
-                                                                    </CardHeader>
-                                                                </a>
-                                                                <CardBody className="text-secondary" style={{ padding: "10px" }}>
-                                                                    <div align="left">
-                                                                        <Button className="Button-Style" color="secondary" size="sm" onClick={() => delectAgen(agen.agen_id)} style={{ borderTopRightRadius: "0px", borderBottomRightRadius: "0px", marginBottom: "0px" }} href="" >
-                                                                            <img className="Button-icon" style={{ height: "17px", width: "auto" }} src="https://tzs-global.com/website_factor-image/button_icon/delete_forever_white.png" />
-                                                                        </Button>
-                                                                        <Button className="Button-Style" outline color="secondary" size="sm" onClick={() => delectAgen(agen.agen_id)} style={{ borderTopLeftRadius: "0px", borderBottomLeftRadius: "0px", marginBottom: "0px" }} href="" >
-                                                                            ลบข้อมูล
-                                                                        </Button>
-                                                                    </div>
-                                                                </CardBody>
-                                                            </Card>
+                                                            <div key=""  >
+                                                                <Card className="CardBackground-2">
+                                                                    <a href="#">
+                                                                        <CardHeader className="" style={{ background: "#dadce0", borderRadius: "10px", borderBottom: "0px" }}>
+                                                                            <h6 className="text-dark" style={{ margin: '0px' }}>
+                                                                                <b>{agen.agen_name}</b>
+                                                                            </h6>
+                                                                        </CardHeader>
+                                                                    </a>
+                                                                    <CardBody className="text-secondary" style={{ padding: "10px" }}>
+                                                                        <div align="left">
+                                                                            <Button className="Button-Style" color="secondary" size="sm" onClick={() => delectAgen(agen.agen_id)} style={{ borderTopRightRadius: "0px", borderBottomRightRadius: "0px", marginBottom: "0px" }} href="" >
+                                                                                <img className="Button-icon" style={{ height: "17px", width: "auto" }} src="https://tzs-global.com/website_factor-image/button_icon/delete_forever_white.png" />
+                                                                            </Button>
+                                                                            <Button className="Button-Style" outline color="secondary" size="sm" onClick={() => delectAgen(agen.agen_id)} style={{ borderTopLeftRadius: "0px", borderBottomLeftRadius: "0px", marginBottom: "0px" }} href="" >
+                                                                                ลบข้อมูล
+                                                                            </Button>
+                                                                        </div>
+                                                                    </CardBody>
+                                                                </Card>
+                                                            </div>
+
                                                         </div>
+                                                    </>
+                                                );
 
-                                                    </div>
-                                                </>
-                                            );
-
-                                        })}
-                                    </Row>
-                                </div>
+                                            })}
+                                        </Row>
+                                    </div>
+                                }
                             </CardBody>
                         </Card>
 

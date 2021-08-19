@@ -4,7 +4,6 @@ import { Container, Card, Row, Col,CardBody } from "reactstrap";
 import { Helmet } from "react-helmet";
 import NavBar from "../component/structure_global/navbar";
 import Footer from "../component/structure_global/footer";
-import Scholarship_Box from "../component/scholarship_box";
 import RightContent from "../component/structure_global/right_content";
 import axios from 'axios';
 import AllSchollar from './sch_main-readAll';
@@ -59,17 +58,17 @@ const AllSchollarpage = (props) => {
                             <CardBody className="CardBody-WithBoxContent">
                             มีทุนการศึกษาทั้งหมด XX รายการ
                                 <div className="borderline" />
-
+                                {Mscholar == "" ?
                                 <div className="NotFoundTxtInBox">
                                     <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/error_outline_danger.png" />
                                     ไม่พบข้อมูล
-                                </div>
+                                </div>:
                                 <div className="EdgeRow-1">
                                     <Row>
                                         <AllSchollar/>
                                     </Row>
                                 </div>
-                                
+}
                             </CardBody>
                         </div>
                     </Col>

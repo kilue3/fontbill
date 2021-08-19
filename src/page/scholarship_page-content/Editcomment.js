@@ -77,8 +77,8 @@ const Edit = ({ cm }) => {
         };
     }
     return (
-        <div>
-            <Button color="link" style={{ margin: '0px', padding: '0px' }} onClick={toggle}>แก้ไข</Button>
+        <div style={{ marginTop: '-20px', marginLeft: '130px' }}>
+            <Button color="link" style={{ margin: '0px', padding: '0px', fontSize: "12px", color: "gray" }} onClick={toggle}>แก้ไข</Button>
             <Form align="right" >
 
                 <Modal isOpen={modal} toggle={toggle} className={className}>

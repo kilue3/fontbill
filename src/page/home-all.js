@@ -8,7 +8,7 @@ import Resultbox from "../component/sch_notify_box";
 import Scholarship_Box from "../component/scholarship_box";
 import RightContent from "../component/structure_global/right_content";
 import axios from 'axios';
-const title = 'หน้าแรก';
+const title = 'ระบบการให้บริการสารสนเทศทุนการศึกษา ฯ';
 
 
 const Home = (props) => {
@@ -65,12 +65,12 @@ const Home = (props) => {
                             <CardBody className="CardBody-WithBoxContent">
                                 <a href="/allscholarship">ดูทั้งหมด>></a>
                                 <div className="borderline" />
-
+                                {Mscholar == "" ?
                                 <div className="NotFoundTxtInBox">
                                     <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/error_outline_danger.png" />
                                     ไม่พบข้อมูล
                                 </div>
-
+:
                                 <div className="EdgeRow-1">
                                     <Row>
                                         {Mscholar.map((scholar) => {
@@ -83,7 +83,7 @@ const Home = (props) => {
                                         })}
                                     </Row>
                                 </div>
-
+}
                             </CardBody>
                         </div>
 
@@ -91,20 +91,19 @@ const Home = (props) => {
                             <Card className="CardHeaderStyle-Home">
                                 <h5 style={{ margin: '0px' }}>
                                     <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/campaign.png" />
-                                    ประกาศผลทุนการศึกษา
-                                </h5>
+                                    ประกาศรายชื่อผู้ได้รับทุนการศึกษา                                </h5>
                             </Card>
                         </Card>
                         <div className="CardHeaderDetail">
                             <CardBody className="CardBody-WithBoxContent">
                                 <a href="/allScholarshipNotify">ดูทั้งหมด>></a>
                                 <div className="borderline" />
-
+                                {Resultboxs == "" ?
                                 <div className="NotFoundTxtInBox">
                                     <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/error_outline_danger.png" />
                                     ไม่พบข้อมูล
                                 </div>
-
+:
                                 <div className="EdgeRow-1">
                                     <Row>
                                         {Resultboxs.map((result) => {
@@ -117,7 +116,7 @@ const Home = (props) => {
                                         })}
                                     </Row>
                                 </div>
-
+}
                             </CardBody>
                         </div>
                     </Col>

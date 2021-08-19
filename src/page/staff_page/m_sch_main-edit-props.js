@@ -4,12 +4,15 @@ import { Container, Card, CardBody, Row, Col, Form, FormGroup, Label, Input, But
 import { Helmet } from "react-helmet";
 import axios from 'axios';
 import Swal from 'sweetalert2';
-
+import Editimg from './modal/edit_scholar_img';
 import NavBar from "../../component/structure_global/navbar";
 
 const title = 'เเก้ไขข้อมูลทุนการศึกษา - ระบบผู้ดูแล';
 
 const Medit = ({ id }) => {
+
+
+
     ///////////////////////////agen//////////////////////////
     const [Mscholar, setMscholar] = useState([]);
 
@@ -37,7 +40,11 @@ const Medit = ({ id }) => {
         lname: localStorage.getItem('lname'),
         status: localStorage.getItem('status')
     }
+    const [ses, setSes] = useState(session);
+    if (ses.status == "นักเรียน") {
+        window.location.assign("/");
 
+    }
 
 
     const inputdata = (event) => {
@@ -149,6 +156,10 @@ const Medit = ({ id }) => {
                                 </h6>
                                 <div className="borderline" />
                                 <div align="center">
+                                    <img src={Mscholar.m_img} alt="รูปทุนหลัก" style={{ height: '300px', width: '350' }} />
+                                    <br />
+                                    <Editimg msch_id={id} />
+
                                     <form style={{ maxWidth: '700px' }} onSubmit={saveStudent} >
                                         <FormGroup align="left">
                                             <Label for="ssch_name_main">ชื่อทุนการศึกษา</Label>

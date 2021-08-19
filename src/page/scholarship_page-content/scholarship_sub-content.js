@@ -205,6 +205,15 @@ const Subpage = ({ id }) => {
                 })
         }
     };
+
+    const showallcomment = async () => {
+        axios.get("http://localhost:8080/Mback/public/commentfindall/" + id)
+            .then((response) => {
+                setcommentstudent(response.data);
+
+            }, []);
+    };
+
     return (
         <>
             <Helmet>
@@ -214,8 +223,7 @@ const Subpage = ({ id }) => {
 
             <Container className="container-fluid TZS-Container">
                 <Row>
-
-                    <Col lg="3" className="col-ContentSetting">
+                    <Col className="col-ContentSetting col-12 col-sm-6 col-lg-3">
                         {status.status == "นักเรียน" ?
                             fmessage.message == "none" ?
                                 <Button className="Button-Style" color="danger" size="lg" block style={{ marginBottom: "10px" }} onClick={() => Unfollow(fmessage.nid)} >ยกเลิกติดตาม</Button>
@@ -226,13 +234,14 @@ const Subpage = ({ id }) => {
                             <CardBody className="">
                                 <h6>
                                     <img className="header-1-Icon" src="https://tzs-global.com/website_factor-image/button_icon/save_alt.png" />
-                                    ไฟล์ที่เกี่ยวข้อง
+                                    เอกสารที่เกี่ยวข้อง
                                 </h6>
                                 <div className="borderline" />
                                 {Subscholar.file == "" ?
-                                    <h6 style={{ color: "#FF0000", marginBottom: "0px" }}>
-                                        ไม่มีไฟล์เอกสารสำหรับทุนนี้
-                                    </h6>
+                                    <div className="NotFoundTxtInBox" style={{ marginBottom: '10px' }}>
+                                        <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/error_outline_danger.png" />
+                                        ไม่พบเอกสาร
+                                    </div>
                                     :
                                     <Button className="Button-Style" color="secondary" href={Subscholar.file} block>ดาวน์โหลดไฟล์เอกสาร</Button>
 
@@ -242,7 +251,7 @@ const Subpage = ({ id }) => {
                         <RightContent />
                     </Col>
 
-                    <Col lg="9" className="col-ContentSetting">
+                    <Col className="col-ContentSetting col-12 col-sm-6 col-lg-6">
 
                         <Card className="HeaderShadow">
                             <nav aria-label="breadcrumb">
@@ -263,11 +272,11 @@ const Subpage = ({ id }) => {
                             <CardBody className="CardBody">
                                 ใน {Mscholar.name}
                                 <div className="borderline" />
-                                <Button outline color="success" className="Button-Style mr-1">{Mscholar.Tname}</Button>
+                                <Button outline color="success" href={"/allResult_forthis_Type/" + Mscholar.type} className="Button-Style mr-1">{Mscholar.Tname}</Button>
 
-                                <Button outline color="info" className="Button-Style mr-1">{Mscholar.aname}</Button>
+                                <Button outline color="info" href={"/allResult_forthis_agen/" + Mscholar.ag} className="Button-Style mr-1">{Mscholar.aname}</Button>
 
-                                <Button outline color="warning" className="Button-Style mr-1">ปีงบประมาณ {Mscholar.year}</Button>
+                                <Button outline color="warning" href={"/allResult_forthis_year/" + Mscholar.year} className="Button-Style mr-1">ปีงบประมาณ {Mscholar.year}</Button>
                             </CardBody>
                         </div>
 
@@ -294,7 +303,17 @@ const Subpage = ({ id }) => {
                                 </div>
                             </CardBody>
                         </Card>
-
+                        <Card className="CardBackground-1">
+                            <CardBody className="">
+                                <h5>
+                                    เว็บหลักทุน
+                                </h5>
+                                <div className="borderline" />
+                                <div className="text-muted">
+                                    <a href={Subscholar.web}>{Subscholar.web}</a>
+                                </div>
+                            </CardBody>
+                        </Card>
                         <Card className="CardBackground-1">
                             <CardBody className="">
                                 <h5>
@@ -343,84 +362,92 @@ const Subpage = ({ id }) => {
                                 </div>
                             </CardBody>
                         </Card>
+                    </Col>
 
-                        <Card className="CardBackground-1" style={{ margin: '20px 0px 0px 0px', borderRadius: '10px 10px 0px 0px', borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}>
+                    <Col className="col-ContentSetting col-12 col-sm-6 col-lg-3">
+                        <Card className="CardBackground-1" style={{ margin: '0px 0px 0px 0px', borderRadius: '10px 10px 0px 0px', borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}>
                             <CardBody className="">
-                                <h5 style={{ margin: '0px' }}>
+                                <h6>
                                     <img className="header-1-Icon" src="https://tzs-global.com/website_factor-image/button_icon/question_answer.png" />
                                     ความคิดเห็น
-                                </h5>
+                                </h6>
                                 <div className="borderline" />
 
                                 {commentsinfostudent == "" ?
                                     <div className="text-danger" align="center" style={{ marginTop: '50px', marginBottom: '50px' }}>
-                                        <h5 style={{ margin: '0px' }}>
-                                            <img className="header-1-Icon" src="https://tzs-global.com/website_factor-image/button_icon/error_outline_danger.png" />
-                                        ไม่มีความคิดเห็น
-                                    </h5>
+                                        <div className="NotFoundTxtInBox">
+                                            <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/error_outline_danger.png" />
+                                            ไม่มีความคิดเห็น
+                                        </div>
                                     </div> : commentsinfostudent.map((cm) => {
+
                                         return (
-                                            < div className="Comment" key={cm.user_id}>
-                                                <Card className="CardBackground-2">
-                                                    <CardBody className="CardBody-WithBoxContent">
-                                                        <h5 style={{ marginBottom: '5px' }}>
-                                                            <img style={{ borderRadius: "100%", border: "1px solid black", height: "40px", width: "40px", marginRight: "10px" }} src={cm.s_img || cm.st_img} />
+                                            < div className="Comment" key={cm.user_id} style={{ marginTop: '10px' }}>
+                                                <img style={{ borderRadius: "100%", border: "1px solid black", height: "30px", width: "30px", marginRight: "10px" }} src={cm.s_img || cm.st_img} />
+                                                <div style={{ marginTop: '-30px', marginLeft: '35px' }}>
+                                                    <Card className="CardBackground-2" style={{ minWidth: '200px' }}>
+                                                        <CardBody className="CardBody" style={{ padding: '10px', paddingLeft: '15px' }}>
 
-                                                            {cm.s_fname}{" "}{cm.s_lname} {cm.st_fname}{" "}{cm.st_lname}
-                                                        </h5>
-                                                        <right><span style={{ color: "gray", fontSize: "15px", marginLeft: "48px" }}> {cm.Cm_Time}</span></right>
-                                                        <hr />
+                                                            <div style={{ marginBottom: '5px' }}>
 
+                                                                {cm.s_fname}{" "}{cm.s_lname} {cm.st_fname}{" "}{cm.st_lname}
+                                                            </div>
 
-                                                        <div className="text-muted" style={{ marginBottom: '5px' }}>
-                                                            {cm.cm_dt}                                                </div>
-
-                                                        {" "}
+                                                            <div className="text-muted" style={{}}>
+                                                                {cm.cm_dt}
+                                                            </div>
+                                                        </CardBody>
+                                                        {/* /////////reply/////////////////////// */}
+                                                    </Card>
+                                                    <div style={{ fontSize: "12px" }}>
+                                                        <span style={{ color: "gray" }}> {cm.Cm_Time}</span>
                                                         {cm.user_id != status.id &&//////ถุ้าcmid ไม่ตรงกับ Local sto ไม่สามารถลบได้
                                                             <Reply cm={cm} />
                                                         }
-
-
+                                                        {/* <Button color="link" style={{ margin: '0px', padding: '0px' }}>
+                                                                    ตอบกลับ
+                                                        </Button> */}
                                                         {" "}
-                                                        {cm.user_id == status.id &&//////ถุ้าcmid ไม่ตรงกับ Local sto ไม่สามารถลบได้
-                                                            <Button color="link" style={{ margin: '0px', padding: '0px' }} onClick={() => delectComment(cm.cm_id)} >ลบ</Button>
-                                                        }
                                                         {cm.user_id == status.id &&
                                                             <Edit cm={cm} />
                                                         }
+                                                        {cm.user_id == status.id &&//////ถุ้าcmid ไม่ตรงกับ Local sto ไม่สามารถลบได้
+                                                            <div style={{ marginTop: '-20px', marginLeft: '165px' }}>
+                                                                <Button color="link" style={{ margin: '0px', padding: '0px', fontSize: "12px", color: "gray" }} onClick={() => delectComment(cm.cm_id)} >ลบ</Button>
+                                                            </div>
+                                                        }
+                                                    </div>
 
 
-                                                    </CardBody>
-                                                    {/* /////////reply/////////////////////// */}
-                                                </Card>
+
+                                                </div>
 
                                             </div>
                                         );
                                     })
-                                }
 
+                                }
+                                <br />
+                                <Button color="link" style={{ margin: '0px', padding: '0px', fontSize: "12px", color: "gray" }} onClick={showallcomment} >แสดงข้อมูลทั้งหมด</Button>
                             </CardBody>
                         </Card>
+
+
                         {status.status != null &&
                             <Card className="CardBackground-1" style={{ borderRadius: '0px 0px 10px 10px' }}>
                                 <CardBody className="">
-
                                     <Form align="right" onSubmit={Postcomment}>
-                                        <FormGroup align="left">
-                                            <Label for="more_detail">แสดงความคิดเห็น</Label>
-                                            <h6 className="text-danger" style={{}} >
-
-                                            </h6>
+                                        <FormGroup style={{ marginBottom: '5px' }}>
+                                            {/* <h6 className="text-danger" style={{}} >
+                                                <img className="header-1-Icon" src="https://tzs-global.com/website_factor-image/button_icon/error_outline_danger.png" />
+                                                คุณกำลังตอบกลับ <b>ชื่อ1 นามสกุล1</b>
+                                            </h6> */}
                                             <Input type="textarea" name="detail" id="more_detail" placeholder="เขียนความคิดเห็นที่นี่" onChange={inputdata} />
                                         </FormGroup>
-                                        <div align="right">
-                                            <div style={{ maxWidth: "250px" }}>
-                                                <Button type="submit" className="Button-Style" block color="primary" size="md" >
-                                                    <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/send_white.png" />
-                                                ส่งความคิดเห็น
-                                            </Button>
-                                            </div>
-                                        </div>
+                                        <Button type="submit" className="Button-Style" block color="primary" size="md" >
+                                            <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/send_white.png" />
+                                            ส่งความคิดเห็น
+                                        </Button>
                                     </Form>
                                 </CardBody>
                             </Card>

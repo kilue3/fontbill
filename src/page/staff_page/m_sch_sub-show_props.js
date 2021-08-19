@@ -10,6 +10,17 @@ import NavBar from "../../component/structure_global/navbar";
 const title = 'ทุนการศึกษาย่อย - ระบบผู้ดูแล';
 
 const ShscholarShow = ({ id }) => {
+    const session = {
+        id: localStorage.getItem('id'),
+        fname: localStorage.getItem('fname'),
+        lname: localStorage.getItem('lname'),
+        status: localStorage.getItem('status')
+    }
+    const [ses, setSes] = useState(session);
+    if (ses.status == "นักเรียน") {
+        window.location.assign("/");
+
+    }
 
     const [ShscholarShow, setShscholarShow] = useState([]); //ดึงมาจาก Product api
 
@@ -102,7 +113,7 @@ const ShscholarShow = ({ id }) => {
                                                 <div className="text-danger" align="center" style={{ marginTop: '200px', marginBottom: '200px' }}>
                                                     <h5 style={{ margin: '0px' }}>
                                                         <img className="" style={{ height: "60px", width: "auto" }} src="https://tzs-global.com/website_factor-image/button_icon/error_outline_danger.png" />
-                                                        <br/>ไม่มีข้อมูลที่จะแสดง
+                                                        <br />ไม่มีข้อมูลที่จะแสดง
                                                     </h5>
                                                 </div>
                                             </div>
@@ -114,7 +125,7 @@ const ShscholarShow = ({ id }) => {
 
                                                         <div key={ShscholarShow.msch_id}  >
                                                             <Card className="CardBackground-2 Hover-CardBackground-2">
-                                                                <a href={"/scholarshipMain/" + ShscholarShow.msch_id}>
+                                                                <a href={"/scholarshipSub/" + ShscholarShow.ssch_id}>
                                                                     <CardHeader className="" style={{ background: "#dadce0", borderRadius: "10px", borderBottom: "0px" }}>
                                                                         <h6 className="text-dark" style={{ margin: '0px' }}>
                                                                             <b>{ShscholarShow.ssch_name}</b>
@@ -124,23 +135,23 @@ const ShscholarShow = ({ id }) => {
                                                                 <CardBody className="text-secondary" style={{ padding: "10px" }}>
                                                                     <h6 style={{ margin: '0px' }}>
                                                                         <img className="contentIcon" src="https://tzs-global.com/website_factor-image/button_icon/restore.png" />
-                                                                            ช่วงเวลาเพิ่มทุน : {ShscholarShow.timeadd}
+                                                                        ช่วงเวลาเพิ่มทุน : {ShscholarShow.timeadd}
                                                                     </h6>
                                                                     <h6 style={{ margin: '0px' }}>
                                                                         <img className="contentIcon" src="https://tzs-global.com/website_factor-image/button_icon/receipt_long.png" />
-                                                                            ช่วงเวลารับสมัครทุน : {ShscholarShow.ssch_dopen} ถึง {ShscholarShow.ssch_dclose}
+                                                                        ช่วงเวลารับสมัครทุน : {ShscholarShow.ssch_dopen} ถึง {ShscholarShow.ssch_dclose}
                                                                     </h6>
                                                                     <h6 style={{ margin: '0px' }}>
                                                                         <img className="contentIcon" src="https://tzs-global.com/website_factor-image/button_icon/person.png" />
-                                                                            จำนวนรับสมัครทุน : {ShscholarShow.ssch_amount}
+                                                                        จำนวนรับสมัครทุน : {ShscholarShow.ssch_amount}
                                                                     </h6>
                                                                     <h6 style={{ margin: '0px' }}>
                                                                         <img className="contentIcon" src="https://tzs-global.com/website_factor-image/button_icon/monetization_on.png" />
-                                                                            งบประมาณต่อทุน : {ShscholarShow.Budget_per_capital}
+                                                                        งบประมาณต่อทุน : {ShscholarShow.Budget_per_capital}
                                                                     </h6>
                                                                     <h6 style={{ margin: '0px' }}>
                                                                         <img className="contentIcon" src="https://tzs-global.com/website_factor-image/button_icon/monetization_on.png" />
-                                                                            งบประมาณทั้งหมด : {ShscholarShow.ssch_budget}
+                                                                        งบประมาณทั้งหมด : {ShscholarShow.ssch_budget}
                                                                     </h6>
                                                                     <div className="borderline" />
                                                                     <div align="left">
@@ -149,7 +160,7 @@ const ShscholarShow = ({ id }) => {
                                                                         </Button>
                                                                         <Button className="Button-Style" outline color="secondary" size="sm" style={{ borderTopLeftRadius: "0px", borderBottomLeftRadius: "0px", marginBottom: "0px" }} href={"/staff/editDataShscholar/" + ShscholarShow.ssch_id} >
                                                                             แก้ไขข้อมูล
-                                                                            </Button>
+                                                                        </Button>
                                                                     </div>
                                                                     <div className="borderline" />
                                                                     <div align="left">
@@ -158,7 +169,7 @@ const ShscholarShow = ({ id }) => {
                                                                         </Button>
                                                                         <Button className="Button-Style" outline color="secondary" size="sm" style={{ borderTopLeftRadius: "0px", borderBottomLeftRadius: "0px", marginBottom: "0px" }} onClick={() => delectSubSch(ShscholarShow.ssch_id)} >
                                                                             ลบทุนการศึกษา
-                                                                            </Button>
+                                                                        </Button>
                                                                     </div>
                                                                 </CardBody>
                                                             </Card>

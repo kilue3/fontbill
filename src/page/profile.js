@@ -52,7 +52,7 @@ const Profile = () => {
                     setInfo(response.data);
                 });
         } else if (ses.status == "อาจารย์") {
-            axios.get("http://localhost:8080/Mback/public/profilestaff/" + ses.id)
+            axios.get("http://localhost:8080/Mback/public/profilestaffs/" + ses.id)
                 .then((response) => {
                     setInfo(response.data);
                 });

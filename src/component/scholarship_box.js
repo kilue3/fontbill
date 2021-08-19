@@ -3,35 +3,36 @@ import axios from 'axios';
 import { Card, Button, CardBody, CardHeader } from "reactstrap";
 
 const Scholarship_Box = ({ id }) => {
-    const initMscholar = {
-        id: "",
-        content: "",
-        name: "",
-    }
-    const [Mscholar, setMscholar] = useState(initMscholar);
+   
+    const [Mscholar, setMscholar] = useState([]);
     useEffect(() => {
         axios.get("http://localhost:8080/Mback/public/findMshcholarship/" + id)
             .then((response) => {
                 setMscholar(response.data);
             });
     }, [id]);
-
-    return (
+      return (
         <>
+                <div style={{  }}>
+                    <img src={Mscholar.m_img} alt="" style={{ borderTopLeftRadius: '10px', borderTopRightRadius: '10px', width: '100%', marginBottom: '-10px' }}/>
+                </div>
                 <Card className="CardBackground-2" style={{ minHeight: '200px' }}>
                     <a href={"/scholarshipMain/" + Mscholar.id}>
                         <CardHeader className="" style={{ background: "#dadce0", borderRadius: "10px", borderBottom: "0px" }}>
                             <h6 className="text-dark" style={{ margin: '0px' }}>
-                                <b>{Mscholar.name}</b>
+                                <b>{Mscholar.name} ปี {Mscholar.year}</b>
                             </h6>
                         </CardHeader>
                     </a>
                     <CardBody className="text-secondary" style={{ padding: "10px" }}>
-                        {Mscholar.content}
+                    <div className="borderline" />
+                       {Mscholar.content}
                         <div className="borderline" />
                         <Button href={"/scholarshipMain/" + Mscholar.id} className="Button-Style" outline >อ่านทั้งหมด</Button>
                     </CardBody>
                 </Card>
+
+              
         </>
     )
 }

@@ -10,6 +10,18 @@ import NavBar from "../../component/structure_global/navbar";
 const title = 'อนุมัติผู้ใช้งาน - ระบบผู้ดูแล';
 
 const ApproveUser = () => {
+    const session = {
+        id: localStorage.getItem('id'),
+        fname: localStorage.getItem('fname'),
+        lname: localStorage.getItem('lname'),
+        status: localStorage.getItem('status')
+    }
+    const [ses, setSes] = useState(session);
+    if (ses.status == "นักเรียน") {
+        window.location.assign("/");
+
+    }
+
     const [Userlist, setUserlist] = useState([]);
     // ใช้ useState เก็บ สร้าง Userlist
     const updateUserlist = () => {
@@ -49,7 +61,7 @@ const ApproveUser = () => {
                             </nav>
                             <Card className="CardHeaderStyle">
                                 <h5 style={{ margin: '0px' }}>
-                                <img className="header-1-Icon" src="https://tzs-global.com/website_factor-image/button_icon/assignment_ind.png" />
+                                    <img className="header-1-Icon" src="https://tzs-global.com/website_factor-image/button_icon/assignment_ind.png" />
                                     อนุมัติผู้ใช้งาน
                                 </h5>
                             </Card>
@@ -64,80 +76,82 @@ const ApproveUser = () => {
                             <CardBody className="CardBody-WithBoxContent">
                                 ผู้ใช้ที่ส่งคำขออนุมัติ
                                 <div className="borderline" />
+                                {Userlist == "" ?
 
-                                <div className="NotFoundTxtInBox">
-                                    <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/error_outline_danger.png" />
-                                    ไม่พบข้อมูล
-                                </div>
-                                
-                                <div className="EdgeRow-1">
-                                    <Row>
-                                        {Userlist.map((user) => {
-                                            //   ต้องใช้ key กับ id
-                                            return (
-                                                <div className="col-12 col-sm-6 col-lg-6 col-BoxContentSetting">
-                                                    <div key={user.user_id}  >
-                                                        <Card className="CardBackground-2">
-                                                            <CardBody className="">
-                                                                <Row>
-                                                                    <div className="col-9">
-                                                                        <h6 className="text-primary" style={{ margin: '0px' }}>
-                                                                            <a href={"/scholarshipMain/" + user.user_id}>
-                                                                                {user.usertitle}{" "}{user.username}{" "}{user.userlastname}
-                                                                            </a>
-                                                                        </h6>
-                                                                    </div>
-                                                                    <div className="col-3">
-                                                                        <div align="right" style={{ marginRight: "-20px", marginTop: "-20px" }}>
+                                    <div className="NotFoundTxtInBox">
+                                        <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/error_outline_danger.png" />
+                                        ไม่พบข้อมูล
+                                    </div>
+                                    :
+                                    <div className="EdgeRow-1">
+                                        <Row>
+                                            {Userlist.map((user) => {
+                                                //   ต้องใช้ key กับ id
+                                                return (
+                                                    <div className="col-12 col-sm-6 col-lg-6 col-BoxContentSetting">
+                                                        <div key={user.user_id}  >
+                                                            <Card className="CardBackground-2">
+                                                                <CardBody className="">
+                                                                    <Row>
+                                                                        <div className="col-9">
+                                                                            <h6 className="text-primary" style={{ margin: '0px' }}>
+                                                                                <a href={"/scholarshipMain/" + user.user_id}>
+                                                                                    {user.usertitle}{" "}{user.username}{" "}{user.userlastname}
+                                                                                </a>
+                                                                            </h6>
+                                                                        </div>
+                                                                        <div className="col-3">
+                                                                            <div align="right" style={{ marginRight: "-20px", marginTop: "-20px" }}>
+                                                                                <a href={"/staff/approve_user_detail/" + user.user_id}>
+
+                                                                                    {user.userstatus == "อาจารย์" ?
+                                                                                        <Button className="Button-Style" color="primary" style={{ paddingRight: "6px", borderTopLeftRadius: "0px", borderBottomRightRadius: "0px" }}>
+                                                                                            {user.userstatus}
+                                                                                            <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/assignment_ind_white.png" style={{ marginRight: "0px", marginLeft: "5px" }} />
+                                                                                        </Button>
+                                                                                        :
+                                                                                        <Button className="Button-Style" color="success" style={{ paddingRight: "6px", borderTopLeftRadius: "0px", borderBottomRightRadius: "0px" }}>
+                                                                                            {user.userstatus}
+                                                                                            <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/assignment_ind_white.png" style={{ marginRight: "0px", marginLeft: "5px" }} />
+                                                                                        </Button>
+                                                                                    }
+
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </Row>
+                                                                    <div className="borderline" />
+                                                                    <h6 style={{ margin: '0px' }}>
+                                                                        <img className="contentIcon" src="https://tzs-global.com/website_factor-image/button_icon/email.png" />
+                                                                        {user.useremail}
+                                                                    </h6>
+                                                                    <h6 style={{ margin: '0px' }}>
+                                                                        <img className="contentIcon" src="https://tzs-global.com/website_factor-image/button_icon/restore.png" />
+                                                                        {user.usertel}
+                                                                    </h6>
+                                                                    <div className="borderline" />
+                                                                    <div align="right">
+
+                                                                        <div align="center">
                                                                             <a href={"/staff/approve_user_detail/" + user.user_id}>
 
-                                                                                {user.userstatus == "อาจารย์" ?
-                                                                                    <Button className="Button-Style" color="primary" style={{ paddingRight: "6px", borderTopLeftRadius: "0px", borderBottomRightRadius: "0px" }}>
-                                                                                        {user.userstatus}
-                                                                                        <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/assignment_ind_white.png" style={{ marginRight: "0px", marginLeft: "5px" }} />
-                                                                                    </Button>
-                                                                                    :
-                                                                                    <Button className="Button-Style" color="success" style={{ paddingRight: "6px", borderTopLeftRadius: "0px", borderBottomRightRadius: "0px" }}>
-                                                                                        {user.userstatus}
-                                                                                        <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/assignment_ind_white.png" style={{ marginRight: "0px", marginLeft: "5px" }} />
-                                                                                    </Button>
-                                                                                }
-
+                                                                                <Button className="Button-Style" color="success" outline style={{ marginRight: "5px" }}>
+                                                                                    ดูรายละเอียด
+                                                                                </Button>
                                                                             </a>
+
                                                                         </div>
-                                                                    </div>
-                                                                </Row>
-                                                                <div className="borderline" />
-                                                                <h6 style={{ margin: '0px' }}>
-                                                                    <img className="contentIcon" src="https://tzs-global.com/website_factor-image/button_icon/email.png" />
-                                                                    {user.useremail}
-                                                                </h6>
-                                                                <h6 style={{ margin: '0px' }}>
-                                                                    <img className="contentIcon" src="https://tzs-global.com/website_factor-image/button_icon/restore.png" />
-                                                                    {user.usertel}
-                                                                </h6>
-                                                                <div className="borderline" />
-                                                                <div align="right">
-
-                                                                    <div align="center">
-                                                                        <a href={"/staff/approve_user_detail/" + user.user_id}>
-
-                                                                            <Button className="Button-Style" color="success" outline style={{ marginRight: "5px" }}>
-                                                                                ดูรายละเอียด
-                                                                            </Button>
-                                                                        </a>
 
                                                                     </div>
-
-                                                                </div>
-                                                            </CardBody>
-                                                        </Card>
+                                                                </CardBody>
+                                                            </Card>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            );
-                                        })}
-                                    </Row>
-                                </div>
+                                                );
+                                            })}
+                                        </Row>
+                                    </div>
+                                }
                             </CardBody>
                         </Card>
 

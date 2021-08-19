@@ -36,8 +36,6 @@ $RECYCLE.BIN/
 # Linux trash folder which might appear on any partition or disk
 .Trash-*
 
-node_modules/
-
 #-------------------------
 # Environment Files
 #-------------------------
@@ -127,3 +125,4 @@ nb-configuration.xml
 /phpunit*.xml
 /.phpunit.*.cache
 
+node_modules

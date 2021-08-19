@@ -9,11 +9,23 @@ import NavBar from "../../component/structure_global/navbar";
 const title = 'ประกาศทุนการศึกษา - ระบบผู้ดูแล';
 
 const Result_pagestaff = () => {
-    const [Mscholar, setMscholar] = useState([]);
+    const session = {
+        id: localStorage.getItem('id'),
+        fname: localStorage.getItem('fname'),
+        lname: localStorage.getItem('lname'),
+        status: localStorage.getItem('status')
+    }
+    const [ses, setSes] = useState(session);
+    if (ses.status == "นักเรียน") {
+        window.location.assign("/");
+
+    }
+
+    const [Resultlist, setResultlist] = useState([]);
     useEffect(() => {
         axios.get("http://localhost:8080/Mback/public/ResultAndUsername")
             .then((response) => {
-                setMscholar(response.data);
+                setResultlist(response.data);
             });
     }, []);
 
@@ -46,22 +58,22 @@ const Result_pagestaff = () => {
                                 <ol className="breadcrumb BreadcrumbStyle">
                                     <li className="breadcrumb-item"><a href="/home">หน้าหลัก</a></li>
                                     <li className="breadcrumb-item"><a href="/staff_page">หน้าหลักระบบผู้ดูแล</a></li>
-                                    <li className="breadcrumb-item active" aria-current="page">ประกาศทุนการศึกษา</li>
+                                    <li className="breadcrumb-item active" aria-current="page">ประกาศรายชื่อผู้ได้รับทุนการศึกษา</li>
                                 </ol>
                             </nav>
                             <Card className="CardHeaderStyle">
                                 <h5 style={{ margin: '0px' }}>
                                     <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/campaign.png" />
-                                    ประกาศทุนการศึกษา
+                                    ประกาศรายชื่อผู้ได้รับทุนการศึกษา
                                 </h5>
                             </Card>
                         </Card>
                         <div className="CardHeaderDetail">
                             <CardBody className="CardBody-WithBoxContent">
-                                จัดการเกี่ยวกับประกาศทุนการศึกษา
+                                จัดการเกี่ยวกับประกาศรายชื่อผู้ได้รับทุนการศึกษา
                                 <div className="borderline" />
                                 <Button className="Button-Style headerButton" outline color="info" size="sm" href="/staff/NewResultpage">
-                                    + เพิ่มประกาศทุนการศึกษา
+                                    + เพิ่มประกาศรายชื่อผู้ได้รับทุนการศึกษา
                                 </Button>
                             </CardBody>
                         </div>
@@ -70,65 +82,66 @@ const Result_pagestaff = () => {
                             <CardBody className="CardBody-WithBoxContent">
                                 ประกาศทุนการศึกษา
                                 <div className="borderline" />
+                                {Resultlist == "" ?
+                                    <div className="NotFoundTxtInBox">
+                                        <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/error_outline_danger.png" />
+                                        ไม่พบข้อมูล
+                                    </div>
+                                    :
+                                    <div className="EdgeRow-1">
+                                        <Row>
+                                            {Resultlist.map((scholar) => {
+                                                return (
+                                                    <>
+                                                        <div className="col-12 col-sm-6 col-lg-6 col-BoxContentSetting">
 
-                                <div className="NotFoundTxtInBox">
-                                    <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/error_outline_danger.png" />
-                                    ไม่พบข้อมูล
-                                </div>
-
-                                <div className="EdgeRow-1">
-                                    <Row>
-                                        {Mscholar.map((scholar) => {
-                                            return (
-                                                <>
-                                                    <div className="col-12 col-sm-6 col-lg-6 col-BoxContentSetting">
-
-                                                        <div key={scholar.result_id}  >
-                                                            <Card className="CardBackground-2" style={{ minHeight: '215px' }}>
-                                                                <a href={"/result/" + scholar.result_id}>
-                                                                    <CardHeader className="" style={{ background: "#dadce0", borderRadius: "10px", borderBottom: "0px" }}>
-                                                                        <h6 className="text-dark" style={{ margin: '0px' }}>
-                                                                            <Badge color="danger">ใหม่</Badge><b> {scholar.result_name}</b>
-                                                                        </h6>
-                                                                    </CardHeader>
-                                                                </a>
-                                                                <CardBody className="text-secondary" style={{ padding: "10px" }}>
-                                                                    <h6 style={{ margin: '0px' }}>
-                                                                        <img className="contentIcon" src="https://tzs-global.com/website_factor-image/button_icon/restore.png" />
+                                                            <div key={scholar.result_id}  >
+                                                                <Card className="CardBackground-2" style={{ minHeight: '215px' }}>
+                                                                    <a href={"/result/" + scholar.result_id}>
+                                                                        <CardHeader className="" style={{ background: "#dadce0", borderRadius: "10px", borderBottom: "0px" }}>
+                                                                            <h6 className="text-dark" style={{ margin: '0px' }}>
+                                                                                <Badge color="danger">ใหม่</Badge><b> {scholar.result_name}</b>
+                                                                            </h6>
+                                                                        </CardHeader>
+                                                                    </a>
+                                                                    <CardBody className="text-secondary" style={{ padding: "10px" }}>
+                                                                        <h6 style={{ margin: '0px' }}>
+                                                                            <img className="contentIcon" src="https://tzs-global.com/website_factor-image/button_icon/restore.png" />
                                                                             สร้างเมื่อ : {scholar.adate}
-                                                                    </h6>
-                                                            
-                                                                    <h6 style={{ margin: '0px' }}>
-                                                                        <img className="contentIcon" src="https://tzs-global.com/website_factor-image/button_icon/person.png" />
+                                                                        </h6>
+
+                                                                        <h6 style={{ margin: '0px' }}>
+                                                                            <img className="contentIcon" src="https://tzs-global.com/website_factor-image/button_icon/person.png" />
                                                                             เพิ่มโดย : {scholar.st_fname} {"  "} {scholar.st_lname}
-                                                                    </h6>
-                                                                    <div className="borderline" />
-                                                                    <div align="left">
-                                                                        {/* ------------------ */}
-                                                                        <Button className="Button-Style" color="secondary" size="sm" style={{ borderTopRightRadius: "0px", borderBottomRightRadius: "0px", marginBottom: "0px" }} href={"/staff/MainEditSunsholar/" + scholar.result_id} >
-                                                                            <img className="Button-icon" style={{ height: "18px", width: "auto" }} src="https://tzs-global.com/website_factor-image/button_icon/edit_white.png" />
-                                                                        </Button>
-                                                                        <Button className="Button-Style" outline color="secondary" size="sm" style={{ borderTopLeftRadius: "0px", borderBottomLeftRadius: "0px", marginBottom: "0px", marginRight: "5px" }} href={"/staff/editresult/" + scholar.result_id} >
-                                                                            แก้ไขข้อมูล
-                                                                        </Button>
-                                                                       
-                                                                        {/* ------------------ */}
-                                                                    </div>
-                                                                    <div className="borderline" />
-                                                                    <div align="left">
-                                                                        {/* ------------------ */}
-                                                                        <Delectresult scholar={scholar} />
-                                                                        {/* ------------------ */}
-                                                                    </div>
-                                                                </CardBody>
-                                                            </Card>
+                                                                        </h6>
+                                                                        <div className="borderline" />
+                                                                        <div align="left">
+                                                                            {/* ------------------ */}
+                                                                            <Button className="Button-Style" color="secondary" size="sm" style={{ borderTopRightRadius: "0px", borderBottomRightRadius: "0px", marginBottom: "0px" }} href={"/staff/MainEditSunsholar/" + scholar.result_id} >
+                                                                                <img className="Button-icon" style={{ height: "18px", width: "auto" }} src="https://tzs-global.com/website_factor-image/button_icon/edit_white.png" />
+                                                                            </Button>
+                                                                            <Button className="Button-Style" outline color="secondary" size="sm" style={{ borderTopLeftRadius: "0px", borderBottomLeftRadius: "0px", marginBottom: "0px", marginRight: "5px" }} href={"/staff/editresult/" + scholar.result_id} >
+                                                                                แก้ไขข้อมูล
+                                                                            </Button>
+
+                                                                            {/* ------------------ */}
+                                                                        </div>
+                                                                        <div className="borderline" />
+                                                                        <div align="left">
+                                                                            {/* ------------------ */}
+                                                                            <Delectresult scholar={scholar} />
+                                                                            {/* ------------------ */}
+                                                                        </div>
+                                                                    </CardBody>
+                                                                </Card>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </>
-                                            );
-                                        })}
-                                    </Row>
-                                </div>
+                                                    </>
+                                                );
+                                            })}
+                                        </Row>
+                                    </div>
+                                }
                             </CardBody>
                         </Card>
 

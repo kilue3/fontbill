@@ -6,12 +6,20 @@ import NavBar from "../component/structure_global/navbar";
 import Footer from "../component/structure_global/footer";
 import RightContent from "../component/structure_global/right_content";
 import Allresult from './sch_notify-readAll';
+import axios from 'axios';
+
 const title = 'ประกาศทุนการศึกษาทั้งหมด';
 
 
 const Allresutpage = () => {
+    const [Resultlist, setResultlist] = useState([]);
 
-
+    useEffect(() => {
+        axios.get("http://localhost:8080/Mback/public/allresultlist")
+            .then((response) => {
+                setResultlist(response.data);
+            });
+    }, []);
     return (
         <>
             <Helmet>
@@ -49,17 +57,17 @@ const Allresutpage = () => {
                             <CardBody className="CardBody-WithBoxContent">
                                 มีประกาศผลทุนการศึกษาทั้งหมด XX รายการ
                                 <div className="borderline" />
-
+                                {Resultlist == "" ?
                                 <div className="NotFoundTxtInBox">
                                     <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/error_outline_danger.png" />
                                     ไม่พบข้อมูล
                                 </div>
-
+:
                                 <div className="EdgeRow-1">
                                     <Row>
                                         <Allresult/>
                                     </Row>
-                                </div>
+                                </div>}
                             </CardBody>
                         </div>
                     </Col>

@@ -20,6 +20,11 @@ const ScholarshipCreateSub = ({ id }) => {
         status: localStorage.getItem('status')
     }
     const [ses, setSes] = useState(session);
+    if (ses.status == "นักเรียน") {
+        window.location.assign("/");
+
+    }
+
 
     //////mscholar////////////
     const initMscholar = {

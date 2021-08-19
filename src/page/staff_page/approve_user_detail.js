@@ -11,6 +11,17 @@ const title = 'อนุมัติผู้ใช้งาน - ระบบ�
 
 const ApproveUserDetail = ({ id }) => {
 
+    const session = {
+        id: localStorage.getItem('id'),
+        fname: localStorage.getItem('fname'),
+        lname: localStorage.getItem('lname'),
+        status: localStorage.getItem('status')
+    }
+    const [ses, setSes] = useState(session);
+    if (ses.status == "นักเรียน") {
+        window.location.assign("/");
+
+    }
 
     const [info, setInfo] = useState([]);
 
@@ -184,26 +195,26 @@ const ApproveUserDetail = ({ id }) => {
                                     </div>
                                 </Row>
                                 {info.status == "นักเรียน" ?
-                                <Row>
-                                    <div className="col-6" align="right">
-                                        ระดับชั้นการศึกษา :
-                                    </div>
-                                    <div className="col-6" align="left">
-                                        <b>
-                                            {info.class}
+                                    <Row>
+                                        <div className="col-6" align="right">
+                                            ระดับชั้นการศึกษา :
+                                        </div>
+                                        <div className="col-6" align="left">
+                                            <b>
+                                                {info.class}
 
-                                        </b>
-                                    </div>
-                                </Row>:<div></div>}
+                                            </b>
+                                        </div>
+                                    </Row> : <div></div>}
                                 <div className="borderline" />
                                 <Form >
                                     <div align="center">
                                         <Button className="Button-Style" color="success" outline onClick={(e, a) => saveUser(e, "Yes")} style={{ marginRight: "5px" }}>
                                             อนุมัติ
-                                    </Button>
+                                        </Button>
                                         <Button className="Button-Style" color="danger" outline onClick={(e, a) => saveUser(e, "NO")} outline>
                                             ปฎิเสธ
-                                    </Button>
+                                        </Button>
                                     </div>
                                 </Form>
                             </CardBody>
