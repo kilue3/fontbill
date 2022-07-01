@@ -4,7 +4,6 @@ import { Container, Card, CardBody, Row, Col, Button, FormGroup, Label, Input } 
 import { Helmet } from "react-helmet";
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { useDispatch } from 'react-redux';
 
 const title = 'เข้าสู่ระบบ';
 
@@ -66,16 +65,6 @@ const Login = () => {
                     localStorage.setItem('email', res.data.email);
                     localStorage.setItem('img', res.data.status);
 
-                    // dispatch({
-                    //     type: "ADD_ACTIVITY",
-                    //     payload: {
-                    //         id: ses.id,
-                    //         fname: ses.fname,
-                    //         lname: ses.lname,
-                    //         status: ses.status,
-
-                    //     },
-                    // });
 
 
                     Swal.fire(
@@ -165,7 +154,7 @@ const Login = () => {
                                 <div style={{ marginTop: '20px' }}>
                                     <Row>
                                         <Col md-6>
-                                            <Button color="link" size="md" className="Button-Style">ลืมรหัสผ่าน?</Button>
+                                            <Button color="link" href="/Resetpassword" size="md" className="Button-Style">ลืมรหัสผ่าน?</Button>
                                         </Col>
                                         <Col md-6>
                                             <Button color="success" size="lg" className="Button-Style" block>เข้าสู่ระบบ</Button>

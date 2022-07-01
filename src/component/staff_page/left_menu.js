@@ -84,24 +84,26 @@ const StaffLeftMenu = () => {
                             <Card className="CardBackground-1">
                                 <CardBody className="CardBody">
                                     <div className="borderline" style={{ margin: '0px' }}/>
-                                    <a href="#">
+                                    <a href="/staff/Manage_system_show">
                                         <div className="buttonMenu">
                                             <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/flags.png" />
                                             ชื่อและโลโก้
                                         </div>
                                     </a>
-                                    <a href="#">
-                                        <div className="buttonMenu">
-                                            <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/opacity.png" />
-                                            รูปแบบและสี
-                                        </div>
-                                    </a>
-                                    <a href="#">
+                                  
+                                    <a href="/staff/slideShow">
                                         <div className="buttonMenu">
                                             <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/photo.png" />
                                             รูปภาพสไลด์
                                         </div>
                                     </a>
+
+                                    <a href="/staff/ShowApprovalSubScholar">
+                                    <div className="buttonMenu">
+                                        <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/article.png" />
+                                        อนุมัติการแสดงทุนการศึกษา
+                                    </div>
+                                </a>
                                 </CardBody>
                             </Card>
                         }

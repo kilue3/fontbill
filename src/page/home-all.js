@@ -1,38 +1,106 @@
-import React, { useState, useEffect } from 'react';
-import Slide from '../component/home-slide';
-import { Container, Card, Row, Col,CardBody } from "reactstrap";
+import React, { useState } from 'react';
+
+import { Container, Card, CardBody, Row, Col, Button, FormGroup, Label, Input } from 'reactstrap';
 import { Helmet } from "react-helmet";
-import NavBar from "../component/structure_global/navbar";
-import Footer from "../component/structure_global/footer";
-import Resultbox from "../component/sch_notify_box";
-import Scholarship_Box from "../component/scholarship_box";
-import RightContent from "../component/structure_global/right_content";
 import axios from 'axios';
-const title = 'ระบบการให้บริการสารสนเทศทุนการศึกษา ฯ';
+import Swal from 'sweetalert2';
+import { AiFillCheckSquare } from "react-icons/ai";
+
+const title = 'เข้าสู่ระบบ';
+
+const Login = () => {
+    const log = {
+        username: "",
+        password: "",
 
 
-const Home = (props) => {
+    };
+
+
+
+    // const dispatch = useDispatch();
+
+
+
+    const [User, setUser] = useState(log);
+
+
     const session = {
         id: localStorage.getItem('id'),
         fname: localStorage.getItem('fname'),
-        lname: localStorage.getItem('lname'),
-        status: localStorage.getItem('status')
+        lname: localStorage.getItem('username'),
+        status: localStorage.getItem('status'),
     }
-    const [status, SetStatus] = useState(session);
 
-    const [Mscholar, setMscholar] = useState([]);
-    const [Resultboxs, setResultboxs] = useState([]);
+    const [ses, setSes] = useState(session);
 
-    useEffect(() => {
-        axios.get("http://localhost:8080/Mback/public/Mshcholarship")
-            .then((response) => {
-                setMscholar(response.data);
-            });
-            axios.get("http://localhost:8080/Mback/public/resultlist")
-            .then((response) => {
-                setResultboxs(response.data);
-            });
-    }, []);
+    const inputdata = (event) => {
+        let { name, value } = event.target;
+        setUser({ ...User, [name]: value });
+
+
+    }
+    const saveStudent = (e) => {
+        e.preventDefault()
+
+        var data = {
+
+
+            username: User.username,
+            password: User.password,
+
+
+
+        };//เอาค่าที่รับจาก form มาใส่ใน json
+console.log(data)
+        axios.post("http://localhost/Mback/public/Login", data)//ส่งค่าไปแอดใน DB
+            .then((res) => {
+                console.log(res.data.message);
+                if (res.data.message == "success") {
+                    localStorage.setItem('id', res.data.id);
+                    localStorage.setItem('fname', res.data.fullname);
+                    localStorage.setItem('lname', res.data.username);
+                    localStorage.setItem('status', res.data.status);
+
+
+
+                    Swal.fire(
+                        'เข้าสู่ระบบสำเร็จ',
+                        'ยินดีต้อนรับ ' + res.data.fullname ,
+                        'success'
+                    )
+
+                        .then(() => window.location.assign("/"))
+
+                }  else if (res.data.message == "fail") {
+
+                    Swal.fire(
+
+                        'เข้าสู่ระบบล้มเหลว',
+                        'บัญชีของคุณอยู่ระหว่างการตรวจสอบ โปรดรอการตรวจสอบบัญชี'
+                        ,
+                        'warning'
+                    )
+                        // .then(() => window.location.reload())
+                } else {
+
+                    Swal.fire(
+                        'เข้าสู่ระบบล้มเหลว',
+                        'อีเมลหรือรหัสผ่านผิด โปรดลองใหม่อีกครั้ง',
+                        'error'
+                    )
+                }
+
+            })
+
+            .catch((error) => {
+                console.log("error");
+            });//ใช้ ดัก Error
+
+    }
+
+
+
 
     return (
         <>
@@ -40,93 +108,48 @@ const Home = (props) => {
                 <title>{title}</title>
             </Helmet>
 
-            <NavBar />
-
             <Container className="container-fluid TZS-Container">
-                <Row>
-                    <Col lg="12" className="col-ContentSetting" style={{ marginBottom: '20px' }}>
-                        <Slide />
-                    </Col>
+                <div align="center" style={{ marginTop: '100px' }}>
+                    {/* <a href="/home">
+                        <h4>ระบบวางบิลออนไลน์</h4>
 
-                    <Col lg="3" className="col-ContentSetting">
-                        <RightContent />
-                    </Col>
-
-                    <Col lg="9" className="col-ContentSetting">
-                        <Card className="HeaderShadow">
-                            <Card className="CardHeaderStyle-Home">
-                                <h5 style={{ margin: '0px' }}>
-                                    <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/article.png" />
-                                    ทุนการศึกษา
-                                </h5>
-                            </Card>
-                        </Card>
-                        <div className="CardHeaderDetail">
-                            <CardBody className="CardBody-WithBoxContent">
-                                <a href="/allscholarship">ดูทั้งหมด>></a>
-                                <div className="borderline" />
-                                {Mscholar == "" ?
-                                <div className="NotFoundTxtInBox">
-                                    <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/error_outline_danger.png" />
-                                    ไม่พบข้อมูล
-                                </div>
-:
-                                <div className="EdgeRow-1">
+                    </a> */}
+                </div>
+                <div align="center" style={{ marginTop: '30px' }}>
+                    <Card className="CardBackground-1" style={{ maxWidth: '500px' }} align="left">
+                        <CardBody className="">
+                            <h4  align="center">
+                            <AiFillCheckSquare/>
+                               ระบบวางบิล<h5>Online</h5>
+                            </h4>
+                            <div className="borderline" />
+                            <form onSubmit={saveStudent} >
+                                <FormGroup>
+                                    <Label for="exampleEmail">ชื่อผู้ใช้</Label>
+                                    <Input Type="email" name="username" placeholder="ใส่ชื่อผู้ใช้" onChange={inputdata} required />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="exampleEmail">รหัสผ่าน</Label>
+                                    <Input type="password" name="password" placeholder="ใส่รหัสผ่านที่นี่" onChange={inputdata} required />
+                                </FormGroup>
+                                <div style={{ marginTop: '20px' }}>
                                     <Row>
-                                        {Mscholar.map((scholar) => {
-                                            props.match.params.id = scholar.msch_id
-                                            return (
-                                                <div className="col-12 col-sm-6 col-lg-6 col-BoxContentSetting">
-                                                    <div key={scholar.msch_id}><Scholarship_Box id={props.match.params.id} /></div>
-                                                </div>
-                                            );
-                                        })}
+                                        {/* <Col md-6>
+                                            <Button color="link" href="/Resetpassword" size="md" className="Button-Style">ลืมรหัสผ่าน?</Button>
+                                        </Col> */}
+                                        <Col md-6>
+                                            <Button color="success" size="lg" className="Button-Style" block>เข้าสู่ระบบ</Button>
+                                        </Col>
                                     </Row>
                                 </div>
-}
-                            </CardBody>
-                        </div>
-
-                        <Card className="HeaderShadow">
-                            <Card className="CardHeaderStyle-Home">
-                                <h5 style={{ margin: '0px' }}>
-                                    <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/campaign.png" />
-                                    ประกาศรายชื่อผู้ได้รับทุนการศึกษา                                </h5>
-                            </Card>
-                        </Card>
-                        <div className="CardHeaderDetail">
-                            <CardBody className="CardBody-WithBoxContent">
-                                <a href="/allScholarshipNotify">ดูทั้งหมด>></a>
-                                <div className="borderline" />
-                                {Resultboxs == "" ?
-                                <div className="NotFoundTxtInBox">
-                                    <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/error_outline_danger.png" />
-                                    ไม่พบข้อมูล
-                                </div>
-:
-                                <div className="EdgeRow-1">
-                                    <Row>
-                                        {Resultboxs.map((result) => {
-                                            props.match.params.id = result.result_id
-                                            return (
-                                                <div className="col-12 col-sm-6 col-lg-6 col-BoxContentSetting">
-                                                    <div key={result.result_id}><Resultbox id={props.match.params.id} /></div>
-                                                </div>
-                                            );
-                                        })}
-                                    </Row>
-                                </div>
-}
-                            </CardBody>
-                        </div>
-                    </Col>
-
-                </Row>
+                            </form>
+                          
+                        </CardBody>
+                    </Card>
+                </div>
             </Container>
-
-            <Footer />
         </>
-    );
+    )
 }
 
-export default Home;
+export default Login;

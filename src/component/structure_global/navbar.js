@@ -12,6 +12,8 @@ import {
     Button
 } from 'reactstrap';
 
+import Manage_systemShow from '../../page/staff_page/setup_nameSystem/manage_systemShow';
+
 
 const NavBar = () => {
     const session = {
@@ -39,7 +41,8 @@ const NavBar = () => {
                 <Navbar className="navbar navbar-expand-lg navbar-light sticky-top shadow-box-example " color="white" light expand="md" style={{ maxWidth: "auto" }}>
                     <Container className="container-fluid TZS-Container" style={{ maxWidth: "1700px" }}>
                         <NavbarBrand href="/" style={{ color: "#f8813a" }}>
-                            ระบบการให้บริการสารสนเทศทุนการศึกษา ฯ
+                        {/* ระบบการให้บริการสารสนเทศทุนการศึกษา */}
+                            <Manage_systemShow/>
                     </NavbarBrand>
                         < NavbarToggler onClick={toggle} />
                         <Collapse isOpen={isOpen} navbar >
@@ -67,7 +70,8 @@ const NavBar = () => {
                 <Navbar className="navbar navbar-expand-lg navbar-light sticky-top shadow-box-example " color="white" light expand="md" style={{ maxWidth: "auto" }}>
                     <Container className="container-fluid TZS-Container" style={{ maxWidth: "1700px" }}>
                         <NavbarBrand href="/" style={{ color: "#f8813a" }}>
-                            ระบบการให้บริการสารสนเทศทุนการศึกษา ฯ
+                        {/* ระบบการให้บริการสารสนเทศทุนการศึกษา */}
+                            <Manage_systemShow/>
                     </NavbarBrand>
                         < NavbarToggler onClick={toggle} />
                         <Collapse isOpen={isOpen} navbar >

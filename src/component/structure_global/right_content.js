@@ -13,6 +13,7 @@ const RightContent = () => {
     const [status, SetStatus] = useState(session);
     const [Mscholar, setMscholar] = useState([]);
     const [FollowCommet, setFollowCommet] = useState([]);
+    const [MainscholarCommet, setMainscholarCommet] = useState([]);
 
 
     useEffect(() => {
@@ -31,6 +32,11 @@ const RightContent = () => {
                 .then((response) => {
                     setFollowCommet(response.data);
                 });
+        } if (status.id != null && status.status == "อาจารย์" || status.status == "ผู้ดูแล") {
+            axios.get("http://localhost:8080/Mback/public/nottiflyfollowcommentStaffMain/" + status.id)
+                .then((response) => {
+                    setMainscholarCommet(response.data);
+                });
         }
     }, []);
 
@@ -42,13 +48,17 @@ const RightContent = () => {
                     <CardBody>
                         <h6>
                             <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/notification_important.png" />
-                            การแจ้งเตือน <a href="/allnotification">>ดูทั้งหมด</a>
+                            การแจ้งเตือน <a href="/allnotification">ดูทั้งหมด</a>
                         </h6>
 
 
                         <div className="borderline" />
-                        {Mscholar == " " && FollowCommet == " " ?
-                            <span>ไม่มีการแจ้งเตือน</span>
+                        {Mscholar == "" && FollowCommet.message == "fail" ?
+                            <div className="text-danger" align="center" >
+                                <div className="NotFoundTxtInBox text-muted" style={{ marginTop: '25px', marginBottom: '15px' }}>
+                                    ไม่มีการแจ้งเตือน
+                                </div>
+                            </div>
                             :
                             <CardText>
                                 {Mscholar.map((scholar) => {
@@ -67,14 +77,16 @@ const RightContent = () => {
                                 {status.status == "นักเรียน" & FollowCommet.message == "success" ? FollowCommet.data.map((Commet) => {
 
                                     return (
-                                        <div className="col-12 col-BoxContentSetting">
+                                        <div>
                                             <a href={"/scholarshipSub/" + Commet.ssch_id}>
                                                 <div className="buttonMenu" key={Commet.ssch_id}>
-                                                    <b>{Commet.s_fname}{Commet.st_fname}</b>  ได้แสดงความคิดเห็นใน  <b>{Commet.ssch_name.slice(0, 30)}...</b>
+                                                    <b>{Commet.s_fname}{Commet.st_fname}</b>  ได้แสดงความคิดเห็นใน
+                                                    <br/>
+                                                    <b>{Commet.ssch_name.slice(0, 30)}...</b>
+                                                    <br/>
+                                                    <small>{Commet.Cm_time}</small>
                                                 </div>
-
                                             </a>
-                                            <small>{Commet.Cm_time}</small>
                                         </div>
                                     );
                                 }) : <div></div>}
@@ -90,13 +102,19 @@ const RightContent = () => {
                     <CardBody>
                         <h6>
                             <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/notification_important.png" />
-                            การแจ้งเตือน<a href="/allnotificationStaff">ดูทั้งหมด</a>
+                            การแจ้งเตือน
                         </h6>
                         <div className="borderline" />
-                        {Mscholar == "" && FollowCommet == "" ?
-                            <span>ไม่มีการแจ้งเตือน</span>
+                        {Mscholar == "" && FollowCommet.message == "fail" && MainscholarCommet.message == "fail" ?
+                            <div className="text-danger" align="center" >
+                                <div className="NotFoundTxtInBox text-muted" style={{ marginTop: '25px', marginBottom: '15px' }}>
+                                    ไม่มีการแจ้งเตือน
+                                </div>
+                            </div>
                             :
+
                             <CardText>
+
                                 {Mscholar.map((scholar) => {
                                     return (
                                         <div className="col-12 col-BoxContentSetting">
@@ -109,19 +127,47 @@ const RightContent = () => {
                                     );
                                 })}
 
-                                {status.status == "อาจารย์" && FollowCommet.message == "success" || status.status == "ผู้ดูแล" ? FollowCommet.data.map((Commet) => {
-                                    return (
-                                        <div className="col-12 col-BoxContentSetting">
-                                            <a href={"/scholarshipSub/" + Commet.ssch_id}>
-                                                <div className="buttonMenu" key={Commet.ssch_id}>
-                                                    <b>{Commet.s_fname}{Commet.st_fname}</b>  ได้แสดงความคิดเห็นใน  <b>{Commet.ssch_name.slice(0, 30)}...</b>
-                                                </div>
-                                            </a>
-                                            <small>{Commet.Cm_time}</small>
 
+                                {status.status == "ผู้ดูแล" | status.status == "อาจารย์" && MainscholarCommet.message == "success" ?
+                                    <CardText>
+                                        <div style={{ marginBottom: "10px" }}>
+                                            <b>แจ้งเตือนจากทุนหลัก</b>{" "}<a href="/allMainscholarnotificationStaff">ดูทั้งหมด</a>
                                         </div>
-                                    );
-                                }) : <div></div>}
+                                        {MainscholarCommet.data.map((MCommet) => {
+                                            return (
+                                                <a href={"/scholarshipMain/" + MCommet.msch_id}>
+                                                    <div className="buttonMenu text-muted" key={MCommet.msch_id}>
+                                                        <b>{MCommet.s_fname}{MCommet.st_fname}</b>  ได้แสดงความคิดเห็นใน  
+                                                        <br/>
+                                                        <b>{MCommet.msch_name.slice(0, 30)}...</b>
+                                                        <br/>
+                                                        <small>{MCommet.Cm_time}</small>
+                                                    </div>
+                                                </a>
+                                            );
+                                        })}        
+                                    </CardText>
+                                    : <div></div>}
+                                {status.status == "ผู้ดูแล" | status.status == "อาจารย์" && FollowCommet.message == "success" ?
+                                    <CardText>
+                                        <div style={{ marginBottom: "10px" }}>
+                                            <b>แจ้งเตือนจากทุนย่อย</b>{" "}<a href="/allnotificationStaff">ดูทั้งหมด</a>
+                                        </div>
+                                        {FollowCommet.data.map((Commet) => {
+                                            return (
+                                                <a href={"/scholarshipSub/" + Commet.ssch_id}>
+                                                    <div className="buttonMenu text-muted" key={Commet.ssch_id}>
+                                                        <b>{Commet.s_fname}{Commet.st_fname}</b>  ได้แสดงความคิดเห็นใน
+                                                        <br/>
+                                                        <b>{Commet.ssch_name.slice(0, 30)}...</b>
+                                                        <br/>
+                                                        <small>{Commet.Cm_time}</small>
+                                                    </div>
+                                                </a>
+                                            );
+                                        })}
+                                    </CardText>
+                                    : <div></div>}
                             </CardText>
                         }
                     </CardBody>
@@ -138,6 +184,18 @@ const RightContent = () => {
                                     <div className="buttonMenu">
                                         <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/bookmark.png" />
                                         ทุนการศึกษาที่ติดตามไว้
+                                    </div>
+                                </a>
+                                <a href="/allscholarship">
+                                    <div className="buttonMenu">
+                                        <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/article.png" />
+                                        ทุนการศึกษา
+                                    </div>
+                                </a>
+                                <a href="/allScholarshipNotify">
+                                    <div className="buttonMenu">
+                                        <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/campaign.png" />
+                                        ประกาศรายชื่อผู้ได้รับทุนการศึกษา
                                     </div>
                                 </a>
                             </CardBody>
@@ -176,25 +234,26 @@ const RightContent = () => {
                             </CardBody>
                         </Card>
                         : <div></div>}
+                    {status.status == "อาจารย์" || status.status == "ผู้ดูแล" ?
+                        <Card className="CardBackground-1">
+                            <CardBody>
+                                <a href="/allscholarship">
+                                    <div className="buttonMenu">
+                                        <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/article.png" />
+                                        ทุนการศึกษา
+                                    </div>
+                                </a>
+                                <a href="/allScholarshipNotify">
+                                    <div className="buttonMenu">
+                                        <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/campaign.png" />
+                                        ประกาศรายชื่อผู้ได้รับทุนการศึกษา
+                                    </div>
+                                </a>
+                            </CardBody>
+                        </Card>
+                    : <div></div>}
                 </div>
             }
-
-            <Card className="CardBackground-1">
-                <CardBody>
-                    <a href="/allscholarship">
-                        <div className="buttonMenu">
-                            <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/article.png" />
-                            ทุนการศึกษา
-                        </div>
-                    </a>
-                    <a href="/allScholarshipNotify">
-                        <div className="buttonMenu">
-                            <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/campaign.png" />
-                            ประกาศรายชื่อผู้ได้รับทุนการศึกษา
-                        </div>
-                    </a>
-                </CardBody>
-            </Card>
 
             <Card className="CardBackground-1">
                 <CardBody>
