@@ -1,57 +1,76 @@
-import React, { useState } from 'react'
-import { Button, Card, CardTitle, CardText, Row, Col, CardBody } from 'reactstrap';
+import React, { useState } from "react";
+import {
+  Button,
+  Card,
+  CardTitle,
+  CardText,
+  Row,
+  Col,
+  CardBody,
+} from "reactstrap";
 const StaffLeftMenu = () => {
-    const session = {
-        id: localStorage.getItem('id'),
-        fname: localStorage.getItem('fname'),
-        lname: localStorage.getItem('lname'),
-        status: localStorage.getItem('status')
-    }
-    const [status, SetStatus] = useState(session);
-    return (
-        <>
-            <div class="TZS-LeftMenu-Container">
-                <Row>
-                    <div className="col-sm-6 col-md-6 col-lg-12 col-LeftMenuSetting">
-                        <Card className="CardBackground-1">
-                            <CardBody className="CardBody">
-                                <a href="/staff_page">
-                                    <div className="buttonMenu">
-                                        <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/house.png" />
-                                        หน้าหลักระบบผู้ดูแล
-                                    </div>
-                                </a>
-                            </CardBody>
-                        </Card>
+  const session = {
+    id: localStorage.getItem("id"),
+    fname: localStorage.getItem("fname"),
+    lname: localStorage.getItem("lname"),
+    status: localStorage.getItem("status"),
+  };
+  const [status, SetStatus] = useState(session);
+  return (
+    <>
+      <div class="TZS-LeftMenu-Container">
+        <Row>
+          <div className="col-sm-6 col-md-6 col-lg-12 col-LeftMenuSetting">
+            <Card className="CardBackground-1">
+              <CardBody className="CardBody">
+                <a href="/adminpage">
+                  <div className="buttonMenu">
+                    <img
+                      className="buttonMenuIcon"
+                      src="https://cdn-icons-png.flaticon.com/512/1946/1946436.png"
+                    />
+                    หน้าหลักระบบผู้ดูแล
+                  </div>
+                </a>
+              </CardBody>
+            </Card>
 
-                        <Card className="CardBackground-1">
-                            <CardBody className="CardBody">
-                                {status.status == "ผู้ดูแล" &&
-                                    <a href="/staff/manage_user">
-                                        <div className="buttonMenu">
-                                            <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/person.png" />
-                                            ผู้ใช้งานในระบบ
-                                        </div>
-                                    </a>
-                                }
-                                <a href="/staff/manage_user">
-                                    <div className="buttonMenu">
-                                        <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/person.png" />
-                                        ผู้ใช้งานในระบบ
-                                    </div>
-                                </a>
-                                <a href="/staff/approve_user">
-                                    <div className="buttonMenu">
-                                        <img className="buttonMenuIcon" src="https://tzs-global.com/website_factor-image/button_icon/assignment_ind.png" />
-                                        อนุมัติผู้ใช้งาน
-                                    </div>
-                                </a>
-                            </CardBody>
-                        </Card>
-                    </div>
+            <Card className="CardBackground-1">
+              <CardBody className="CardBody">
+                <a href="/alluserpage">
+                  <div className="buttonMenu">
+                    <img
+                      className="buttonMenuIcon"
+                      src="https://cdn-icons-png.flaticon.com/512/456/456212.png"
+                    />
+                    ผู้ใช้งานในระบบ
+                  </div>
+                </a>
 
-                    <div className="col-sm-6 col-md-6 col-lg-12 col-LeftMenuSetting">
-                        <Card className="CardBackground-1">
+                <a href="/staff/approve_user">
+                  <div className="buttonMenu">
+                    <img
+                      className="buttonMenuIcon"
+                      src="https://cdn-icons.flaticon.com/png/512/2697/premium/2697432.png?token=exp=1656727276~hmac=c07fda6be16f418fddebd9bd4ff60038"
+                    />
+                    รายชื่อร้านค้าในระบบ
+                  </div>
+                </a>
+                <a href="/staff/approve_user">
+                  <div className="buttonMenu">
+                    <img
+                      className="buttonMenuIcon"
+                      src="https://cdn-icons-png.flaticon.com/512/1611/1611318.png"
+                    />
+                    รายการวางบิล
+                  </div>
+                </a>
+              </CardBody>
+            </Card>
+          </div>
+
+          <div className="col-sm-6 col-md-6 col-lg-12 col-LeftMenuSetting">
+            {/* <Card className="CardBackground-1">
                             <CardBody className="CardBody">
                                 <a href="/staff/scholarship">
                                     <div className="buttonMenu">
@@ -78,9 +97,9 @@ const StaffLeftMenu = () => {
                                     </div>
                                 </a>
                             </CardBody>
-                        </Card>
+                        </Card> */}
 
-                        {status.status == "ผู้ดูแล" &&
+            {/* {status.status == "" &&
                             <Card className="CardBackground-1">
                                 <CardBody className="CardBody">
                                     <div className="borderline" style={{ margin: '0px' }}/>
@@ -106,12 +125,12 @@ const StaffLeftMenu = () => {
                                 </a>
                                 </CardBody>
                             </Card>
-                        }
-                    </div>
-                </Row>
-            </div>
-        </>
-    )
-}
+                        } */}
+          </div>
+        </Row>
+      </div>
+    </>
+  );
+};
 
 export default StaffLeftMenu;
