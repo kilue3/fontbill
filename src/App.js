@@ -4,6 +4,7 @@ import FullPaageLoader from "./component/FullPageLoader";
 import Home from "./page/home-all";
 import Adminpage from "./page/admin/main-admin";
 import Alluser from "./page/admin/alluser";
+import Storepage from "./page/admin/storepage"
 const App = () => {
   const [loading, setloading] = useState(false);
 
@@ -23,6 +24,8 @@ const App = () => {
           <Route path="/home" component={Home} />
           <Route path="/adminpage" component={Adminpage} />
           <Route path="/alluserpage" component={Alluser} />
+          <Route path="/storepage" component={Storepage} />
+
         </Switch>
       </Router>,
     ]

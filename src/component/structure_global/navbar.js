@@ -94,8 +94,17 @@ const NavBar = () => {
             className="container-fluid TZS-Container"
             style={{ maxWidth: "1700px" }}
           >
-            <NavbarBrand href="/" style={{ color: "#f8813a" }}>
-              ระบบวางบิล<h5>Online</h5>
+              <img
+              className="buttonMenuIcon"
+              src="https://cdn-icons-png.flaticon.com/512/2325/2325673.png"
+              style={{ Width: "auto", height: "30px" }}
+            />
+
+            <NavbarBrand
+              href="/adminpage"
+              style={{ color: "#f8813a", fontSize: "30px" }}
+            >
+              <b>ระบบวางบิล Online</b>
             </NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>

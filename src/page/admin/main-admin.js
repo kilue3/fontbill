@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import StaffLeftMenu from "../../component/staff_page/left_menu";
 import { Container, Card, Button, Input, Row, Col, CardBody } from "reactstrap";
 import { Helmet } from "react-helmet";
 import NavBar from "../../component/structure_global/navbar";
+import axios from "axios";
+import Swal from "sweetalert2";
+import API from "../API/API";
 
 const title = "หน้าหลักระบบผู้ดูแล";
 
@@ -13,11 +16,57 @@ const Adminpage = () => {
     uname: localStorage.getItem("username"),
     status: localStorage.getItem("status"),
   };
-  const [ses, setSes] = useState(session);
-  // if (ses.status == "นักเรียน") {
-  //     window.location.assign("/");
+  const log = {
+    date: "",
 
-  // }
+  };
+  const [billdate, setbilldate] = useState(log);
+  const inputdata = (event) => {
+    let { name, value } = event.target;
+    setbilldate({ ...billdate, [name]: value });
+  };
+  var today = new Date();
+ const D = today.toISOString().substring(0, 10);
+    console.log(D)
+
+  const [ses, setSes] = useState(session);
+  if (ses.status == "store") {
+      window.location.assign("/");
+
+  }
+  const Opbill = (e) => {
+    e.preventDefault();
+
+    var data = {
+     opdate: D,
+     enddate: billdate.date
+    }
+    console.log(data)
+    if(data.enddate =="")
+    
+    {
+      Swal.fire(
+            "กำหนดวันแจ้งเปิดบิลล้มเหลว",
+            "กรุณาระบุวันหมดเขตการส่งบิล",
+            "warning"
+          );
+       }else{
+        axios.post(API("Opbill"), data) //ส่งค่าไปแอดใน DB
+        .then((res) => {
+          console.log(res.data.message);
+          if (res.data.message == "success") {
+    
+            Swal.fire(
+              "แจ้งกำหนดการเปิดบิลสำเร็จ",
+              "success"
+            )
+            .then(() => window.location.reload());
+          } 
+       }
+    )}
+    
+    
+  };
 
   return (
     <>
@@ -65,18 +114,8 @@ const Adminpage = () => {
               <CardBody className="CardBody-WithBoxContent">
                 สร้างเอกสารวางบิลภายในวันที่{" "}
                 <div class="quantity">
-                  <Input type="select" name="day" id="category" required>
-                    <option value="1 ">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                  </Input>
+                  <Input type="date" name="date" id="category" onChange={inputdata} required/>
+                  
                 </div>
                 <div className="borderline" />
                 <div className="NotFoundTxtInBox">
@@ -85,6 +124,7 @@ const Adminpage = () => {
                     size="lg"
                     className="Button-Style"
                     block
+                    onClick={(e)=>Opbill(e)}
                   >
                     บันทึก
                   </Button>

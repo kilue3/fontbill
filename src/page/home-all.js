@@ -15,6 +15,7 @@ import { Helmet } from "react-helmet";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { AiFillCheckSquare } from "react-icons/ai";
+import API from './API/API'
 
 const title = "เข้าสู่ระบบ";
 
@@ -41,7 +42,7 @@ const Login = () => {
     let { name, value } = event.target;
     setUser({ ...User, [name]: value });
   };
-  const saveStudent = (e) => {
+  const Login = (e) => {
     e.preventDefault();
 
     var data = {
@@ -49,8 +50,7 @@ const Login = () => {
       password: User.password,
     }; //เอาค่าที่รับจาก form มาใส่ใน json
     console.log(data);
-    axios
-      .post("http://localhost/Mback/public/Login", data) //ส่งค่าไปแอดใน DB
+    axios.post(API("Login"), data) //ส่งค่าไปแอดใน DB
       .then((res) => {
         console.log(res.data.message);
         if (res.data.message == "success") {
@@ -65,20 +65,14 @@ const Login = () => {
             "success"
           )
           .then(() => window.location.assign("/adminpage"));
-        } else if (res.data.message == "fail") {
+        } else{
           Swal.fire(
             "เข้าสู่ระบบล้มเหลว",
-            "บัญชีของคุณอยู่ระหว่างการตรวจสอบ โปรดรอการตรวจสอบบัญชี",
+            "ชื่อผู้ใช้หรือรหัสผ่านผิด โปรดลองใหม่อีกครั้ง ",
             "warning"
           );
           // .then(() => window.location.reload())
-        } else {
-          Swal.fire(
-            "เข้าสู่ระบบล้มเหลว",
-            "อีเมลหรือรหัสผ่านผิด โปรดลองใหม่อีกครั้ง",
-            "error"
-          );
-        }
+        } 
       })
 
       .catch((error) => {
@@ -111,7 +105,7 @@ const Login = () => {
                 ระบบวางบิล<h5>Online</h5>
               </h4>
               <div className="borderline" />
-              <form onSubmit={saveStudent}>
+              <form onSubmit={Login}>
                 <FormGroup>
                   <Label for="exampleEmail">ชื่อผู้ใช้</Label>
                   <Input

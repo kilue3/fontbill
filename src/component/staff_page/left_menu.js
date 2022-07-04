@@ -47,7 +47,7 @@ const StaffLeftMenu = () => {
                   </div>
                 </a>
 
-                <a href="/staff/approve_user">
+                <a href="/storepage">
                   <div className="buttonMenu">
                     <img
                       className="buttonMenuIcon"

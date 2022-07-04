@@ -7,9 +7,9 @@ import axios from "axios";
 import Info_user from "./info_user";
 import API from "../API/API"
 import Registerusers from  "./component/regis_user"
-const title = "ผู้ใช้ในระบบทั้งหมด";
+const title = "บัญชีร้านค้าในระบบทั้งหมด";
 
-const Alluser = () => {
+const Storepage = () => {
   const session = {
     id: localStorage.getItem("id"),
     fname: localStorage.getItem("fname"),
@@ -50,7 +50,7 @@ const Alluser = () => {
                     <a href="/adminpage">หน้าหลัก</a>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
-                    ผู้ใช้งานในระบบ
+                  บัญชีร้านค้าในระบบทั้งหมด
                   </li>
                 </ol>
               </nav>
@@ -61,7 +61,7 @@ const Alluser = () => {
                     className="header-1-Icon"
                     src="https://cdn-icons-png.flaticon.com/512/1946/1946436.png"
                   />
-                  ผู้ใช้งานในระบบ
+                  บัญชีร้านค้าในระบบทั้งหมด
                 </h5>
               </Card>
             </Card>
@@ -75,13 +75,13 @@ const Alluser = () => {
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>ชื่อ เต็ม </th>
+                      <th>ชื่อร้านค้า </th>
                       <th>ชื่อผู้ใช้ </th>
                       <th>สถานะ</th>
                       
                      
                       {ses.status == "admin" ? (
-                          <th>รายละเอียดผู้ใช้</th> ) : (
+                          <th>รายละเอียดร้านค้า</th> ) : (
                               ""
                             )}
                     
@@ -119,4 +119,4 @@ const Alluser = () => {
   );
 };
 
-export default Alluser;
+export default Storepage;
