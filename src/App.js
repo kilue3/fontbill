@@ -4,7 +4,11 @@ import FullPaageLoader from "./component/FullPageLoader";
 import Home from "./page/home-all";
 import Adminpage from "./page/admin/main-admin";
 import Alluser from "./page/admin/alluser";
-import Storepage from "./page/admin/storepage"
+import Storepage from "./page/admin/storepage";
+import Billpage from "./page/admin/bill_page";
+import Store_Login from "./page/StoreUser/store_login";
+
+
 const App = () => {
   const [loading, setloading] = useState(false);
 
@@ -12,7 +16,7 @@ const App = () => {
     setloading(true);
     setTimeout(() => {
       setloading(false);
-    }, 0);
+    }, 1);
   }, []);
   return loading ? (
     <FullPaageLoader />
@@ -21,12 +25,15 @@ const App = () => {
       <Router>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/home" component={Home} />
+          
+          <Route path="/Login" component={Home} />
+          <Route path="/loginStore" component={Store_Login} />
+
           <Route path="/adminpage" component={Adminpage} />
           <Route path="/alluserpage" component={Alluser} />
           <Route path="/storepage" component={Storepage} />
-
-        </Switch>
+          <Route path="/billpage" component={Billpage} />
+       </Switch>
       </Router>,
     ]
   );

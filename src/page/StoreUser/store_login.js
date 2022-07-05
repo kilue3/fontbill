@@ -15,11 +15,11 @@ import { Helmet } from "react-helmet";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { AiFillCheckSquare } from "react-icons/ai";
-import API from './API/API'
+import API from '../API/API'
 
 const title = "เข้าสู่ระบบ";
 
-const Login = () => {
+const Store_Login = () => {
   const log = {
     username: "",
     password: "",
@@ -95,7 +95,7 @@ const Login = () => {
             <CardBody className="">
               <h4 align="center">
                 <AiFillCheckSquare />
-                ระบบวางบิล<h5>Online</h5>(Admin)
+                ระบบวางบิล<h5>Online</h5>(ผู้ใช้ทั่วไป)
               </h4>
               <div className="borderline" />
               <form onSubmit={Login}>
@@ -126,24 +126,22 @@ const Login = () => {
                                         </Col> */}
                     <Col md-6>
                       <Button
-                        color="success"
+                        color="danger"
                         size="lg"
                         className="Button-Style"
                         block
                       >
                         เข้าสู่ระบบ
                       </Button>
-                      
-                     
                       <div className="borderline" />
                       <Button
                         color="primary"
                         size="lg"
                         className="Button-Style"
-                        href  ="/loginStore"
+                        href  ="/Login"
                         block
                       >
-                        เข้าสู่ระบบของ ผู้ใช้ทั่วไป
+                        เข้าสู่ระบบของ Admin
                       </Button>
                     </Col>
                   </Row>
@@ -157,4 +155,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Store_Login;

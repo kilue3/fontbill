@@ -14,28 +14,28 @@ import {
 } from "reactstrap";
 import axios from "axios";
 import Swal from "sweetalert2";
-import API from "../API/API";
-import Resetpass from "./component/resetpass";
+import API from "../../API/API";
+import Resetpassstore from "./resetpass_store";
 
 
-const Info_user = ({ id }) => {
+const Info_store = ({ id }) => {
   const { className } = id;
 
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
   const userdata = {};
+
   /////////////////userget//////////////////////
+  
   const [userinfo, setuserdata] = useState(userdata);
 
   useEffect(() => {
-    axios.get(API("Info_user") + id).then((response) => {
+    axios.get(API("Findstore") + id).then((response) => {
       setuserdata(response.data);
     });
   }, []);
-  /////////////resetpass////////////
- 
-  ///////////////////localstate///////////
+ ///////////////////localstate///////////
   const session = {
     id: localStorage.getItem("id"),
     fname: localStorage.getItem("fname"),
@@ -56,7 +56,7 @@ const Info_user = ({ id }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(API("Delectuser") + id) //ส่งค่าไปแอดใน DB
+          .delete(API("Delectstore") + id) //ส่งค่าไปแอดใน DB
           .then((res) => {
             if (res.data.message == "success") {
               ////ต่อตรงนี้
@@ -85,60 +85,59 @@ const Info_user = ({ id }) => {
           <ModalHeader toggle={toggle}> ID :    {id} </ModalHeader>
           <ModalBody>
             <FormGroup align="left">
-              <h3 for="more_detail">รายละเอียดผู้ใช้</h3>
+              <h3 for="more_detail">รายละเอียดร้านค้า</h3>
 
               <Card className="CardBackground-1">
                 <CardBody className="">
                   
                   <div className="borderline" />
                   <div align="center" style={{ marginBottom: "10px" }}>
-                    {userinfo.status == "admin" ? (
+                  
                       <Button
                         className="Button-Style"
-                        color="primary"
+                        color="warning"
                         style={{
                           paddingRight: "6px",
                           borderTopLeftRadius: "0px",
                           borderBottomRightRadius: "0px",
                         }}
                       >
-                        แอดมิน
+                        ร้านค้า
                         <img
                           className="buttonMenuIcon"
                           src="https://cdn-icons-png.flaticon.com/512/456/456212.png"
                           style={{ marginRight: "0px", marginLeft: "5px" }}
                         />
                       </Button>
-                    ) : (
-                      <Button
-                        className="Button-Style"
-                        color="success"
-                        style={{
-                          paddingRight: "6px",
-                          borderTopLeftRadius: "0px",
-                          borderBottomRightRadius: "0px",
-                        }}
-                      >
-                        ทั่วไป
-                        <img
-                          className="buttonMenuIcon"
-                          src="https://cdn-icons-png.flaticon.com/512/456/456212.png"
-                          style={{ marginRight: "0px", marginLeft: "5px" }}
-                        />
-                      </Button>
-                    )}
+                 
                   </div>
                   <Row>
                     <div className="col-6" align="right">
-                      ชื่อ :
+                      ชื่อร้านค้า :
                     </div>
                     <div className="col-6" align="left">
-                      <b>{userinfo.fullname}</b>
+                      <b>{userinfo.store_name}</b>
                     </div>
                   </Row>
                   <Row>
                     <div className="col-6" align="right">
-                      นามสกุล :
+                      ชื่อผู้ติดต่อ :
+                    </div>
+                    <div className="col-6" align="left">
+                      <b>{userinfo.contactname}</b>
+                    </div>
+                  </Row>
+                  <Row>
+                    <div className="col-6" align="right">
+                      Email :
+                    </div>
+                    <div className="col-6" align="left">
+                      <b>{userinfo.email}</b>
+                    </div>
+                  </Row>
+                  <Row>
+                    <div className="col-6" align="right">
+                      ชื่อผู้ใช้ :
                     </div>
                     <div className="col-6" align="left">
                       <b>{userinfo.username}</b>
@@ -192,14 +191,8 @@ const Info_user = ({ id }) => {
                               </Button>
                             </Col>
                             <Col md="6">
-                                <Resetpass id={id}/>
-                              {/* <Button
-                                className="Button-Style"
-                                color="warning"
-                                onClick={""}
-                              >
-                                เปลี่ยนรหัสผ่าน
-                              </Button> */}
+                                <Resetpassstore id={id}/>
+                          
                             </Col>
 
                           </Row>
@@ -231,4 +224,4 @@ const Info_user = ({ id }) => {
   );
 };
 
-export default Info_user;
+export default Info_store;

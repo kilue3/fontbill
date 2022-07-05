@@ -17,6 +17,11 @@ const Alluser = () => {
     status: localStorage.getItem("status"),
   };
   const [ses, setSes] = useState(session);
+  if (ses.status == "store" || ses.status == null) {
+    window.location.assign("/");
+
+}
+
   const [User, setUser] = useState([]);
   useEffect(() => {
     axios.get(API("Showlistnameusers")).then((response) => {
@@ -68,8 +73,12 @@ const Alluser = () => {
 
             <Card className="CardBackground-1" style={{ margin: 10 }}>
               <CardBody>
-
-             <Registerusers/>
+              {ses.status == "admin" ? (
+                                      <Registerusers/>
+                                      ) : (
+                              ""
+                            )}
+                    
               
                 <Table bordered>
                   <thead>

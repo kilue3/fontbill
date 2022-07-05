@@ -13,7 +13,18 @@ const Api = (props) => {
         case 'Repassword': return path + "repassword/";
         case 'Registerusers': return path + "addusers";
         case 'Opbill': return path + "opbill";
+        case 'Checkdate': return path + "checkdate";
+        case 'Billend': return path + "updateEndbill";
+        case 'Dateshows': return path + "opbilldateshow";
 
+        
+        case 'Storelist': return path + "storelist";
+        case 'Findstore': return path + "findstore/";
+        case 'Delectstore': return path + "delectstore/";
+        case 'Resetpassstore': return path + "Resetpassstore/";
+        case 'AddStore': return path + "addStore";
+
+        
         
         
 

@@ -46,8 +46,8 @@ const NavBar = () => {
           >
             <img
               className="buttonMenuIcon"
-              src="https://cdn-icons-png.flaticon.com/512/2325/2325673.png"
-              style={{ Width: "auto", height: "30px" }}
+              src="https://cdn-icons-png.flaticon.com/512/985/985765.png"
+              style={{width:"40px", height: "40px" }}
             />
 
             <NavbarBrand

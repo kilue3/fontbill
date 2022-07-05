@@ -56,7 +56,7 @@ const StaffLeftMenu = () => {
                     รายชื่อร้านค้าในระบบ
                   </div>
                 </a>
-                <a href="/staff/approve_user">
+                <a href="/billpage">
                   <div className="buttonMenu">
                     <img
                       className="buttonMenuIcon"
