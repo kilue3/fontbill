@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 import StaffLeftMenu from "../../component/staff_page/left_menu";
-import { Container, Card, Button, Input, Row, Col, CardBody ,Table} from "reactstrap";
+import { Container, Card, Button, Table, Row, Col, CardBody } from "reactstrap";
 import { Helmet } from "react-helmet";
 import NavBar from "../../component/structure_global/navbar";
 import axios from "axios";
-import Swal from "sweetalert2";
 import API from "../API/API";
+const title = "รายชื่อบิลที่ยื่น";
 
-const title = "รายการวางบิล";
-
-const Billpage = () => {
+const Billlist = () => {
   const session = {
     id: localStorage.getItem("id"),
     fname: localStorage.getItem("fname"),
@@ -21,24 +19,17 @@ const Billpage = () => {
     window.location.assign("/");
   }
 
-  const [User, setUser] = useState([]);
+  const [list, setlist] = useState([]);
+  //   const [normaluser, setnormaluser] = useState([]);
+
   useEffect(() => {
-    axios.get(API("Showlistnameusers")).then((response) => {
-      setUser(response.data);
+    axios.get(API("BilllistAtive") + ses.id).then((response) => {
+      setlist(response.data);
     });
+    // axios.get(API("Allnormaluser")).then((response) => {
+    //   setnormaluser(response.data);
+    // });
   }, []);
-  if (ses.status == "" | ses.status =="store") {
-      window.location.assign("/");
-
-  }
-  var today = new Date();
-
-  const result = today.toLocaleDateString('th-TH', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    weekday: 'long',
-  })
 
   return (
     <>
@@ -59,10 +50,10 @@ const Billpage = () => {
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb BreadcrumbStyle">
                   <li className="breadcrumb-item">
-                    <a href="/adminpage">หน้าหลัก</a>
+                    <a href="/mainstore">หน้าหลัก</a>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
-                    รายการวางบิลประจำเดือน 
+                  รายการบิลที่แจ้งเบิก
                   </li>
                 </ol>
               </nav>
@@ -73,50 +64,44 @@ const Billpage = () => {
                     className="header-1-Icon"
                     src="https://cdn-icons-png.flaticon.com/512/1946/1946436.png"
                   />
-                  รายการวางบิลประจำเดือน
+                  รายการบิลที่แจ้งเบิก
                 </h5>
               </Card>
             </Card>
 
             <Card className="CardBackground-1" style={{ margin: 10 }}>
               <CardBody>
-                {/* {ses.status == "admin" ? <Registerusers /> : ""} */}
-
+                <h4>รายการบิลที่แจ้งเบิก</h4>
                 <Table bordered>
                   <thead>
                     <tr>
-                      <th>วัน-เวลา</th>
-                      <th>ชื่อร้านค้า</th>
-                      <th>เลขที่บิล </th>
-                      <th>จำนวนเงิน</th>
-                      <th>รายละเอียด</th>
+                      <th>วันเวลา</th>
+                      <th>หมายเลขบิล </th>
+                      <th>โน็ต</th>
                       <th>สถานะ</th>
                       <th>ดูรายละเอียด</th>
-
-                      {/* {ses.status == "admin" ? <th>รายละเอียดผู้ใช้</th> : ""} */}
                     </tr>
                   </thead>
                   <tbody>
-                    {/* {User.map((list) => {
+                    {list.map((lists) => {
                       return (
                         <>
                           <tr>
-                            <th>{list.id}</th>
-                            <td>{list.fullname}</td>
-                            <td>{list.username}</td>
-                            <td>{list.status}</td>
+                            <td>{lists.bill_op_time}</td>
+
+                            <th>{lists.bill_id}</th>
+                            <td>{lists.bill_detail}</td>
+                            <td>{lists.bill_status}</td>
+
                             <td>
                               {" "}
-                              {ses.status == "admin" ? (
-                                <Info_user id={list.id} />
-                              ) : (
-                                ""
-                              )}
+                              <Button color="primary" href="" block>
+ดูรายละเอียด                              </Button>
                             </td>
                           </tr>
                         </>
                       );
-                    })} */}
+                    })}
                   </tbody>
                 </Table>
               </CardBody>
@@ -127,4 +112,5 @@ const Billpage = () => {
     </>
   );
 };
-export default Billpage;
+
+export default Billlist;

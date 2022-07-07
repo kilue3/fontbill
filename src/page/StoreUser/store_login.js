@@ -43,7 +43,7 @@ const Store_Login = () => {
       password: User.password,
     }; //เอาค่าที่รับจาก form มาใส่ใน json
     console.log(data);
-    axios.post(API("Login"), data) //ส่งค่าไปแอดใน DB
+    axios.post(API("Storelogin"), data) //ส่งค่าไปแอดใน DB
       .then((res) => {
         console.log(res.data.message);
         if (res.data.message == "success") {
@@ -51,13 +51,14 @@ const Store_Login = () => {
           localStorage.setItem("fname", res.data.fullname);
           localStorage.setItem("uname", res.data.username);
           localStorage.setItem("status", res.data.status);
+          localStorage.setItem("conname", res.data.contactname);
 
           Swal.fire(
             "เข้าสู่ระบบสำเร็จ",
             "ยินดีต้อนรับ " + res.data.fullname,
             "success"
           )
-          .then(() => window.location.assign("/adminpage"));
+          .then(() => window.location.assign("/mainstore"));
         } else{
           Swal.fire(
             "เข้าสู่ระบบล้มเหลว",

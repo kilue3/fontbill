@@ -30,7 +30,7 @@ const NavBar = () => {
     window.location.assign("/");
   };
   const toggle = () => setIsOpen(!isOpen);
-  if (session.status === "admin") {
+  if (session.status === "admin"||session.status==="normal") {
     return (
       <div>
         <Navbar
@@ -80,7 +80,7 @@ const NavBar = () => {
         </Navbar>
       </div>
     );
-  } else if (session.status === "normal") {
+  } else if (session.status === "enable") {
     return (
       <div>
         <Navbar
@@ -101,7 +101,7 @@ const NavBar = () => {
             />
 
             <NavbarBrand
-              href="/adminpage"
+              href="/mainstore"
               style={{ color: "#f8813a", fontSize: "30px" }}
             >
               <b>ระบบวางบิล Online</b>
@@ -113,11 +113,11 @@ const NavBar = () => {
                   <NavLink href="/"></NavLink>
                 </NavItem>
               </Nav>
-              <a href="/profile">
+              {/* <a href="/profile"> */}
                 <NavLink style={{ paddingLeft: "0px", paddingRight: "5px" }}>
                   {session.fname} {session.lname}
                 </NavLink>
-              </a>
+              {/* </a> */}
               <NavLink style={{ paddingLeft: "0px", paddingRight: "0px" }}>
                 <Button
                   onClick={logout}
@@ -134,52 +134,7 @@ const NavBar = () => {
         </Navbar>
       </div>
     );
-  } else {
-    return (
-      <div>
-        <Navbar
-          className="navbar navbar-expand-lg navbar-light sticky-top shadow-box-example "
-          color="white"
-          light
-          expand="md"
-          style={{ maxWidth: "auto" }}
-        >
-          <Container
-            className="container-fluid TZS-Container"
-            style={{ maxWidth: "1700px" }}
-          >
-            <NavbarBrand href="/" style={{ color: "#f8813a" }}>
-              ระบบวางบิล<h5>Online</h5>
-            </NavbarBrand>
-            <NavbarToggler onClick={toggle} />
-            <Collapse isOpen={isOpen} navbar>
-              <Nav className="mr-auto" navbar>
-                <NavItem>
-                  <NavLink href="/"></NavLink>
-                </NavItem>
-              </Nav>
-              <a href="/profile">
-                <NavLink style={{ paddingLeft: "0px", paddingRight: "5px" }}>
-                  {session.fname} {session.lname}
-                </NavLink>
-              </a>
-              <NavLink style={{ paddingLeft: "0px", paddingRight: "0px" }}>
-                <Button
-                  onClick={logout}
-                  outline
-                  color="danger"
-                  className="Button-Style"
-                  style={{ marginLeft: "10px" }}
-                >
-                  ออกจากระบบ
-                </Button>
-              </NavLink>
-            </Collapse>
-          </Container>
-        </Navbar>
-      </div>
-    );
-  }
+  } 
 };
 
 export default NavBar;

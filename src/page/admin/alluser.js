@@ -23,10 +23,16 @@ const Alluser = () => {
 }
 
   const [User, setUser] = useState([]);
+  const [normaluser, setnormaluser] = useState([]);
+
   useEffect(() => {
     axios.get(API("Showlistnameusers")).then((response) => {
       setUser(response.data);
     });
+    axios.get(API("Allnormaluser")).then((response) => {
+      setnormaluser(response.data);
+    });    
+
   }, []);
   // if (ses.status == "นักเรียน") {
   //     window.location.assign("/");
@@ -79,7 +85,7 @@ const Alluser = () => {
                               ""
                             )}
                     
-              
+              <h4>รายชื่อ แอดมิน</h4>
                 <Table bordered>
                   <thead>
                     <tr>
@@ -109,6 +115,46 @@ const Alluser = () => {
                             <td>{list.status}</td>
                             <td> {ses.status == "admin" ? (
                               <Info_user id={list.id} />
+                            ) : (
+                              ""
+                            )}</td>
+                           
+                          </tr>
+                        </>
+                      );
+                    })}
+                  </tbody>
+                </Table>
+                <h4>รายชื่อผู้ใช้ทั่วไป</h4>
+                <Table bordered>
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>ชื่อ เต็ม </th>
+                      <th>ชื่อผู้ใช้ </th>
+                      <th>สถานะ</th>
+                      
+                     
+                      {ses.status == "admin" ? (
+                          <th>รายละเอียดผู้ใช้</th> ) : (
+                              ""
+                            )}
+                    
+
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {normaluser.map((normal) => {
+                      return (
+                        <>
+                          <tr>
+                            <th>{normal.id}</th>
+                            <td>{normal.fullname}</td>
+                            <td>{normal.username}</td>
+                            <td>{normal.status}</td>
+                            <td> {ses.status == "admin" ? (
+                              <Info_user id={normal.id} />
                             ) : (
                               ""
                             )}</td>
