@@ -14,8 +14,8 @@ import {
 import { Helmet } from "react-helmet";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { AiFillCheckSquare } from "react-icons/ai";
 import API from '../API/API'
+import bill from ".././../img/invoice.png"
 
 const title = "เข้าสู่ระบบ";
 
@@ -95,7 +95,8 @@ const Store_Login = () => {
           >
             <CardBody className="">
               <h4 align="center">
-                <AiFillCheckSquare />
+              <img className="buttonMenuIcon" src={bill} />
+
                 ระบบวางบิล<h5>Online</h5>(ผู้ใช้ทั่วไป)
               </h4>
               <div className="borderline" />

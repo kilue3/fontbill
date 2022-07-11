@@ -23,15 +23,20 @@ const Api = (props) => {
         case 'Dateshows': return path + "opbilldateshow";
         case 'Today': return path + "selecttoday";
         case 'Addbills': return path + "addbill";
-;
-        
-        
+       case 'Editamount': return path + "editamountbill/";
+       case 'Addfire': return path + "addfile/";
+       case 'Listfile': return path + "listfile/";
+       case 'Delectfile': return path + "Delectfile/";
+       case 'Delectbills': return path + "Delectbills/";
+
+       
         case 'Storelist': return path + "storelist";
         case 'Findstore': return path + "findstore/";
         case 'Delectstore': return path + "delectstore/";
         case 'Resetpassstore': return path + "Resetpassstore/";
         case 'AddStore': return path + "addStore";
         case 'BilllistAtive': return path + "billlistative/";
+        case 'Billid': return path + "billid/";
 
         
         

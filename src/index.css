@@ -1,13 +1,32 @@
 @charset "utf-8";
 /* CSS Document */
-*{	font-family: 'Inter', Prompt, sans-serif;
+/* @import url('https://fonts.googleapis.com/css2?family=Pattaya&family=Srisakdi:wght@700&display=swap');
+*{font-family: 'Pattaya', 'sans-serif';
+  font-family: 'Srisakdi', 'cursive';
 
    
+} */
+@import url('https://fonts.googleapis.com/css2?family=Mali&family=Pattaya&family=Srisakdi:wght@700&display=swap');
+*{font-family: 'Mali', 'cursive';
+ }
+@keyframes color {
+  0% { background: #a6a6a6; }
+
+  20%   { background: #404040; }
+  400%  { background: #595959; }
+  60%  { background: #737373; }
+  80%  { background: #8c8c8c; }
+  100%  { background: #b3b3b3; }
 }
-body{
+
+body {
+  background: #000000; /* Fallback */
+  animation: color 8s infinite linear;
+}
+/* body{
 	background: #4b4b4b;
 
-}
+} */
 .shadow-box-example {
   box-shadow: 1px 1px 20px -4px gray;
    background: #FFFFFF; 
@@ -53,7 +72,10 @@ A:visited {
 .Button-Style {
   border-radius: 10px;
 }
-
+.status {
+  font-size: 15px;
+  color: red;
+}
 .buttonMenu {
   background: #FFFFFF;
   color: #000000;
@@ -592,11 +614,11 @@ Breadcrumb {
 {
    text-transform: uppercase;
   background-image: linear-gradient(
-    -225deg,
-    #000000 0%,
-    #F341FF 29%,
-    #4A4A4A 67%,
-    #EB7FF1 100%
+    -205deg,
+    #00ff15 15%,
+    #ffee02 25%,
+    #ff1100 50%,
+    #00f7ff 100%
     /* #ff0000 0%,
     #fecd7f 29%,
     #000000 67%,
@@ -619,7 +641,7 @@ Breadcrumb {
   text-fill-color: transparent;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: textclip 2s linear infinite;
+  animation: textclip 5s linear infinite;
   display: inline-block;
       font-size: 70px;
 }
@@ -628,4 +650,50 @@ Breadcrumb {
   to {
     background-position: 200% center;
   }
+}
+
+svg {
+    display: block;
+    font: 10.5em 'Montserrat';
+    width: 960px;
+    height: 300px;
+    margin: 0 auto;
+}
+
+.text-copy {
+    fill: none;
+    stroke: white;
+    stroke-dasharray: 6% 29%;
+    stroke-width: 5px;
+    stroke-dashoffset: 0%;
+    animation: stroke-offset 5.5s infinite linear;
+}
+
+.text-copy:nth-child(1){
+  stroke: #4D163D;
+  animation-delay: -1;
+}
+
+.text-copy:nth-child(2){
+  stroke: #840037;
+  animation-delay: -2s;
+}
+
+.text-copy:nth-child(3){
+  stroke: #BD0034;
+  animation-delay: -3s;
+}
+
+.text-copy:nth-child(4){
+  stroke: #BD0034;
+  animation-delay: -4s;
+}
+
+.text-copy:nth-child(5){
+  stroke: #FDB731;
+  animation-delay: -5s;
+}
+
+@keyframes stroke-offset{
+  100% {stroke-dashoffset: -35%;}
 }

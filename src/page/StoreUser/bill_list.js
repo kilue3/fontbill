@@ -16,7 +16,7 @@ const Billlist = () => {
   };
   const [ses, setSes] = useState(session);
   if (ses.status == "store" || ses.status == null) {
-    window.location.assign("/");
+    window.location.assign("/Billuser");
   }
 
   const [list, setlist] = useState([]);
@@ -31,6 +31,11 @@ const Billlist = () => {
     // });
   }, []);
 
+  var limitday = new Date();
+  const result = limitday.toLocaleDateString('th-TH', {
+    year: 'numeric',
+    month: 'long',
+  })
   return (
     <>
       <Helmet>
@@ -64,7 +69,7 @@ const Billlist = () => {
                     className="header-1-Icon"
                     src="https://cdn-icons-png.flaticon.com/512/1946/1946436.png"
                   />
-                  รายการบิลที่แจ้งเบิก
+                  รายการบิลที่แจ้งเบิก <b>{result}</b>
                 </h5>
               </Card>
             </Card>
@@ -91,11 +96,13 @@ const Billlist = () => {
 
                             <th>{lists.bill_id}</th>
                             <td>{lists.bill_detail}</td>
-                            <td>{lists.bill_status}</td>
+                            {lists.bill_status =="wait" ? (<><td className="status">สร้างใหม่</td></>):(<>
+                            {lists.bill_status }</>)}
+                            
 
                             <td>
                               {" "}
-                              <Button color="primary" href="" block>
+                              <Button color="primary" href={"/Billdetailfrom/"+lists.bill_id} block>
 ดูรายละเอียด                              </Button>
                             </td>
                           </tr>

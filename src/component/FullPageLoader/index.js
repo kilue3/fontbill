@@ -1,6 +1,6 @@
 import React from 'react'
 import Spinner from "../FullPageLoader/ne.gif"
-
+import img from "./load2.gif"
 export const FullPaageLoader = () => {
     const mystyle = {
         position: "fixed",
@@ -8,7 +8,7 @@ export const FullPaageLoader = () => {
         height: "100%",
         top: "0",
         left: "0",
-        background: "#f8f8f8ad",
+        background: "#383a3e",
     }
     const loader = {
         width: "250px",
@@ -20,7 +20,7 @@ export const FullPaageLoader = () => {
     }
     return (
         <div className="fp-container" style={mystyle}>
-            <img src='https://f.ptcdn.info/413/072/000/qnqdfy7rjt1RwwWVr2OQ-o.gif' className="fp-loader" style={loader} alt="loading" />
+            <img src={img} className="fp-loader" style={loader} alt="loading" />
         </div>
     )
 }
