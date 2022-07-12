@@ -10,7 +10,7 @@ import Store_Login from "./page/StoreUser/store_login";
 import MainStorepage from "./page/StoreUser/main_store";
 import Billlist from "./page/StoreUser/bill_list";
 import Billdetail from "./page/StoreUser/bill_detail.js"
-
+import Testfile from "../src/page/testfile"
 
 
 const App = () => {
@@ -40,6 +40,7 @@ const App = () => {
           <Route path="/mainstore" component={MainStorepage} />
           <Route path="/Billuser" component={Billlist} />
           <Route path="/Billdetailfrom/:id" component={Billdetail} />
+          <Route path="/test" component={Testfile} />
 
           
         </Switch>

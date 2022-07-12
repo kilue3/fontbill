@@ -64,7 +64,7 @@ let data = fileup
 let formData = new FormData();
 formData.append('image',data);
 
- axios.post(API("Movefile")+id,formData).then((response) => {
+ axios.post(API("Movefile"),formData).then((response) => {
   setfileup(response.data);
     window.location.reload()
   });
@@ -342,10 +342,9 @@ formData.append('image',data);
                                 <Button
                                   color="link"
                                   outline
-                                  href={'http://localhost/Mback/img/upload/'+files.file_name}
+                                  href={files.file_url}
                                 >
                                   {files.file_name}
-                                  
                                 </Button>
                               </td>
                               <th>{files.file_date}</th>

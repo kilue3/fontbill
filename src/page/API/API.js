@@ -38,7 +38,8 @@ const Api = (props) => {
         case 'BilllistAtive': return path + "billlistative/";
         case 'Billid': return path + "billid/";
 
-        
+        case 'Movefile': return path + "movefiles/";
+
         
         
 

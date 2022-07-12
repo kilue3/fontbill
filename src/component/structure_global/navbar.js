@@ -24,8 +24,8 @@ const NavBar = () => {
   const logout = () => {
     localStorage.removeItem("id");
     localStorage.removeItem("fname");
-    localStorage.removeItem("lname");
-    localStorage.removeItem("username");
+    localStorage.removeItem("conname");
+    localStorage.removeItem("uname");
     localStorage.removeItem("status");
     window.location.assign("/");
   };
@@ -34,9 +34,9 @@ const NavBar = () => {
     return (
       <div>
         <Navbar
-          className="navbar navbar-expand-lg navbar-light sticky-top shadow-box-example "
+          className="navbar navbar-expand-lg navbar-dark sticky-top shadow-box-example "
           color="white"
-          light
+         
           expand="md"
           style={{ maxWidth: "auto" }}
         >
@@ -52,7 +52,7 @@ const NavBar = () => {
 
             <NavbarBrand
               href="/adminpage"
-              style={{ color: "#f8813a", fontSize: "30px" }}
+              style={{ color: "#0062cb", fontSize: "30px" }}
             >
               <b>ระบบวางบิล Online</b>
             </NavbarBrand>
@@ -102,7 +102,7 @@ const NavBar = () => {
 
             <NavbarBrand
               href="/mainstore"
-              style={{ color: "#f8813a", fontSize: "30px" }}
+              style={{ color: "#F1948A", fontSize: "30px" }}
             >
               <b>ระบบวางบิล Online</b>
             </NavbarBrand>
