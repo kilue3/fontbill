@@ -9,7 +9,7 @@ import API from "../API/API";
 
 const title = "รายการวางบิล";
 
-const Billpage = () => {
+const Billpasspage = () => {
   const session = {
     id: localStorage.getItem("id"),
     fname: localStorage.getItem("fname"),
@@ -37,7 +37,7 @@ const Billpage = () => {
 
   const [list, setlist] = useState([]);
   useEffect(() => {
-    axios.get(API("Billlist")).then((response) => {
+    axios.get(API("Billpasslist")).then((response) => {
       setlist(response.data);
     });
     
@@ -143,4 +143,4 @@ const Billpage = () => {
     </>
   );
 };
-export default Billpage;
+export default Billpasspage;

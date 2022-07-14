@@ -11,8 +11,8 @@ import MainStorepage from "./page/StoreUser/main_store";
 import Billlist from "./page/StoreUser/bill_list";
 import Billdetail from "./page/StoreUser/bill_detail.js"
 import Testfile from "../src/page/testfile"
-
-
+import Bill_detail_admin from "./page/admin/bill_detail_admin"
+import Billpasspage from "./page/admin/ิbillpass"
 const App = () => {
   const [loading, setloading] = useState(false);
 
@@ -41,6 +41,8 @@ const App = () => {
           <Route path="/Billuser" component={Billlist} />
           <Route path="/Billdetailfrom/:id" component={Billdetail} />
           <Route path="/test" component={Testfile} />
+          <Route path="/Billdetailfromadmin/:id" component={Bill_detail_admin} />
+          <Route path="/Billpasspage" component={Billpasspage} />
 
           
         </Switch>

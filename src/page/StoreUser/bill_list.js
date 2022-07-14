@@ -20,22 +20,18 @@ const Billlist = () => {
   }
 
   const [list, setlist] = useState([]);
-  //   const [normaluser, setnormaluser] = useState([]);
 
   useEffect(() => {
     axios.get(API("BilllistAtive") + ses.id).then((response) => {
       setlist(response.data);
     });
-    // axios.get(API("Allnormaluser")).then((response) => {
-    //   setnormaluser(response.data);
-    // });
   }, []);
 
   var limitday = new Date();
-  const result = limitday.toLocaleDateString('th-TH', {
-    year: 'numeric',
-    month: 'long',
-  })
+  const result = limitday.toLocaleDateString("th-TH", {
+    year: "numeric",
+    month: "long",
+  });
   return (
     <>
       <Helmet>
@@ -58,7 +54,7 @@ const Billlist = () => {
                     <a href="/mainstore">หน้าหลัก</a>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
-                  รายการบิลที่แจ้งเบิก
+                    รายการบิลที่แจ้งเบิก
                   </li>
                 </ol>
               </nav>
@@ -96,14 +92,32 @@ const Billlist = () => {
 
                             <th>{lists.bill_id}</th>
                             <td>{lists.bill_detail}</td>
-                            {lists.bill_status =="wait" ? (<><td className="status">สร้างใหม่</td></>):(<>
-                            {lists.bill_status }</>)}
-                            
+                            {lists.bill_status == "wait" ? (
+                              <>
+                                <td className="status">
+                                  <b>สร้างใหม่</b>
+                                </td>
+                              </>
+                            ) : (
+                              <>
+                                <td
+                                  className="status"
+                                  style={{ color: "green" }}
+                                >
+                                  <b>{lists.bill_status}</b>
+                                </td>
+                              </>
+                            )}
 
                             <td>
                               {" "}
-                              <Button color="primary" href={"/Billdetailfrom/"+lists.bill_id} block>
-ดูรายละเอียด                              </Button>
+                              <Button
+                                color="primary"
+                                href={"/Billdetailfrom/" + lists.bill_id}
+                                block
+                              >
+                                ดูรายละเอียด{" "}
+                              </Button>
                             </td>
                           </tr>
                         </>

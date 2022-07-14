@@ -71,6 +71,15 @@ const StaffLeftMenu = () => {
          รายการวางบิล
        </div>
      </a>
+     <a href="/Billpasspage">
+       <div className="buttonMenu">
+         <img
+           className="buttonMenuIcon"
+           src={bill}
+         />
+         บิลที่ผ่านการอนุมัติแล้ว
+       </div>
+     </a>
    </CardBody>
  </Card>
 </div>

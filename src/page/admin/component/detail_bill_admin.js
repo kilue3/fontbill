@@ -17,10 +17,9 @@ import { Helmet } from "react-helmet";
 import axios from "axios";
 import Swal from "sweetalert2";
 import StaffLeftMenu from "../../../component/staff_page/left_menu";
-import API from ".././../API/API";
-import Edit_amount from "./edit_amount";
+import API from "../../API/API";
 
-const Bill_detail_page = ({ id }) => {
+const Detail_bill_admin = ({ id }) => {
   const session = {
     id: localStorage.getItem("id"),
     fname: localStorage.getItem("fname"),
@@ -51,99 +50,14 @@ const Bill_detail_page = ({ id }) => {
   useEffect(() => {
     page();
   }, [id]);
-  ///////////////uploadfile////////////////////////////////////////////////
-  const initFile = {
-    file: "",
-  };
-  const [fileup, setfileup] = useState(initFile);
 
-  const handleFile = (e) => {
-    let file = e.target.files[0];
-    setfileup(file);
-    // console.log(e.target.files,"$$$$");
-    // console.log(e.target.files[0],"$$$$");
-  };
 
-  const savefile = (e) => {
-    let data = fileup;
-    let formData = new FormData();
-    formData.append("image", data);
-
-    axios.post(API("Movefile") + id, formData).then((response) => {
-      setfileup(response.data);
-      window.location.reload();
-    });
-  };
-
+ 
+ 
   var today = new Date();
   const D = today.toISOString().substring(0, 10);
 
-  // /////////////////delectfile///////////////////////////
-  function alertdelect(fid) {
-    console.log(fid);
-    Swal.fire({
-      title: "คำเตือน?",
-      text: "เมื่อลบไฟล์นี้แล้วจะไม่สามารถดูได้อีกได้อีก",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "ลบ!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios
-          .delete(API("Delectfile") + fid) //ส่งค่าไปแอดใน DB
-          .then((res) => {
-            if (res.data.message == "success") {
-              ////ต่อตรงนี้
-              Swal.fire("Deleted!", "ลบไฟล์สำเร็จ.", "success").then(() =>
-                window.location.reload()
-              );
-            } else {
-              Swal.fire("ลบไฟล์ไม่สำเร็จ", "", "error");
-            }
-          })
-
-          .catch((error) => {
-            console.log("error");
-          }); //ใช้ ดัก Error
-      }
-    });
-  }
-
-  function DelectBill(e) {
-    e.preventDefault();
-
-    Swal.fire({
-      title: "คำเตือน?",
-      text: "คุณต้องการจะยกเลิกการแจ้งบิลนี้ใช้ไหม",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "ลบ!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios
-          .delete(API("Delectbills") + id) //ส่งค่าไปแอดใน DB
-          .then((res) => {
-            if (res.data.message == "success") {
-              ////ต่อตรงนี้
-              Swal.fire("Deleted!", "ยกเลิกบิลสำเร็จ.", "success").then(() =>
-                window.location.assign("/Billuser")
-              );
-            } else {
-              Swal.fire("ยกเลิกบิลไม่สำเร็จ", "", "error");
-            }
-          })
-
-          .catch((error) => {
-            console.log("error");
-          }); //ใช้ ดัก Error
-      }
-    });
-  }
-
+ 
   ////////////////////////////approve//////////////////////////
   const initapprovenote = {
     note: "",
@@ -160,10 +74,10 @@ const Bill_detail_page = ({ id }) => {
       username: ses.uname,
       cm_note: approvenote.note,
       id_bill: id,
-      cm_status: "รออนุมัติ",
+      cm_status: "อนุมัติแล้ว",
     }; //เอาค่าที่รับจาก form มาใส่ใน json
     axios
-      .post(API("Sentapprove") + id, data)
+      .post(API("Approve") + id, data)
       .then((res) => {
         if (res.data.message == "success") {
           Swal.fire("ดำเนินการสำเร็จ", "ยื่นอนุมัติบิลสำเร็จแล้ว", "success");
@@ -181,29 +95,36 @@ const Bill_detail_page = ({ id }) => {
         console.log("error");
       }); //ใช้ ดัก Error
   };
-  // const delectComment = async (cid) => {
+  const notApprove = (e) => {
+    e.preventDefault();
 
-  //     if (cid) {
-  //         axios.delete("http://localhost:8080/Mback/public/commentdelect/" + cid)
-  //             .then((response) => {
-  //                 Swal.fire(
-  //                     'ดำเนินการสำเร็จ',
-  //                     'ลบความคิดเห็นสำเร็จแล้ว',
-  //                     'success'
-  //                 )
-  //                 page();
+    var data = {
+      username: ses.uname,
+      cm_note: approvenote.note,
+      id_bill: id,
+      cm_status: "ไม่ผ่านการอนุมัติ",
+    }; //เอาค่าที่รับจาก form มาใส่ใน json
+    axios
+      .post(API("Approve") + id, data)
+      .then((res) => {
+        if (res.data.message == "success") {
+          Swal.fire("ดำเนินการสำเร็จ", "ยื่นอนุมัติบิลสำเร็จแล้ว", "success");
+          page();
+        } else {
+          Swal.fire(
+            "ดำเนินการล้มเหลว",
+            "เกิดข้อผิดพลาดในการยื่นอนุมัติบิล โปรดลองใหม่อีกครั้ง",
+            "error"
+          );
+        }
+      })
 
-  //             })
-  //     }
-  // };
+      .catch((error) => {
+        console.log("error");
+      }); //ใช้ ดัก Error
+  };
+  
 
-  // const showallcomment = async () => {
-  //     axios.get("http://localhost:8080/Mback/public/commentfindall/" + id)
-  //         .then((response) => {
-  //             setcommentstudent(response.data);
-  //         }, []);
-
-  // };
 
   return (
     <>
@@ -232,7 +153,6 @@ const Bill_detail_page = ({ id }) => {
               <Card className="CardHeaderStyle">
                 <h5 style={{ margin: "0px" }}>
                   <b>รายละเอียด {title}</b>{" "}
-
                   {Bill.billstatus == "wait" ? (
                     <>
                       <b className="status"> "สร้างใหม่"</b>
@@ -255,34 +175,7 @@ const Bill_detail_page = ({ id }) => {
               }}
             >
               <CardBody className="CardBody-WithBoxContent">
-              {Bill.billstatus == "wait" || Bill.billstatus == "ไม่ผ่านการอนุมัติ"? (
-                                    <>   <h6>
-                                    เพิ่มไฟล์
-                                    <Form>
-                                      <div class="profile-img">
-                                        <Input
-                                          type="file"
-                                          name="fileupload"
-                                          id="fileupload"
-                                          onChange={(e) => handleFile(e)}
-                                        />
-                                        <br />
-                                      </div>
-                  
-                                      <Button
-                                        className="Button-Style"
-                                        color="success"
-                                        size="md"
-                                        onClick={(e) => savefile(e)}
-                                      >
-                                        บันทึกข้อมูล
-                                      </Button>
-                                    </Form>
-                                  </h6></>
-                                  ):("")}
-
-             
-                <div className="borderline" />
+                
                 {bFile.message == "fail" ? (
                   <>
                     <div className="NotFoundTxtInBox">
@@ -296,7 +189,7 @@ const Bill_detail_page = ({ id }) => {
                       <tr>
                         <th>ชื่อไฟล์</th>
                         <th>เวลาอัพไฟล์ </th>
-                        <th>ลบ</th>
+                        <th>รายละเอียด</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -315,12 +208,12 @@ const Bill_detail_page = ({ id }) => {
                               </td>
                               <th>{files.file_date}</th>
                               <td>
-                                {" "}
-                                <Button
-                                  color="danger"
-                                  onClick={() => alertdelect(files.id)}
+                              <Button
+                                  color="success"
+                                  block
+                                  href={API("Uploadfolder") + files.file_name}
                                 >
-                                  ลบไฟล์
+                                  ดู
                                 </Button>
                               </td>
                             </tr>
@@ -368,7 +261,6 @@ const Bill_detail_page = ({ id }) => {
                                 <b>ยอดวางบิล : {Bill.amount} บาท</b>
                               </Col>
                               <Col md="4">
-                                <Edit_amount id={id} />
                               </Col>
                             </Row>
                           </div>
@@ -450,7 +342,7 @@ const Bill_detail_page = ({ id }) => {
                       onChange={inputdata}
                     />
                   </FormGroup>
-                  {Bill.billstatus == "wait" || Bill.billstatus == "ไม่ผ่านการอนุมัติ"? (
+                  {Bill.billstatus == "รออนุมัติ" ? (
                     <>
                       <Button
                         type="submit"
@@ -460,18 +352,18 @@ const Bill_detail_page = ({ id }) => {
                         size="md"
                         onClick={(e) => Sentapprove(e)}
                       >
-                        ส่งอนุมัติ
+                        อนุมัติ
                       </Button>
                       <Button
-                    type="submit"
-                    className="Button-Style"
-                    block
-                    color="danger"
-                    size="md"
-                    onClick={(e) => DelectBill(e)}
-                  >
-                    ยกเลิกการวางบิล
-                  </Button>
+                        type="submit"
+                        className="Button-Style"
+                        block
+                        color="danger"
+                        size="md"
+                        onClick={(e) => notApprove(e)}
+                      >
+                        ไม่อนุมัติ
+                      </Button>
                     </>
                   ) : (
                     <>
@@ -484,23 +376,23 @@ const Bill_detail_page = ({ id }) => {
                         disabled
                         onClick={(e) => Sentapprove(e)}
                       >
-                        ส่งอนุมัติ
+                        อนุมัติ
                       </Button>
                       <Button
-                    type="submit"
-                    className="Button-Style"
-                    block
-                    color="danger"
-                    size="md"
-                    disabled
-                    onClick={(e) => DelectBill(e)}
-                  >
-                    ยกเลิกการวางบิล
-                  </Button>
+                        type="submit"
+                        className="Button-Style"
+                        block
+                        color="danger"
+                        size="md"
+                        disabled
+                        onClick={(e) => notApprove(e)}
+                      >
+                        ไม่อนุมัติ
+                      </Button>
                     </>
                   )}
 
-                 
+                
                 </Form>
               </CardBody>
             </Card>
@@ -513,4 +405,4 @@ const Bill_detail_page = ({ id }) => {
   );
 };
 
-export default Bill_detail_page;
+export default Detail_bill_admin;
