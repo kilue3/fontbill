@@ -10,6 +10,7 @@ import {
   NavLink,
   Button,
 } from "reactstrap";
+import logo from ".././../img/th.png"
 
 const NavBar = () => {
   const session = {
@@ -44,15 +45,16 @@ const NavBar = () => {
             className="container-fluid TZS-Container"
             style={{ maxWidth: "1700px" }}
           >
-            <img
-              className="buttonMenuIcon"
-              src="https://cdn-icons-png.flaticon.com/512/985/985765.png"
-              style={{width:"40px", height: "40px" }}
-            />
+            <a href="/adminpage"> <img
+              className="buttonMenuIcon" 
+              src={logo}
+              style={{width:"auto", height: "60px" ,marginLeft:"0px" ,paddingLeft:"0px" }}
+            /></a>
+           
 
             <NavbarBrand
               href="/adminpage"
-              style={{ color: "#0062cb", fontSize: "30px" }}
+              style={{ color: "#0062cb", fontSize: "30px" ,marginTop:"20px" }}
             >
               <b>ระบบวางบิล Online</b>
             </NavbarBrand>
@@ -67,7 +69,7 @@ const NavBar = () => {
               <NavLink style={{ paddingLeft: "0px", paddingRight: "0px" }}>
                 <Button
                   onClick={logout}
-                  outline
+                  block
                   color="danger"
                   className="Button-Style"
                   style={{ marginLeft: "10px" }}
@@ -94,15 +96,16 @@ const NavBar = () => {
             className="container-fluid TZS-Container"
             style={{ maxWidth: "1700px" }}
           >
-              <img
-              className="buttonMenuIcon"
-              src="https://cdn-icons-png.flaticon.com/512/2325/2325673.png"
-              style={{ Width: "auto", height: "30px" }}
-            />
+             <a href="/adminpage"> <img
+              className="buttonMenuIcon" 
+              src={logo}
+              style={{width:"auto", height: "60px" ,marginLeft:"0px" ,paddingLeft:"0px" }}
+            /></a>
+           
 
             <NavbarBrand
-              href="/mainstore"
-              style={{ color: "#F1948A", fontSize: "30px" }}
+              href="/adminpage"
+              style={{ color: "#0062cb", fontSize: "30px" ,marginTop:"20px" }}
             >
               <b>ระบบวางบิล Online</b>
             </NavbarBrand>
@@ -121,7 +124,7 @@ const NavBar = () => {
               <NavLink style={{ paddingLeft: "0px", paddingRight: "0px" }}>
                 <Button
                   onClick={logout}
-                  outline
+                  block
                   color="danger"
                   className="Button-Style"
                   style={{ marginLeft: "10px" }}

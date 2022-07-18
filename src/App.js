@@ -9,10 +9,12 @@ import Billpage from "./page/admin/bill_page";
 import Store_Login from "./page/StoreUser/store_login";
 import MainStorepage from "./page/StoreUser/main_store";
 import Billlist from "./page/StoreUser/bill_list";
-import Billdetail from "./page/StoreUser/bill_detail.js"
-import Testfile from "../src/page/testfile"
-import Bill_detail_admin from "./page/admin/bill_detail_admin"
-import Billpasspage from "./page/admin/ิbillpass"
+import Billdetail from "./page/StoreUser/bill_detail.js";
+import Testfile from "../src/page/testfile";
+import Bill_detail_admin from "./page/admin/bill_detail_admin";
+import Billpasspage from "./page/admin/ิbillpass";
+import History_bill from "./page/StoreUser/history_bill";
+
 const App = () => {
   const [loading, setloading] = useState(false);
 
@@ -20,7 +22,7 @@ const App = () => {
     setloading(true);
     setTimeout(() => {
       setloading(false);
-    }, 0);
+    }, 800);
   }, []);
   return loading ? (
     <FullPaageLoader />
@@ -30,7 +32,6 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/storepage" component={Storepage} />
-
           <Route path="/Login" component={Home} />
           <Route path="/adminpage" component={Adminpage} />
           <Route path="/alluserpage" component={Alluser} />
@@ -41,10 +42,9 @@ const App = () => {
           <Route path="/Billuser" component={Billlist} />
           <Route path="/Billdetailfrom/:id" component={Billdetail} />
           <Route path="/test" component={Testfile} />
-          <Route path="/Billdetailfromadmin/:id" component={Bill_detail_admin} />
+          <Route path="/Billdetailfromadmin/:id"  component={Bill_detail_admin} />
           <Route path="/Billpasspage" component={Billpasspage} />
-
-          
+          <Route path="/History_bill" component={History_bill} />
         </Switch>
       </Router>,
     ]

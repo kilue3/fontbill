@@ -73,7 +73,7 @@ const Billlist = () => {
             <Card className="CardBackground-1" style={{ margin: 10 }}>
               <CardBody>
                 <h4>รายการบิลที่แจ้งเบิก</h4>
-                <Table bordered>
+                <Table bordered responsive hover>
                   <thead>
                     <tr>
                       <th>วันเวลา</th>

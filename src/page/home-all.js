@@ -16,6 +16,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import API from './API/API'
 import bill from "../img/invoice.png"
+import logo from "../img/logos.png"
 
 const title = "เข้าสู่ระบบ";
 
@@ -87,6 +88,7 @@ const Login = () => {
                     </a> */}
         </div>
         <div align="center" style={{ marginTop: "30px" }}>
+          <img src={logo} ></img>
           <Card
             className="CardBackground-1"
             style={{ maxWidth: "500px" }}

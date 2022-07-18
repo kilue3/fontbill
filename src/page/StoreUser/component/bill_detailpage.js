@@ -8,7 +8,7 @@ import {
   CardHeader,
   FormGroup,
   Table,
-  Progress,
+  Badge,
   Input,
   Form,
   Button,
@@ -19,6 +19,7 @@ import Swal from "sweetalert2";
 import StaffLeftMenu from "../../../component/staff_page/left_menu";
 import API from ".././../API/API";
 import Edit_amount from "./edit_amount";
+import Edit_Detail from "./edit_detail";
 
 const Bill_detail_page = ({ id }) => {
   const session = {
@@ -28,6 +29,9 @@ const Bill_detail_page = ({ id }) => {
     status: localStorage.getItem("status"),
   };
   const [ses, setSes] = useState(session);
+  if (ses.status == "admin" || ses.status == null|| ses.status == "normal"  ) {
+    window.location.assign("/");
+  }
   const title = "บิลหมายเลข" + id;
 
   // const [status, SetStatus] = useState(session);
@@ -232,15 +236,14 @@ const Bill_detail_page = ({ id }) => {
               <Card className="CardHeaderStyle">
                 <h5 style={{ margin: "0px" }}>
                   <b>รายละเอียด {title}</b>{" "}
-
                   {Bill.billstatus == "wait" ? (
-                    <>
-                      <b className="status"> "สร้างใหม่"</b>
-                    </>
-                  ) : (
-                    <>
-                      <b className="status">"{Bill.billstatus}"</b>
-                    </>
+                     <>
+                     <Badge color="danger">สร้างใหม่</Badge>
+                     </>
+                   ) : (
+                     <>
+                     <Badge color="info">{Bill.billstatus}</Badge>
+                     </>
                   )}
                 </h5>
               </Card>
@@ -255,33 +258,38 @@ const Bill_detail_page = ({ id }) => {
               }}
             >
               <CardBody className="CardBody-WithBoxContent">
-              {Bill.billstatus == "wait" || Bill.billstatus == "ไม่ผ่านการอนุมัติ"? (
-                                    <>   <h6>
-                                    เพิ่มไฟล์
-                                    <Form>
-                                      <div class="profile-img">
-                                        <Input
-                                          type="file"
-                                          name="fileupload"
-                                          id="fileupload"
-                                          onChange={(e) => handleFile(e)}
-                                        />
-                                        <br />
-                                      </div>
-                  
-                                      <Button
-                                        className="Button-Style"
-                                        color="success"
-                                        size="md"
-                                        onClick={(e) => savefile(e)}
-                                      >
-                                        บันทึกข้อมูล
-                                      </Button>
-                                    </Form>
-                                  </h6></>
-                                  ):("")}
+                {Bill.billstatus == "wait" ||
+                Bill.billstatus == "ไม่ผ่านการอนุมัติ" ? (
+                  <>
+                    {" "}
+                    <h6>
+                      เพิ่มไฟล์
+                      <Form>
+                        <div class="profile-img">
+                          <Input
+                            type="file"
+                            name="fileupload"
+                            id="fileupload"
+                            onChange={(e) => handleFile(e)}
+                          />
+                          <br />
+                        </div>
 
-             
+                        <Button
+                          className="Button-Style"
+                          color="success"
+                          size="md"
+                          onClick={(e) => savefile(e)}
+                        >
+                          บันทึกข้อมูล
+                        </Button>
+                      </Form>
+                    </h6>
+                  </>
+                ) : (
+                  ""
+                )}
+
                 <div className="borderline" />
                 {bFile.message == "fail" ? (
                   <>
@@ -309,19 +317,38 @@ const Bill_detail_page = ({ id }) => {
                                   color="link"
                                   outline
                                   href={API("Uploadfolder") + files.file_name}
+                                  target="_blank"
                                 >
                                   {files.file_name}
+                                  
                                 </Button>
                               </td>
                               <th>{files.file_date}</th>
                               <td>
                                 {" "}
-                                <Button
-                                  color="danger"
-                                  onClick={() => alertdelect(files.id)}
-                                >
-                                  ลบไฟล์
-                                </Button>
+                                {Bill.billstatus == "wait" ||
+                                Bill.billstatus == "ไม่ผ่านการอนุมัติ" ? (
+                                  <>
+                                    {" "}
+                                    <Button
+                                      color="danger"
+                                      onClick={() => alertdelect(files.id)}
+                                    >
+                                      ลบไฟล์
+                                    </Button>
+                                  </>
+                                ) : (
+                                  <>
+                                    {" "}
+                                    <Button
+                                      color="danger"
+                                      onClick={() => alertdelect(files.id)}
+                                      disabled
+                                    >
+                                      ลบไฟล์
+                                    </Button>
+                                  </>
+                                )}
                               </td>
                             </tr>
                           </>
@@ -338,7 +365,7 @@ const Bill_detail_page = ({ id }) => {
                         className="CardBackground-2"
                         style={{ minHeight: "200px" }}
                       >
-                        <a >
+                        <a>
                           <CardHeader
                             className=""
                             style={{
@@ -368,13 +395,35 @@ const Bill_detail_page = ({ id }) => {
                                 <b>ยอดวางบิล : {Bill.amount} บาท</b>
                               </Col>
                               <Col md="4">
-                                <Edit_amount id={id} />
+                                {Bill.billstatus == "wait" ||
+                                Bill.billstatus == "ไม่ผ่านการอนุมัติ" ? (
+                                  <>
+                                    <Edit_amount id={id} />
+                                  </>
+                                ) : (
+                                  <></>
+                                )}
                               </Col>
                             </Row>
                           </div>
 
                           <div className="borderline" />
-                          <div>รายละเอียดการวางบิล : {Bill.billDetail}</div>
+                          <Row>
+                            <Col md="8">
+                              <div>รายละเอียดการวางบิล : {Bill.billDetail}</div>{" "}
+                            </Col>
+                            <Col md="4">
+                              {Bill.billstatus == "wait" ||
+                              Bill.billstatus == "ไม่ผ่านการอนุมัติ" ? (
+                                <>
+                                  <Edit_Detail id={id} />
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                            </Col>
+                          </Row>
+
                           <div align="right"></div>
                         </CardBody>
                       </Card>
@@ -411,9 +460,12 @@ const Bill_detail_page = ({ id }) => {
                         >
                           <div style={{ marginBottom: "5px" }}>
                             <b>{comments.cm_username} </b>
-                            <span style={{ color: "gray" }}> {comments.cm_time}</span>
+                            <span style={{ color: "gray" }}>
+                              {" "}
+                              {comments.cm_time}
+                            </span>
                           </div>
-                          <div  style={{}}>
+                          <div style={{}}>
                             <b>{comments.cm_status}</b>
                           </div>
                           <div className="text-muted" style={{}}>
@@ -450,7 +502,8 @@ const Bill_detail_page = ({ id }) => {
                       onChange={inputdata}
                     />
                   </FormGroup>
-                  {Bill.billstatus == "wait" || Bill.billstatus == "ไม่ผ่านการอนุมัติ"? (
+                  {Bill.billstatus == "wait" ||
+                  Bill.billstatus == "ไม่ผ่านการอนุมัติ" ? (
                     <>
                       <Button
                         type="submit"
@@ -463,15 +516,15 @@ const Bill_detail_page = ({ id }) => {
                         ส่งอนุมัติ
                       </Button>
                       <Button
-                    type="submit"
-                    className="Button-Style"
-                    block
-                    color="danger"
-                    size="md"
-                    onClick={(e) => DelectBill(e)}
-                  >
-                    ยกเลิกการวางบิล
-                  </Button>
+                        type="submit"
+                        className="Button-Style"
+                        block
+                        color="danger"
+                        size="md"
+                        onClick={(e) => DelectBill(e)}
+                      >
+                        ยกเลิกการวางบิล
+                      </Button>
                     </>
                   ) : (
                     <>
@@ -487,20 +540,18 @@ const Bill_detail_page = ({ id }) => {
                         ส่งอนุมัติ
                       </Button>
                       <Button
-                    type="submit"
-                    className="Button-Style"
-                    block
-                    color="danger"
-                    size="md"
-                    disabled
-                    onClick={(e) => DelectBill(e)}
-                  >
-                    ยกเลิกการวางบิล
-                  </Button>
+                        type="submit"
+                        className="Button-Style"
+                        block
+                        color="danger"
+                        size="md"
+                        disabled
+                        onClick={(e) => DelectBill(e)}
+                      >
+                        ยกเลิกการวางบิล
+                      </Button>
                     </>
                   )}
-
-                 
                 </Form>
               </CardBody>
             </Card>

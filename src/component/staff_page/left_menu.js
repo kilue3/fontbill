@@ -75,7 +75,7 @@ const StaffLeftMenu = () => {
        <div className="buttonMenu">
          <img
            className="buttonMenuIcon"
-           src={bill}
+           src={Historybill}
          />
          บิลที่ผ่านการอนุมัติแล้ว
        </div>
@@ -105,7 +105,7 @@ const StaffLeftMenu = () => {
                              รายการวางบิล
                          </div>
                      </a>
-                     <a href="">
+                     <a href="/History_bill">
                          <div className="buttonMenu">
                              <img className="buttonMenuIcon" src={Historybill}/>
                              ประวัติการวางบิล

@@ -43,6 +43,11 @@ const Info_user = ({ id }) => {
     status: localStorage.getItem("status"),
   };
   const [ses, setSes] = useState(session);
+
+
+  if (ses.status == "enable" || ses.status == null ) {
+    window.location.assign("/");
+  }
   /////////////delectuser////////////////
   function alertdelect() {
     Swal.fire({

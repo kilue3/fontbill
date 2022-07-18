@@ -8,7 +8,7 @@ import {
   CardHeader,
   FormGroup,
   Table,
-  Progress,
+  Badge ,
   Input,
   Form,
   Button,
@@ -28,7 +28,9 @@ const Detail_bill_admin = ({ id }) => {
   };
   const [ses, setSes] = useState(session);
   const title = "บิลหมายเลข" + id;
-
+  if (ses.status == "enable" || ses.status == null ) {
+    window.location.assign("/");
+  }
   // const [status, SetStatus] = useState(session);
   const initBill = {};
   const [Bill, setBill] = useState(initBill);
@@ -108,7 +110,7 @@ const Detail_bill_admin = ({ id }) => {
       .post(API("Approve") + id, data)
       .then((res) => {
         if (res.data.message == "success") {
-          Swal.fire("ดำเนินการสำเร็จ", "ยื่นอนุมัติบิลสำเร็จแล้ว", "success");
+          Swal.fire("ดำเนินการสำเร็จ", "ไม่ผ่านการอนุมัติ", "warning");
           page();
         } else {
           Swal.fire(
@@ -155,11 +157,11 @@ const Detail_bill_admin = ({ id }) => {
                   <b>รายละเอียด {title}</b>{" "}
                   {Bill.billstatus == "wait" ? (
                     <>
-                      <b className="status"> "สร้างใหม่"</b>
+                    <Badge color="danger">สร้างใหม่</Badge>
                     </>
                   ) : (
                     <>
-                      <b className="status">"{Bill.billstatus}"</b>
+                    <Badge color="info">{Bill.billstatus}</Badge>
                     </>
                   )}
                 </h5>
@@ -202,6 +204,8 @@ const Detail_bill_admin = ({ id }) => {
                                   color="link"
                                   outline
                                   href={API("Uploadfolder") + files.file_name}
+                                  target="_blank"
+
                                 >
                                   {files.file_name}
                                 </Button>
@@ -212,6 +216,8 @@ const Detail_bill_admin = ({ id }) => {
                                   color="success"
                                   block
                                   href={API("Uploadfolder") + files.file_name}
+                                  target="_blank"
+
                                 >
                                   ดู
                                 </Button>

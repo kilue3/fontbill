@@ -23,7 +23,7 @@ const Storepage = () => {
       setUser(response.data);
     });
   }, []);
-  if (ses.status == "store" || ses.status == null) {
+  if (ses.status == "enable" || ses.status == null ) {
     window.location.assign("/");
 
 }
@@ -74,7 +74,7 @@ const Storepage = () => {
                               ""
                             )}
               
-                <Table bordered>
+                <Table bordered responsive hover>
                   <thead>
                     <tr>
                       <th>ID</th>

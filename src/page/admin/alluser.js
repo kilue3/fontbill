@@ -17,10 +17,9 @@ const Alluser = () => {
     status: localStorage.getItem("status"),
   };
   const [ses, setSes] = useState(session);
-  if (ses.status == "store" || ses.status == null) {
+  if (ses.status == "enable" || ses.status == null ) {
     window.location.assign("/");
-
-}
+  }
 
   const [User, setUser] = useState([]);
   const [normaluser, setnormaluser] = useState([]);
@@ -34,10 +33,6 @@ const Alluser = () => {
     });    
 
   }, []);
-  // if (ses.status == "นักเรียน") {
-  //     window.location.assign("/");
-
-  // }
 
   return (
     <>
@@ -54,7 +49,7 @@ const Alluser = () => {
           </Col>
 
           <Col lg="9" className="col-ContentSetting">
-            <Card className="HeaderShadow">
+            <Card className="HeaderShadow" >
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb BreadcrumbStyle">
                   <li className="breadcrumb-item">
@@ -86,7 +81,7 @@ const Alluser = () => {
                             )}
                     
               <h4>รายชื่อ แอดมิน</h4>
-                <Table bordered>
+                <Table bordered hover responsive>
                   <thead>
                     <tr>
                       <th>ID</th>
@@ -126,7 +121,7 @@ const Alluser = () => {
                   </tbody>
                 </Table>
                 <h4>รายชื่อผู้ใช้ทั่วไป</h4>
-                <Table bordered>
+                <Table bordered hover responsive>
                   <thead>
                     <tr>
                       <th>ID</th>

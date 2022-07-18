@@ -7,9 +7,9 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import API from "../API/API";
 
-const title = "รายการวางบิล";
+const title = "ประวัติการวางบิล";
 
-const Billpage = () => {
+const History_bill = () => {
   const session = {
     id: localStorage.getItem("id"),
     fname: localStorage.getItem("fname"),
@@ -17,7 +17,7 @@ const Billpage = () => {
     status: localStorage.getItem("status"),
   };
   const [ses, setSes] = useState(session);
-  if (ses.status == "enable" || ses.status == null ) {
+  if (ses.status == "store" || ses.status == null) {
     window.location.assign("/");
   }
   const date = new Date();
@@ -37,7 +37,7 @@ const Billpage = () => {
 
   const [list, setlist] = useState([]);
   useEffect(() => {
-    axios.get(API("Billlist")).then((response) => {
+    axios.get(API("Billhistory")+ses.id).then((response) => {
       setlist(response.data);
     });
     
@@ -70,7 +70,7 @@ const Billpage = () => {
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb BreadcrumbStyle">
                   <li className="breadcrumb-item">
-                    <a href="/adminpage">หน้าหลัก</a>
+                    <a href="/mainstore">หน้าหลัก</a>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
                     รายการวางบิลประจำเดือน 
@@ -93,11 +93,10 @@ const Billpage = () => {
               <CardBody>
                 {/* {ses.status == "admin" ? <Registerusers /> : ""} */}
 
-                <Table bordered responsive hover>
+                <Table bordered responsive>
                   <thead>
                     <tr>
                       <th>วัน-เวลา</th>
-                      <th>ชื่อร้านค้า</th>
                       <th>เลขที่บิล </th>
                       <th>จำนวนเงิน</th>
                       <th>รายละเอียด</th>
@@ -113,9 +112,7 @@ const Billpage = () => {
                         <>
                           <tr>
                             <td>{lists.bill_op_time}</td>
-                            <th>{lists.Store_name}</th>
-
-                            <th>{lists.bill_id}</th>
+ <th>{lists.bill_id}</th>
                             <th>{lists.bill_amount}</th>
 
                             <td>{lists.bill_detail}</td>
@@ -126,7 +123,7 @@ const Billpage = () => {
 
                             <td>
                               {" "}
-                              <Button color="primary" href={"/Billdetailfromadmin/"+lists.bill_id} block>
+                              <Button color="primary" href={"/Billdetailfrom/"+lists.bill_id} block>
 ดูรายละเอียด                              </Button>
                             </td>
                           </tr>
@@ -143,4 +140,4 @@ const Billpage = () => {
     </>
   );
 };
-export default Billpage;
+export default History_bill;

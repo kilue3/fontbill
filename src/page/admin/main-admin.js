@@ -28,7 +28,7 @@ const Adminpage = () => {
   };
 
   //////////////check status/////////////////
-  if (ses.status == "enable" || ses.status == null) {
+  if (ses.status == "enable" || ses.status == null ) {
     window.location.assign("/");
   }
 

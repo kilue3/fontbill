@@ -69,13 +69,22 @@ const Api = (props) => {
       return path + "findcmbill/";
     case "Billlist":
       return path + "billlist";
-      case "Billpasslist":
-        return path + "billpasslist";
- // case "Billinmonth":
+    case "Billpasslist":
+      return path + "billpasslist";
+    // case "Billinmonth":
     //   return path + "Billinmonth";
     case "Approve":
       return path + "approve/";
-    
+    case "Billhistory":
+      return path + "billhistory/";
+    case "Monthyearlist":
+      return path + "monthyearlist";
+      case "Billbymonthyearlist":
+        return path + "billbymonthyearlist/";
+        case "Editdetailbill":
+          return path + "editdetailbill/";
+
+        
     case "Uploadfolder":
       return uploads + "img/upload/";
 

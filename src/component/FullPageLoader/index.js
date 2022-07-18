@@ -1,6 +1,7 @@
 import React from 'react'
 import Spinner from "../FullPageLoader/ne.gif"
 import img from "./load2.gif"
+
 export const FullPaageLoader = () => {
     const mystyle = {
         position: "fixed",
@@ -8,7 +9,7 @@ export const FullPaageLoader = () => {
         height: "100%",
         top: "0",
         left: "0",
-        background: "#383a3e",
+        background: "#171c1d",
     }
     const loader = {
         width: "250px",
