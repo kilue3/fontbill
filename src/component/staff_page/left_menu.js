@@ -26,7 +26,7 @@ const StaffLeftMenu = () => {
         <Row>
         {status.status == "admin" || status.status == "normal" ? (
           <>
- <div className="col-sm-6 col-md-6 col-lg-12 col-LeftMenuSetting">
+ <div className="col-sm-12 col-md-12 col-lg-12 col-LeftMenuSetting">
  <Card className="CardBackground-1">
    <CardBody className="CardBody">
      <a href="/adminpage">
@@ -35,7 +35,7 @@ const StaffLeftMenu = () => {
            className="buttonMenuIcon"
            src={Home}
          />
-         หน้าหลักระบบผู้ดูแล
+         กำหนดขอบเขตการวางบิล
        </div>
      </a>
    </CardBody>
@@ -89,7 +89,7 @@ const StaffLeftMenu = () => {
 </div> 
 </>                           ) : (
                               <>
-                               <div className="col-sm-6 col-md-6 col-lg-12 col-LeftMenuSetting">
+                               <div className="col-sm-12 col-md-12 col-lg-12 col-LeftMenuSetting">
 
                               <Card className="CardBackground-1">
                  <CardBody className="CardBody">

@@ -11,6 +11,10 @@ import {
   Button,
 } from "reactstrap";
 import logo from ".././../img/th.png"
+import Profile from "./profile";
+import ProfileStore from "./profile_store"
+
+
 
 const NavBar = () => {
   const session = {
@@ -61,11 +65,12 @@ const NavBar = () => {
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
               <Nav className="mr-auto" navbar></Nav>
-              <a href="">
+              
                 <NavLink style={{ paddingLeft: "0px", paddingRight: "5px" }}>
-                  {session.fname} {session.lname}
+                  <Profile id={ses.id}/>
+                  
                 </NavLink>
-              </a>
+           
               <NavLink style={{ paddingLeft: "0px", paddingRight: "0px" }}>
                 <Button
                   onClick={logout}
@@ -96,7 +101,7 @@ const NavBar = () => {
             className="container-fluid TZS-Container"
             style={{ maxWidth: "1700px" }}
           >
-             <a href="/adminpage"> <img
+             <a href="/mainstore"> <img
               className="buttonMenuIcon" 
               src={logo}
               style={{width:"auto", height: "60px" ,marginLeft:"0px" ,paddingLeft:"0px" }}
@@ -104,7 +109,7 @@ const NavBar = () => {
            
 
             <NavbarBrand
-              href="/adminpage"
+              href="/mainstore"
               style={{ color: "#0062cb", fontSize: "30px" ,marginTop:"20px" }}
             >
               <b>ระบบวางบิล Online</b>
@@ -116,11 +121,11 @@ const NavBar = () => {
                   <NavLink href="/"></NavLink>
                 </NavItem>
               </Nav>
-              {/* <a href="/profile"> */}
-                <NavLink style={{ paddingLeft: "0px", paddingRight: "5px" }}>
-                  {session.fname} {session.lname}
+              
+              <NavLink style={{ paddingLeft: "0px", paddingRight: "5px" }}>
+                  <ProfileStore id={ses.id}/>
+                  
                 </NavLink>
-              {/* </a> */}
               <NavLink style={{ paddingLeft: "0px", paddingRight: "0px" }}>
                 <Button
                   onClick={logout}

@@ -14,11 +14,11 @@ import {
 } from "reactstrap";
 import axios from "axios";
 import Swal from "sweetalert2";
-import API from "../API/API";
-import Resetpass from "./component/resetpass";
+import API from "../../page/API/API";
+import Resetpass from "../../page/admin/component/resetpass";
 
 
-const Info_user = ({ id }) => {
+const Profile = ({ id }) => {
   const { className } = id;
 
   const [modal, setModal] = useState(false);
@@ -45,9 +45,6 @@ const Info_user = ({ id }) => {
   const [ses, setSes] = useState(session);
 
 
-  if (ses.status == "enable" || ses.status == null ) {
-    window.location.assign("/");
-  }
   /////////////delectuser////////////////
   function alertdelect() {
     Swal.fire({
@@ -82,9 +79,9 @@ const Info_user = ({ id }) => {
 
   return (
     <div style={{ marginTop: "0px", marginLeft: "10px" }}>
-      <Button color="danger" onClick={toggle} outline>
-        รายละเอียดผู้ใช้
-      </Button>
+      <div color="danger" onClick={toggle} outline>
+      {session.fname} {session.lname}
+      </div>
       <Form align="right">
         <Modal isOpen={modal} toggle={toggle} className={className}>
           <ModalHeader toggle={toggle}> ID :    {id} </ModalHeader>
@@ -150,18 +147,7 @@ const Info_user = ({ id }) => {
                       <b>{userinfo.username}</b>
                     </div>
                   </Row>
-                  {ses.status == "admin" ? (
-                    <Row>
-                      <div className="col-6" align="right">
-                        รหัสผ่าน :
-                      </div>
-                      <div className="col-6" align="left">
-                        <b>{userinfo.password}</b>
-                      </div>
-                    </Row>
-                  ) : (
-                    ""
-                  )}
+                 
                   <Row>
                     <div className="col-6" align="right">
                       เบอร์โทรศัพท์ :
@@ -182,35 +168,16 @@ const Info_user = ({ id }) => {
                   <Form>
                     <div align="center">
                 
-                      {userinfo.status == "admin" ? (
-                        ""
-                      ) : (
-                        <>
+                
                           <Row>
-                            <Col md="6">
-                              <Button
-                                className="Button-Style"
-                                color="danger"
-                                outline
-                                onClick={(e) => alertdelect(e)}
-                              >
-                                ลบบัญชีผู้ใช้
-                              </Button>
-                            </Col>
-                            <Col md="6">
+                      
+                            <Col >
                                 <Resetpass id={id}/>
-                              {/* <Button
-                                className="Button-Style"
-                                color="warning"
-                                onClick={""}
-                              >
-                                เปลี่ยนรหัสผ่าน
-                              </Button> */}
+                             
                             </Col>
 
                           </Row>
-                        </>
-                      )}
+                    
                     </div>
                   </Form>
                 </CardBody>
@@ -237,4 +204,4 @@ const Info_user = ({ id }) => {
   );
 };
 
-export default Info_user;
+export default Profile;

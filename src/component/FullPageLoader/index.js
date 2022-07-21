@@ -12,7 +12,7 @@ export const FullPaageLoader = () => {
         background: "#171c1d",
     }
     const loader = {
-        width: "250px",
+        width: "300px",
         top: "30%",
         left: "43%",
         zindex: "1000",

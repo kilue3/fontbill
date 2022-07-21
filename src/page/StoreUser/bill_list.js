@@ -95,10 +95,11 @@ const Billlist = () => {
                             {lists.bill_status == "wait" ? (
                               <>
                                 <td className="status">
-                                  <b>สร้างใหม่</b>
+                                  <b style={{ color: "blue" }}>สร้างใหม่</b>
                                 </td>
                               </>
-                            ) : (
+                            ) : 
+                            lists.bill_status == "รออนุมัติ" ?(
                               <>
                                 <td
                                   className="status"
@@ -107,7 +108,15 @@ const Billlist = () => {
                                   <b>{lists.bill_status}</b>
                                 </td>
                               </>
-                            )}
+                            ):(<>
+                            <td
+                                  className="status"
+                                  style={{ color: "red" }}
+                                >
+                                  <b>{lists.bill_status}</b>
+                                </td>
+                            
+                            </>)}
 
                             <td>
                               {" "}

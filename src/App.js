@@ -22,7 +22,7 @@ const App = () => {
     setloading(true);
     setTimeout(() => {
       setloading(false);
-    }, 800);
+    }, 0);
   }, []);
   return loading ? (
     <FullPaageLoader />

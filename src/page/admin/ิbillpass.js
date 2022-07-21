@@ -9,12 +9,14 @@ import {
   Col,
   CardBody,
   Table,
+  CardHeader,
 } from "reactstrap";
 import { Helmet } from "react-helmet";
 import NavBar from "../../component/structure_global/navbar";
 import axios from "axios";
 import Swal from "sweetalert2";
 import API from "../API/API";
+import { BsFillCalendarCheckFill } from "react-icons/bs";
 
 const title = "รายการวางบิล";
 
@@ -29,20 +31,9 @@ const Billpasspage = () => {
   if (ses.status == "enable" || ses.status == null) {
     window.location.assign("/");
   }
-  const date = new Date();
+ 
 
-  const year = date.getFullYear();
-  const month = date.getMonth();
-
-  const result = date.toLocaleDateString("th-TH", {
-    year: "numeric",
-    month: "long",
-  });
-  //   const [Billinmonth, setBillinmonth] = useState([]);
-  // const data ={
-  //   bmonth: month
-  // }
-
+  ///////////////////////////////////////////////////////////////////
   const [list, setlist] = useState([]);
   const [listmonth, setlistmonth] = useState([]);
 
@@ -71,7 +62,31 @@ const Billpasspage = () => {
         console.log("error");
       }); //ใช้ ดัก Error
   };
+////////////////////////search////////////////////////////
+const initSearch = {
+  search: "",
+};
+const [Search, setSearch] = useState(initSearch);
+const inputdata = (event) => {
+  let { name, value } = event.target;
+  setSearch({ ...Search, [name]: value });
+};
 
+const Searchbill = (e) => {
+  e.preventDefault();
+  var id = Search.search;
+ 
+     axios.get(API("searchIDbill")+ id ) //ส่งค่าไปแอดใน DB
+            .then((res) => {
+              setlist(res.data);
+             
+            })
+      
+            .catch((error) => {
+              console.log("error");
+            }); //ใช้ ดัก Error
+
+};
   return (
     <>
       <Helmet>
@@ -84,6 +99,35 @@ const Billpasspage = () => {
         <Row>
           <Col lg="3" className="col-ContentSetting">
             <StaffLeftMenu />
+            <div className="col-sm-12 col-md-12 col-lg-12 col-LeftMenuSetting">
+              <Card className="CardBackground-1">
+                <CardHeader>
+                  <b>เดือนที่มีการวางบิล</b>
+                </CardHeader>
+                <CardBody className="CardBody">
+                  {listmonth.map((listsm) => {
+                    var limitday = new Date(listsm.year_and_month);
+                    const result = limitday.toLocaleDateString("th-TH", {
+                      year: "numeric",
+                      month: "long",
+                    });
+                    return (
+                      <>
+                        <div
+                          className="buttonMenu"
+                          onClick={(e, a) =>
+                            getBillbymonth(e, listsm.year_and_month)
+                          }
+                        >
+                          {result}
+                        </div>
+                        <hr></hr>
+                      </>
+                    );
+                  })}
+                </CardBody>
+              </Card>
+            </div>
           </Col>
 
           <Col lg="9" className="col-ContentSetting">
@@ -103,37 +147,24 @@ const Billpasspage = () => {
                 <h2 style={{ margin: "0px" }}>รายการวางบิลทั้งหมด</h2>
               </Card>
             </Card>
-            
+
             <Card className="HeaderShadow" style={{ margin: "0px" }}>
               <Card className="CardHeaderStyle">
                 <Col md="6"></Col>
-                <h5 style={{ margin: "0px" }}>เดือนที่มีการวางบิล
-               <hr></hr>
-                   <Row>
-                    
-                    {listmonth.map((listsm) => {
-                      var limitday = new Date(listsm.year_and_month);
-                      const result = limitday.toLocaleDateString("th-TH", {
-                        year: "numeric",
-                        month: "long",
-                      });
-                      return (
-                        <>
-                          <Col md="3" sm="6">
-                            <Button
-                              color="warning"
-                              block
-                              style={{ marginTop: "10px" }}
-                              onClick={(e, a) =>
-                                getBillbymonth(e, listsm.year_and_month)
-                              }
-                            >
-                              {result}
-                            </Button>
-                          </Col>
-                        </>
-                      );
-                    })}
+                <h5 style={{ margin: "0px" }}>
+                  ค้นหาหมายเลขบิล
+                  <hr></hr>
+                  <Row>
+                    <Col md="6">
+                  
+                      <Input type="text" name="search" placeholder="กรุณากรอกหมายเลขบิล" onChange={inputdata} >
+                        
+                      </Input>
+                    </Col>
+                    <Col lg="3" md="6">
+                  
+                  <Button color="warning" block style={{ marginTop: "5px" }} onClick={(e)=>Searchbill(e)}>ค้นหา</Button>
+                </Col>
                   </Row>
                 </h5>
               </Card>
@@ -158,7 +189,12 @@ const Billpasspage = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {list.map((lists) => {
+                  {list.message == "notfound" ? <>
+                  <div className="NotFoundTxtInBox">
+                    <div align="center"><b>ไม่พบหมายเลขบิล</b></div> 
+                    </div>{" "}
+                  </> : <>
+                  {list.map((lists) => {
                       return (
                         <>
                           <tr key={lists.bill_id}>
@@ -170,7 +206,7 @@ const Billpasspage = () => {
 
                             <td>{lists.bill_detail}</td>
 
-                            <td className="status">{lists.bill_status}</td>
+                            <td className="status"   style={{ color: "green" }}>{lists.bill_status}</td>
                             <td>
                               {" "}
                               <Button
@@ -185,6 +221,8 @@ const Billpasspage = () => {
                         </>
                       );
                     })}
+                  </>}
+
                   </tbody>
                 </Table>
               </CardBody>

@@ -26,7 +26,6 @@ const Login = () => {
     password: "",
   };
 
-  // const dispatch = useDispatch();
 
   const [User, setUser] = useState(log);
 
@@ -82,10 +81,7 @@ const Login = () => {
 
       <Container className="container-fluid TZS-Container">
         <div align="center" style={{ marginTop: "100px" }}>
-          {/* <a href="/home">
-                        <h4>ระบบวางบิลออนไลน์</h4>
-
-                    </a> */}
+        
         </div>
         <div align="center" style={{ marginTop: "30px" }}>
           <img src={logo} ></img>
@@ -123,9 +119,7 @@ const Login = () => {
                 </FormGroup>
                 <div style={{ marginTop: "20px" }}>
                   <Row>
-                    {/* <Col md-6>
-                                            <Button color="link" href="/Resetpassword" size="md" className="Button-Style">ลืมรหัสผ่าน?</Button>
-                                        </Col> */}
+                  
                     <Col md-6>
                       <Button
                         color="success"

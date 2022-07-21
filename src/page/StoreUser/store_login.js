@@ -83,10 +83,7 @@ const Store_Login = () => {
 
       <Container className="container-fluid TZS-Container">
         <div align="center" style={{ marginTop: "100px" }}>
-          {/* <a href="/home">
-                        <h4>ระบบวางบิลออนไลน์</h4>
-
-                    </a> */}
+      
         </div>
         <div align="center" style={{ marginTop: "30px" }}>
         <img src={logo} ></img>

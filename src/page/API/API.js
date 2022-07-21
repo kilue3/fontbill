@@ -1,9 +1,7 @@
 const Api = (props) => {
-  //let path = "http://localhost/flashwork_api/public/";
   let path = "http://localhost/Mback/public/";
   let uploads = "http://localhost/Mback/";
   switch (props) {
-    // import api from '../../api/linkapi';
     // -------------------- Category -----------------------
     case "Login":
       return path + "Login";
@@ -79,13 +77,18 @@ const Api = (props) => {
       return path + "billhistory/";
     case "Monthyearlist":
       return path + "monthyearlist";
-      case "Billbymonthyearlist":
-        return path + "billbymonthyearlist/";
-        case "Editdetailbill":
-          return path + "editdetailbill/";
+    case "Billbymonthyearlist":
+      return path + "billbymonthyearlist/";
+    case "Editdetailbill":
+      return path + "editdetailbill/";
 
-        
-    case "Uploadfolder":
+    case "searchIDbill":
+      return path + "searchIDbill/";
+      case "searchIDbillwait":
+        return path + "searchIDbillwait/";
+      
+      
+      case "Uploadfolder":
       return uploads + "img/upload/";
 
     default:

@@ -181,8 +181,7 @@ const Detail_bill_admin = ({ id }) => {
                 {bFile.message == "fail" ? (
                   <>
                     <div className="NotFoundTxtInBox">
-                      <img className="buttonMenuIcon" src="" />
-                      ไม่พบไฟล์เอกสารในบิลนี้
+                    <div align="center"><b>ไม่พบไฟล์เอกสารในบิลนี้</b></div> 
                     </div>{" "}
                   </>
                 ) : (

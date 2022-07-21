@@ -41,16 +41,38 @@ const Billpage = () => {
       setlist(response.data);
     });
     
-    // axios.post(API("Billinmonth"),data).then((response) => {
-    //   setlist(response.data);
-    // });
+   
   }, []);
   if (ses.status == "" | ses.status =="store") {
       window.location.assign("/");
 
   }
   
+////////////////////search/////////////
+const initSearch = {
+  search: "",
+};
+const [Search, setSearch] = useState(initSearch);
+const inputdata = (event) => {
+  let { name, value } = event.target;
+  setSearch({ ...Search, [name]: value });
+};
 
+const Searchbill = (e) => {
+  e.preventDefault();
+  var id = Search.search;
+ 
+     axios.get(API("searchIDbillwait")+ id ) //ส่งค่าไปแอดใน DB
+            .then((res) => {
+              setlist(res.data);
+             
+            })
+      
+            .catch((error) => {
+              console.log("error");
+            }); //ใช้ ดัก Error
+
+};
   return (
     <>
       <Helmet>
@@ -88,7 +110,25 @@ const Billpage = () => {
                 </h5>
               </Card>
             </Card>
-
+            <Card className="HeaderShadow" style={{ margin: "0px" }}>
+              <Card className="CardHeaderStyle">
+                <Col md="6"></Col>
+                <h5 style={{ margin: "0px" }}>
+                  ค้นหาหมายเลขบิล
+                  <hr></hr>
+                  <Row>
+                    <Col md="6">
+                  
+                      <Input type="text" name="search" placeholder="กรุณากรอกหมายเลขบิล" onChange={inputdata}></Input>
+                    </Col>
+                    <Col lg="3" md="6">
+                  
+                  <Button color="warning" block style={{ marginTop: "5px" }} onClick={(e)=>Searchbill(e)}>ค้นหา</Button>
+                </Col>
+                  </Row>
+                </h5>
+              </Card>
+              </Card>
             <Card className="CardBackground-1" style={{ margin: 10 }}>
               <CardBody>
                 {/* {ses.status == "admin" ? <Registerusers /> : ""} */}
@@ -108,6 +148,11 @@ const Billpage = () => {
                     </tr>
                   </thead>
                   <tbody>
+                  {list.message == "notfound" ? <>
+                  <div className="NotFoundTxtInBox">
+                    <div align="center"><b>ไม่พบหมายเลขบิล</b></div> 
+                    </div>{" "}
+                  </> : <>
                   {list.map((lists) => {
                       return (
                         <>
@@ -119,9 +164,31 @@ const Billpage = () => {
                             <th>{lists.bill_amount}</th>
 
                             <td>{lists.bill_detail}</td>
-                            {lists.bill_status =="wait" ? (<><td className="status">สร้างใหม่</td></>):(<>
+                            {lists.bill_status == "wait" ? (
+                              <>
+                                <td className="status">
+                                  <b style={{ color: "blue" }}>สร้างใหม่</b>
+                                </td>
+                              </>
+                            ) : 
+                            lists.bill_status == "รออนุมัติ" ?(
+                              <>
+                                <td
+                                  className="status"
+                                  style={{ color: "green" }}
+                                >
+                                  <b>{lists.bill_status}</b>
+                                </td>
+                              </>
+                            ):(<>
+                            <td
+                                  className="status"
+                                  style={{ color: "red" }}
+                                >
+                                  <b>{lists.bill_status}</b>
+                                </td>
                             
-                              <td className="status">{lists.bill_status}</td></>)}
+                            </>)}
                             
 
                             <td>
@@ -133,6 +200,7 @@ const Billpage = () => {
                         </>
                       );
                     })}
+                  </>}
                   </tbody>
                 </Table>
               </CardBody>

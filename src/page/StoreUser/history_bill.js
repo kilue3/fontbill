@@ -30,10 +30,7 @@ const History_bill = () => {
     month: 'long',
   
   })
-//   const [Billinmonth, setBillinmonth] = useState([]);
-// const data ={
-//   bmonth: month
-// }
+
 
   const [list, setlist] = useState([]);
   useEffect(() => {
@@ -41,9 +38,7 @@ const History_bill = () => {
       setlist(response.data);
     });
     
-    // axios.post(API("Billinmonth"),data).then((response) => {
-    //   setlist(response.data);
-    // });
+  
   }, []);
   if (ses.status == "" | ses.status =="store") {
       window.location.assign("/");

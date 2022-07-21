@@ -185,29 +185,7 @@ const Bill_detail_page = ({ id }) => {
         console.log("error");
       }); //ใช้ ดัก Error
   };
-  // const delectComment = async (cid) => {
 
-  //     if (cid) {
-  //         axios.delete("http://localhost:8080/Mback/public/commentdelect/" + cid)
-  //             .then((response) => {
-  //                 Swal.fire(
-  //                     'ดำเนินการสำเร็จ',
-  //                     'ลบความคิดเห็นสำเร็จแล้ว',
-  //                     'success'
-  //                 )
-  //                 page();
-
-  //             })
-  //     }
-  // };
-
-  // const showallcomment = async () => {
-  //     axios.get("http://localhost:8080/Mback/public/commentfindall/" + id)
-  //         .then((response) => {
-  //             setcommentstudent(response.data);
-  //         }, []);
-
-  // };
 
   return (
     <>
@@ -294,8 +272,7 @@ const Bill_detail_page = ({ id }) => {
                 {bFile.message == "fail" ? (
                   <>
                     <div className="NotFoundTxtInBox">
-                      <img className="buttonMenuIcon" src="" />
-                      ไม่พบไฟล์เอกสารในบิลนี้
+                    <div align="center"><b>ไม่พบไฟล์เอกสารในบิลนี้</b></div> 
                     </div>{" "}
                   </>
                 ) : (
@@ -331,7 +308,7 @@ const Bill_detail_page = ({ id }) => {
                                   <>
                                     {" "}
                                     <Button
-                                      color="danger"
+                                      color="danger" block
                                       onClick={() => alertdelect(files.id)}
                                     >
                                       ลบไฟล์
@@ -341,7 +318,7 @@ const Bill_detail_page = ({ id }) => {
                                   <>
                                     {" "}
                                     <Button
-                                      color="danger"
+                                      color="danger" block
                                       onClick={() => alertdelect(files.id)}
                                       disabled
                                     >
