@@ -1,6 +1,9 @@
 const Api = (props) => {
   let path = "http://localhost/Mback/public/";
   let uploads = "http://localhost/Mback/";
+
+  let store = "http://localhost/TEST/";
+
   switch (props) {
     // -------------------- Category -----------------------
     case "Login":
@@ -78,17 +81,40 @@ const Api = (props) => {
     case "Monthyearlist":
       return path + "monthyearlist";
     case "Billbymonthyearlist":
-      return path + "billbymonthyearlist/";
+      return path + "billbymonthyearlist";
     case "Editdetailbill":
       return path + "editdetailbill/";
 
     case "searchIDbill":
       return path + "searchIDbill/";
-      case "searchIDbillwait":
-        return path + "searchIDbillwait/";
+    case "searchIDbillwait":
+      return path + "searchIDbillwait/";
+    case "Monthlist":
+      return path + "Monthlist/";
+    case "Billpassyearlist":
+      return path + "Billpassyearlist/";
+    case "CheckStore":
+      return path + "CheckStore/";
+
+      case "SearchNameStore":
+        return path + "searchNameStore/";
+
+        case "Billnotpasslist":
+          return path + "Billnotpasslist";
+          case "SearchIDbillnotpass":
+            return path + "searchIDbillnotpass/";
+          
+
+
       
-      
-      case "Uploadfolder":
+      case "Getstore":
+      return store + "";
+    case "Getstoreinfo":
+      return store + "getstore.php?ID=";
+    case "SearchStore":
+      return store + "search.php?ID=";
+
+    case "Uploadfolder":
       return uploads + "img/upload/";
 
     default:

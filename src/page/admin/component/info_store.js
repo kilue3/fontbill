@@ -77,8 +77,8 @@ const Info_store = ({ id }) => {
 
   return (
     <div style={{ marginTop: "0px", marginLeft: "10px" }}>
-      <Button color="danger" onClick={toggle} outline>
-        รายละเอียดผู้ใช้
+      <Button color="success" onClick={toggle} outline>
+        รายละเอียด
       </Button>
       <Form align="right">
         <Modal isOpen={modal} toggle={toggle} className={className}>
@@ -112,43 +112,51 @@ const Info_store = ({ id }) => {
                  
                   </div>
                   <Row>
-                    <div className="col-6" align="right">
+                    <div className="col-4" align="right">
                       ชื่อร้านค้า :
                     </div>
-                    <div className="col-6" align="left">
+                    <div className="col-8" align="left">
                       <b>{userinfo.store_name}</b>
                     </div>
                   </Row>
                   <Row>
-                    <div className="col-6" align="right">
+                    <div className="col-4" align="right">
                       ชื่อผู้ติดต่อ :
                     </div>
-                    <div className="col-6" align="left">
+                    <div className="col-8" align="left">
                       <b>{userinfo.contactname}</b>
                     </div>
                   </Row>
                   <Row>
-                    <div className="col-6" align="right">
+                    <div className="col-4" align="right">
                       Email :
                     </div>
-                    <div className="col-6" align="left">
+                    <div className="col-8" align="left">
                       <b>{userinfo.email}</b>
                     </div>
                   </Row>
                   <Row>
-                    <div className="col-6" align="right">
+                    <div className="col-4" align="right">
                       ชื่อผู้ใช้ :
                     </div>
-                    <div className="col-6" align="left">
+                    <div className="col-8" align="left">
                       <b>{userinfo.username}</b>
+                    </div>
+                  </Row>
+                  <Row>
+                    <div className="col-4" align="right">
+                    Address :
+                    </div>
+                    <div className="col-8" align="left">
+                      <b>{userinfo.Address}</b>
                     </div>
                   </Row>
                   {ses.status == "admin" ? (
                     <Row>
-                      <div className="col-6" align="right">
+                      <div className="col-4" align="right">
                         รหัสผ่าน :
                       </div>
-                      <div className="col-6" align="left">
+                      <div className="col-8" align="left">
                         <b>{userinfo.password}</b>
                       </div>
                     </Row>
@@ -156,19 +164,43 @@ const Info_store = ({ id }) => {
                     ""
                   )}
                   <Row>
-                    <div className="col-6" align="right">
+                    <div className="col-4" align="right">
                       เบอร์โทรศัพท์ :
                     </div>
-                    <div className="col-6" align="left">
+                    <div className="col-8" align="left">
                       <b>{userinfo.tel}</b>
                     </div>
                   </Row>
                   <Row>
+                    <div className="col-4" align="right">
+                    VendGroup :
+                    </div>
+                    <div className="col-8" align="left">
+                      <b>{userinfo.VendGroup}</b>
+                    </div>
+                  </Row>
+                  <Row>
+                    <div className="col-4" align="right">
+                    TaxGroup:
+                    </div>
+                    <div className="col-8" align="left">
+                      <b>{userinfo.taxGroup}</b>
+                    </div>
+                  </Row>
+                  <Row>
                     <div className="col-6" align="right">
-                      สถานะ :
+                    WHT Registration ID:
                     </div>
                     <div className="col-6" align="left">
-                      <b>{userinfo.status}</b>
+                      <b>{userinfo.BPC_WHTid}</b>
+                    </div>
+                  </Row>
+                  <Row>
+                    <div className="col-4" align="right">
+                    BranchNo  :
+                    </div>
+                    <div className="col-8" align="left">
+                      <b>{userinfo.BPC_BranchNo}</b>
                     </div>
                   </Row>
                   <div className="borderline" />

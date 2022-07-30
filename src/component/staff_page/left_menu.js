@@ -77,7 +77,16 @@ const StaffLeftMenu = () => {
            className="buttonMenuIcon"
            src={Historybill}
          />
-         บิลที่ผ่านการอนุมัติแล้ว
+          รายการบิลที่ผ่านการอนุมัติแล้ว
+       </div>
+     </a>
+     <a href="/Bill_notpass_page">
+       <div className="buttonMenu">
+         <img
+           className="buttonMenuIcon"
+           src={Historybill}
+         />
+         รายการบิลที่ไม่ผ่านการอนุมัติ
        </div>
      </a>
    </CardBody>

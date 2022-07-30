@@ -597,22 +597,22 @@ Breadcrumb {
 .paginationBttns a {
   padding: 10px;
   margin: 8px;
-  border-radius: 50px;
+  border-radius: 10px;
   border: 3px solid rgb(253, 253, 253);
   color: #000000;
   cursor: pointer;
-  font-size: small;
+  font-size: medium;
 
 }
 
 .paginationBttns a:hover {
   color: rgb(37, 33, 33);
-  background-color: #eec578;
+  background-color: #b1ee78;
 }
 
 .paginationActive a {
   color: white;
-  background-color: #eec578;
+  background-color: #78c1ee;
 }
 
 .paginationDisabled a {

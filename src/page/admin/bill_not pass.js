@@ -1,25 +1,14 @@
 import React, { useState, useEffect } from "react";
 import StaffLeftMenu from "../../component/staff_page/left_menu";
-import {
-  Container,
-  Card,
-  Button,
-  Input,
-  Row,
-  Col,
-  CardBody,
-  Table,
-  CardHeader,
-} from "reactstrap";
+import { Container, Card, Button, Input, Row, Col, CardBody ,Table} from "reactstrap";
 import { Helmet } from "react-helmet";
 import NavBar from "../../component/structure_global/navbar";
 import axios from "axios";
-import Billlist from "./component/ิbillpass_list"
 import API from "../API/API";
-
+import Billlist from "./component/ิbillpass_list"
 const title = "รายการวางบิล";
 
-const Billpasspage = () => {
+const Bill_notpass_page = () => {
   const session = {
     id: localStorage.getItem("id"),
     fname: localStorage.getItem("fname"),
@@ -27,41 +16,38 @@ const Billpasspage = () => {
     status: localStorage.getItem("status"),
   };
   const [ses, setSes] = useState(session);
-  if (ses.status == "enable" || ses.status == null) {
+  if (ses.status == "enable" || ses.status == null ) {
     window.location.assign("/");
   }
- 
+  const date = new Date();
 
-  ///////////////////////////////////////////////////////////////////
+  const year = date.getFullYear();
+  const month = date.getMonth();
+
+  const result = date.toLocaleDateString('th-TH', {
+    year: 'numeric',
+    month: 'long',
+  
+  })
+//   const [Billinmonth, setBillinmonth] = useState([]);
+// const data ={
+//   bmonth: month
+// }
+
   const [list, setlist] = useState([]);
-  const [listmonth, setlistmonth] = useState([]);
-
   useEffect(() => {
-    axios.get(API("Billpasslist")).then((response) => {
+    axios.get(API("Billnotpasslist")).then((response) => {
       setlist(response.data);
     });
-    axios.get(API("Monthyearlist")).then((response) => {
-      setlistmonth(response.data);
-    });
+    
+   
   }, []);
-  if ((ses.status == "") | (ses.status == "store")) {
-    window.location.assign("/");
+  if (ses.status == "" | ses.status =="store") {
+      window.location.assign("/");
+
   }
-  const getBillbymonth = (e, data) => {
-    e.preventDefault();
-
-    console.log(data);
-    axios
-      .get(API("Billbymonthyearlist") + data)
-      .then((response) => {
-        setlist(response.data);
-      })
-
-      .catch((error) => {
-        console.log("error");
-      }); //ใช้ ดัก Error
-  };
-////////////////////////search////////////////////////////
+  
+////////////////////search/////////////
 const initSearch = {
   search: "",
 };
@@ -75,7 +61,7 @@ const Searchbill = (e) => {
   e.preventDefault();
   var id = Search.search;
  
-     axios.get(API("searchIDbill")+ id ) //ส่งค่าไปแอดใน DB
+     axios.get(API("SearchIDbillnotpass")+ id ) //ส่งค่าไปแอดใน DB
             .then((res) => {
               setlist(res.data);
              
@@ -98,42 +84,6 @@ const Searchbill = (e) => {
         <Row>
           <Col lg="3" className="col-ContentSetting">
             <StaffLeftMenu />
-            <div className="col-sm-12 col-md-12 col-lg-12 col-LeftMenuSetting">
-              <Card className="CardBackground-1">
-                <CardHeader>
-                  <b>เดือนที่มีการวางบิล</b>
-                </CardHeader>
-                <CardBody className="CardBody">
-                  {listmonth.map((listsm) => {
-                    var limitday = new Date(listsm.years);
-                    const result = limitday.toLocaleDateString("th-TH", {
-                      year: "numeric",
-                    }
-                    
-                    )
-                    const myJSON = JSON.stringify(listsm.years);
-                    console.log(listsm.years)
-                    ;
-                    return (
-                      <>
-                      <a href={"BillbyYearpage/"+listsm.years}>
-                           {/* <div
-                          className="buttonMenu"
-                          onClick={(e, a) =>
-                            getBillbymonth(e, listsm.year_and_month)
-                          }
-                        > */}
-                          {result}
-                        {/* </div> */}
-                      </a>
-                     
-                        <hr></hr>
-                      </>
-                    );
-                  })}
-                </CardBody>
-              </Card>
-            </div>
           </Col>
 
           <Col lg="9" className="col-ContentSetting">
@@ -144,16 +94,21 @@ const Searchbill = (e) => {
                     <a href="/adminpage">หน้าหลัก</a>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
-                    รายการวางบิลทั้งหมด
+                    รายการวางบิลที่ไม่ผ่านการอนุมัติ
                   </li>
                 </ol>
               </nav>
-              <Card className="CardHeaderStyle2">
+              <Card className="CardHeaderStyle">
                 <Col md="6"></Col>
-                <h2 style={{ margin: "0px" }}>รายการวางบิลทั้งหมด</h2>
+                <h5 style={{ margin: "0px" }}>
+                  <img
+                    className="header-1-Icon"
+                    src="https://cdn-icons-png.flaticon.com/512/1946/1946436.png"
+                  />
+                  รายการวางบิลที่ไม่ผ่านการอนุมัติ 
+                </h5>
               </Card>
             </Card>
-
             <Card className="HeaderShadow" style={{ margin: "0px" }}>
               <Card className="CardHeaderStyle">
                 <Col md="6"></Col>
@@ -163,9 +118,7 @@ const Searchbill = (e) => {
                   <Row>
                     <Col md="6">
                   
-                      <Input type="text" name="search" placeholder="กรุณากรอกหมายเลขบิล" onChange={inputdata} >
-                        
-                      </Input>
+                      <Input type="text" name="search" placeholder="กรุณากรอกหมายเลขบิล" onChange={inputdata}></Input>
                     </Col>
                     <Col lg="3" md="6">
                   
@@ -174,10 +127,9 @@ const Searchbill = (e) => {
                   </Row>
                 </h5>
               </Card>
-            </Card>
+              </Card>
             <Card className="CardBackground-1" style={{ margin: 10 }}>
               <CardBody>
-                <h3>รายการบิลที่ผ่านการอนุมัติ</h3>
                 {/* {ses.status == "admin" ? <Registerusers /> : ""} */}
 
                 <Table bordered responsive hover>
@@ -197,13 +149,11 @@ const Searchbill = (e) => {
                   <tbody>
                   {list.message == "notfound" ? <>
                   <div className="NotFoundTxtInBox">
-                    <div align="center"><b>ไม่พบหมายเลขบิล</b></div> 
+                    <div Align="center"><b>ไม่พบหมายเลขบิลไม่ผ่านการอนุมัติ</b></div> 
                     </div>{" "}
                   </> : <>
-                <Billlist id ={list}/>
-
+                  <Billlist id={list}/>
                   </>}
-
                   </tbody>
                 </Table>
               </CardBody>
@@ -214,4 +164,4 @@ const Searchbill = (e) => {
     </>
   );
 };
-export default Billpasspage;
+export default Bill_notpass_page;

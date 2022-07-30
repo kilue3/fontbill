@@ -110,7 +110,7 @@ const Detail_bill_admin = ({ id }) => {
       .post(API("Approve") + id, data)
       .then((res) => {
         if (res.data.message == "success") {
-          Swal.fire("ดำเนินการสำเร็จ", "ไม่ผ่านการอนุมัติ", "warning");
+          Swal.fire("ดำเนินการสำเร็จ", "บิลนี้ไม่ผ่านการอนุมัติ", "warning");
           page();
         } else {
           Swal.fire(

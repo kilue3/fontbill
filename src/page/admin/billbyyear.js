@@ -14,12 +14,18 @@ import {
 import { Helmet } from "react-helmet";
 import NavBar from "../../component/structure_global/navbar";
 import axios from "axios";
-import Billlist from "./component/ิbillpass_list"
 import API from "../API/API";
-
+import Billlist from "./component/ิbillpass_list"
 const title = "รายการวางบิล";
 
-const Billpasspage = () => {
+const BillbyYearpage = ({id}) => {
+
+    var y = new Date(id);
+    const result = y.toLocaleDateString("th-TH", {
+        year: "numeric",
+        });
+    
+   
   const session = {
     id: localStorage.getItem("id"),
     fname: localStorage.getItem("fname"),
@@ -34,25 +40,35 @@ const Billpasspage = () => {
 
   ///////////////////////////////////////////////////////////////////
   const [list, setlist] = useState([]);
-  const [listmonth, setlistmonth] = useState([]);
+  const [years, setyears] = useState([]);
+  const [months, setmonths] = useState([]);
 
   useEffect(() => {
-    axios.get(API("Billpasslist")).then((response) => {
+    axios.get(API("Billpassyearlist")+id).then((response) => {
       setlist(response.data);
     });
     axios.get(API("Monthyearlist")).then((response) => {
-      setlistmonth(response.data);
+        setyears(response.data);
+    });
+    axios.get(API("Monthlist")+id).then((response) => {
+        setmonths(response.data);
     });
   }, []);
+
+
+
   if ((ses.status == "") | (ses.status == "store")) {
     window.location.assign("/");
   }
   const getBillbymonth = (e, data) => {
     e.preventDefault();
+    const dates = {
+        m: data,
+        y: id
+    }
 
-    console.log(data);
     axios
-      .get(API("Billbymonthyearlist") + data)
+      .post(API("Billbymonthyearlist") , dates)
       .then((response) => {
         setlist(response.data);
       })
@@ -104,19 +120,14 @@ const Searchbill = (e) => {
                   <b>เดือนที่มีการวางบิล</b>
                 </CardHeader>
                 <CardBody className="CardBody">
-                  {listmonth.map((listsm) => {
+                  {years.map((listsm) => {
                     var limitday = new Date(listsm.years);
                     const result = limitday.toLocaleDateString("th-TH", {
                       year: "numeric",
-                    }
-                    
-                    )
-                    const myJSON = JSON.stringify(listsm.years);
-                    console.log(listsm.years)
-                    ;
+                    });
                     return (
                       <>
-                      <a href={"BillbyYearpage/"+listsm.years}>
+                      <a href={listsm.years}>
                            {/* <div
                           className="buttonMenu"
                           onClick={(e, a) =>
@@ -144,13 +155,14 @@ const Searchbill = (e) => {
                     <a href="/adminpage">หน้าหลัก</a>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
-                    รายการวางบิลทั้งหมด
+                    รายการวางบิลทั้งหมดของปี {result}
                   </li>
                 </ol>
               </nav>
               <Card className="CardHeaderStyle2">
                 <Col md="6"></Col>
-                <h2 style={{ margin: "0px" }}>รายการวางบิลทั้งหมด</h2>
+                <h2 style={{ margin: "0px" }}>รายการวางบิลทั้งหมดของปี {result}
+</h2>
               </Card>
             </Card>
 
@@ -172,12 +184,42 @@ const Searchbill = (e) => {
                   <Button color="warning" block style={{ marginTop: "5px" }} onClick={(e)=>Searchbill(e)}>ค้นหา</Button>
                 </Col>
                   </Row>
+                   <Row>
+                {months.map((listm) => {
+                    var date = listm.years_month;
+                    var limitday = new Date(listm.years_month);
+                    const result = limitday.toLocaleDateString("th-TH", {
+                      month: 'long'
+                    });
+                    return (
+                      <>
+                    
+                <Col sm="6" md="4" lg="3" >
+                <br></br>
+                     <Button 
+                          color="danger" block
+                          onClick={(e, a,d) =>
+                            getBillbymonth(e,date)
+                          }
+                        >
+                          {result}
+                        </Button >
+               
+                </Col>
+             
+                      </>
+                    );
+                  })}
+</Row>
+                 
+
+
                 </h5>
               </Card>
             </Card>
             <Card className="CardBackground-1" style={{ margin: 10 }}>
               <CardBody>
-                <h3>รายการบิลที่ผ่านการอนุมัติ</h3>
+                <h5>รายการบิลที่ผ่านการอนุมัติ ของปี {result}</h5>
                 {/* {ses.status == "admin" ? <Registerusers /> : ""} */}
 
                 <Table bordered responsive hover>
@@ -200,8 +242,7 @@ const Searchbill = (e) => {
                     <div align="center"><b>ไม่พบหมายเลขบิล</b></div> 
                     </div>{" "}
                   </> : <>
-                <Billlist id ={list}/>
-
+                <Billlist id={list}/>
                   </>}
 
                   </tbody>
@@ -214,4 +255,4 @@ const Searchbill = (e) => {
     </>
   );
 };
-export default Billpasspage;
+export default BillbyYearpage;

@@ -4,7 +4,7 @@ import { Container, Card, Button, Input, Row, Col, CardBody ,Table} from "reacts
 import { Helmet } from "react-helmet";
 import NavBar from "../../component/structure_global/navbar";
 import axios from "axios";
-import Swal from "sweetalert2";
+import Billlist from "./component/ิbillpass_list"
 import API from "../API/API";
 
 const title = "รายการวางบิล";
@@ -153,53 +153,7 @@ const Searchbill = (e) => {
                     <div align="center"><b>ไม่พบหมายเลขบิล</b></div> 
                     </div>{" "}
                   </> : <>
-                  {list.map((lists) => {
-                      return (
-                        <>
-                          <tr>
-                            <td>{lists.bill_op_time}</td>
-                            <th>{lists.Store_name}</th>
-
-                            <th>{lists.bill_id}</th>
-                            <th>{lists.bill_amount}</th>
-
-                            <td>{lists.bill_detail}</td>
-                            {lists.bill_status == "wait" ? (
-                              <>
-                                <td className="status">
-                                  <b style={{ color: "blue" }}>สร้างใหม่</b>
-                                </td>
-                              </>
-                            ) : 
-                            lists.bill_status == "รออนุมัติ" ?(
-                              <>
-                                <td
-                                  className="status"
-                                  style={{ color: "green" }}
-                                >
-                                  <b>{lists.bill_status}</b>
-                                </td>
-                              </>
-                            ):(<>
-                            <td
-                                  className="status"
-                                  style={{ color: "red" }}
-                                >
-                                  <b>{lists.bill_status}</b>
-                                </td>
-                            
-                            </>)}
-                            
-
-                            <td>
-                              {" "}
-                              <Button color="primary" href={"/Billdetailfromadmin/"+lists.bill_id} block>
-ดูรายละเอียด                              </Button>
-                            </td>
-                          </tr>
-                        </>
-                      );
-                    })}
+                <Billlist id={list}/>
                   </>}
                   </tbody>
                 </Table>

@@ -14,6 +14,9 @@ import Testfile from "../src/page/testfile";
 import Bill_detail_admin from "./page/admin/bill_detail_admin";
 import Billpasspage from "./page/admin/ิbillpass";
 import History_bill from "./page/StoreUser/history_bill";
+import bill_yearpage from "./page/admin/billyearpage"
+import Bill_notpass_page from "./page/admin/bill_not pass"
+
 
 const App = () => {
   const [loading, setloading] = useState(false);
@@ -45,6 +48,9 @@ const App = () => {
           <Route path="/Billdetailfromadmin/:id"  component={Bill_detail_admin} />
           <Route path="/Billpasspage" component={Billpasspage} />
           <Route path="/History_bill" component={History_bill} />
+          <Route path="/BillbyYearpage/:id" component={bill_yearpage} />
+          <Route path="/Bill_notpass_page" component={Bill_notpass_page} />
+
         </Switch>
       </Router>,
     ]
